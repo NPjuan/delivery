@@ -4,9 +4,9 @@
 
     </router-view>
     <footer>
-      <router-link to="/" exact>主页</router-link>
-      <router-link to="/order">订单</router-link>
+      <router-link to="/" exact>友捎</router-link>
       <router-link to="/message">消息</router-link>
+      <router-link to="/friends">好友</router-link>
       <router-link to="/home">我的</router-link>
     </footer>
   </div>

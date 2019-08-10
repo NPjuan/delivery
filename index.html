@@ -2,11 +2,67 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
     <title>delivery</title>
+    <style>
+      *{
+        margin: 0;
+        padding: 0;
+        -webkit-text-size-adjust:none;
+      }
+      img{
+        display: block;
+      }
+      /*html,body::-webkit-scrollbar { display: none }*/
+      html,body{
+        /*千万不要加上 position relative 会出事，在单独的标签里面加上*/
+        height: auto;
+        max-width: 640px;
+        min-width: 320px;
+        font-size: 5px;
+        overflow: hidden;
+        font-family: "Micrisoft YaHei";
+      }
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        /* 清除高亮 */
+        -webkit-tap-highlight-color: transparent;
+
+      }
+      ul,
+      ol {
+        list-style: none;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      input {
+        border: none;
+        outline: none;
+        /* 除去默认样式 */
+        appearance: none;
+        -webkit-appearance: none;
+      }
+    </style>
   </head>
   <body>
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
+  <script>
+    var fontSizeAuto = function(oriWidth){
+      return function(){
+        var viewportWidth = document.documentElement.clientWidth;
+        if(viewportWidth > 640){ viewportWidth = 640; }
+        if(viewportWidth < 320){ viewportWidth = 320; }
+        document.documentElement.style.fontSize = viewportWidth/(oriWidth/100) +'px';
+      }
+    }
+    window.onresize = fontSizeAuto(750)();
+  </script>
 </html>

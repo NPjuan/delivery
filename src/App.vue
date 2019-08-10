@@ -1,4 +1,6 @@
+
 <template>
+<!-- 总的组件 -->
   <div id="app">
     <router-view>
 
@@ -20,6 +22,9 @@ export default {
 </script>
 
 <style>
+/* html{
+  font-size:20px;
+} */
 *{
   margin: 0;
   padding: 0;
@@ -27,21 +32,26 @@ export default {
 footer{
   position: fixed;
   bottom: 0;
-  width: 750px;
-  height: 100px;
+  width: 100%;
+  height: 20px;
   text-align: center;
   background-color: darkseagreen;
+  font-size:.35rem
 }
   footer>a{
+    
     float: left;
     display: inline-block;
-    height: 100px;
-    line-height: 100px;
+    height: 20px;
+    line-height: 20px;
     width: 25%;
     color: black;
     text-decoration: none;
+    /* 15px */
+    /* font-size:1.5rem; */
   }
   .router-link-active{
     color: white;
   }
+
 </style>

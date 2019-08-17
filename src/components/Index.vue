@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-   <h1>首页</h1>
-  <router-link to="/index/driver" class = "driver">我是司机</router-link>
-  <router-link to="/index/customer" class = "customer">我是用户</router-link>
+   <!--<h1>首页</h1>-->
+  <!--<router-link to="/index/driver" class = "driver">我是司机</router-link>-->
+  <!--<router-link to="/index/customer" class = "customer">我是用户</router-link>-->
     <transition :name="transitionName">
       <router-view class="child-view" >
       </router-view>

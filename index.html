@@ -16,7 +16,7 @@
       /*html,body::-webkit-scrollbar { display: none }*/
       html,body{
         /*千万不要加上 position relative 会出事，在单独的标签里面加上*/
-        height: auto;
+        height: 100vh;
         max-width: 640px;
         min-width: 320px;
         font-size: 5px;
@@ -47,6 +47,9 @@
         /* 除去默认样式 */
         appearance: none;
         -webkit-appearance: none;
+      }
+      #app{
+        height: 100%;
       }
     </style>
   </head>

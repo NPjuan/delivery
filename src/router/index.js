@@ -13,10 +13,16 @@ import Register from '../components/home/Register'
 import driver from '../components/index/driver'
 import customer from '../components/index/customer'
 // 三级路由
+
+// 发布行程
 import route from '../components/index/choices/route'
+// 附件订单
 import order from '../components/index/choices/order'
+// 附件订单列表
 import orderlist from '../components/index/choices/orderlist'
+// 附件订单详情
 import orderinfo from '../components/index/choices/orderinfo'
+// 接收邀请
 import invitation from '../components/index/choices/invitation'
 // me
 import HomePage from '../components/HomePage'
@@ -63,7 +69,9 @@ export default new Router({
         // 注册
         {path: "/home/register", name: "registerLink", component: Register}
       ]},
-    {path: "*", redirect: "/"}
+    // {path: "*", redirect: "/"}
   ],
+
+
   mode:"history"
 })

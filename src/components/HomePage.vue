@@ -10,7 +10,7 @@
       <div class="head-span-container">
         <!--点击 span 跳转页面-->
         <!--这里不可以换行显示否则或出现间隙需要用更多的 css 来兼容-->
-        <span class="head-span">我要友捎</span><span class="head-span">我要接单</span><span class="head-span">我的订单</span><span class="head-span">消息</span><span class="head-span">我要接单</span><span class="head-span">我要接单</span>
+        <span class="head-span">我要友捎</span><span class="head-span" @click="driver">我要接单</span><a class="head-span" @click="login">登陆注册</a><span class="head-span">消息</span><span class="head-span">我要接单</span><span class="head-span">我要接单</span>
       </div>
     </header>
     <baidu-map id="map" :center="map.center" :zoom=map.zoom :scroll-wheel-zoom=map.scrollWheelZoom @ready="handler">
@@ -55,12 +55,12 @@
           <div class="lift" @click="judge.listShow = !judge.listShow">收起信息填写栏</div>
           <div class="time-write">
             <span class="time-span">起始时间</span>
-            <input type="text"  @click="showTime(0)" placeholder="捎货起始时间" v-model="date.startTime" class="time-input">
+            <input type="text" readonly @click="showTime(0)" placeholder="捎货起始时间" v-model="date.startTime" class="time-input">
           </div>
           <!--预约截止时间-->
           <div class="time-write">
             <span class="time-span">截止时间</span>
-            <input type="text"  @click="showTime(1)" placeholder="捎货截止时间" v-model="date.endTime" class="time-input">
+            <input type="text"  readonly @click="showTime(1)" placeholder="捎货截止时间" v-model="date.endTime" class="time-input">
           </div>
           <div class="picture-write" style="display: inline-block;">
             <span class="picture-span">货物照片</span>
@@ -171,7 +171,7 @@
         },
         // 图片信息
         file: {
-          maxSize: 1048576,
+          maxSize: 10485760,
           maxCount: 3
         },
         // 时间信息
@@ -261,6 +261,14 @@
       }
     },
     methods: {
+      // 跳转到登陆界面
+      login() {
+        window.location.href = "./login/登录注册.html"
+      },
+      // 跳转到司机页面
+      driver() {
+        this.$router.push('/index/driver')
+      },
       // 上传
       delivery() {
         let self = this

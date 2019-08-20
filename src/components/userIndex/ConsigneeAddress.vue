@@ -93,7 +93,7 @@
 </template>
 
 <script>
-  import  AreaList from '../assets/area'; // 地址列表
+  import  AreaList from '../../assets/area'; // 地址列表
     export default {
         name: "ConsigneeAddress",
         data() {

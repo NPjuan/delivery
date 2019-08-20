@@ -147,8 +147,8 @@
 </template>
 
 <script>
-  import  AreaList from '../assets/area';
-  import { eventBus } from "../main"
+  import  AreaList from '../../assets/area';
+  import { eventBus } from "../../main"
   export default {
     name: "homepage",
     data() {
@@ -697,7 +697,7 @@
     font-size: .25rem;
     text-align: center;
     color: #7d7e80;
-    margin-top: .25rem 0
+    margin-top: .25rem;
   }
   .search-input{
     position: relative;

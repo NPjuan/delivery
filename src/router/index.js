@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 // 一级路由
-import Index from '../components/Index'
-import Friends from '../components/Friends'
-import Message from '../components/Message'
-import Home from '../components/Home'
+import Index from '../components/userIndex/Index'
+import Friends from '../components/userIndex/Friends'
+import Message from '../components/userIndex/Message'
+import Home from '../components/userIndex/Home'
 
 // bz
-import driver from '../components/index/driver'
-import customer from '../components/index/customer'
+import driver from '../components/driverIndex/driver'
+import customer from '../components/driverIndex/customer'
 // 二级路由
 
 // 发布行程

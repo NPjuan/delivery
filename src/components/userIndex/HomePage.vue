@@ -3,7 +3,7 @@
     <header>
       <div class="head-fun-container">
         <span class="search-input-container">
-          <img src="../assets/img/search.svg" alt="">
+          <img src="../../assets/image/search.svg" alt="">
           <input type="text"placeholder="地址搜索" class="search-input">
         </span>
       </div>
@@ -29,7 +29,7 @@
           </div>
           <div v-else class="address-show-container">
             <div class="address-show-container-img">
-              <img src="../assets/img/plus.svg" alt="">
+              <img src="../../assets/image/plus.svg" alt="">
             </div>
           </div>
         </div>
@@ -44,7 +44,7 @@
           </div>
           <div v-else class="address-show-container">
             <div class="address-show-container-img">
-              <img src="../assets/img/plus.svg" alt="">
+              <img src="../../assets/image/plus.svg" alt="">
             </div>
           </div>
         </div>
@@ -108,7 +108,7 @@
               <p class="address-item-user"><span>{{consignor.name}}</span><span>{{consignor.phone}}</span></p>
               <!--通过索引来选择显示的地址-->
               <p class="address-item-address">{{ value.province + value.city + value.district + (value.town?value.town:"") + (value.village?value.village:"") + value.detail }}</p>
-              <img src="../assets/img/modify.svg" alt="" class="address-item-svg" @touchstart="modifyAddress(index)">
+              <img src="../../assets/image/modify.svg" alt="" class="address-item-svg" @touchstart="modifyAddress(index)">
             </div>
           </div>
         </div>
@@ -124,7 +124,7 @@
             <p class="address-item-user"><span>{{value.name}}</span><span>{{value.phone}}</span></p>
             <!--通过索引来选择显示的地址-->
             <p class="address-item-address">{{ value.province + value.city + value.district + (value.town?value.town:"") + (value.village?value.village:"") + value.detail }}</p>
-            <img src="../assets/img/modify.svg" alt="" class="address-item-svg" style="z-index: 50"  @touchstart="modifyAddress(index)">
+            <img src="../../assets/image/modify.svg" alt="" class="address-item-svg" style="z-index: 50"  @touchstart="modifyAddress(index)">
           </div>
         </div>
       </div>
@@ -142,7 +142,7 @@
         @cancel="show.timePick = false"
       />
     </van-popup>
-    <img src="../assets/img/Origin.svg" alt="">
+    <img src="../../assets/image/Origin.svg" alt="">
   </div>
 </template>
 
@@ -263,7 +263,7 @@
     methods: {
       // 跳转到登陆界面
       login() {
-        window.location.href = "./login/登录注册.html"
+        this.$router.push('/loginselect')
       },
       // 跳转到司机页面
       driver() {
@@ -565,7 +565,7 @@
         // 必须用 require 来请求地址否则报错
         // new BMap.Size 用来控制展现区域大小
         // imageSize 用来控制图片大小
-        let originIcon = new BMap.Icon(require("../assets/img/Origin.svg"), new BMap.Size(30,30),{
+        let originIcon = new BMap.Icon(require("../../assets/image/Origin.svg"), new BMap.Size(30,30),{
           imageSize: new BMap.Size(30,30)
         })
         map.addEventListener("click", this.showInfo)
@@ -612,7 +612,7 @@
         console.log('您的位置：'+this.map.center.lng+','+this.map.center.lat);
         let map = this.map.map
         map.removeOverlay(this.map.mk2)
-        let destinationIcon = new BMap.Icon(require("../assets/img/Destination.svg"), new BMap.Size(30,30),{
+        let destinationIcon = new BMap.Icon(require("../../assets/image/Destination.svg"), new BMap.Size(30,30),{
           imageSize: new BMap.Size(30,30),
         })
         this.map.mk2 = new BMap.Marker(new BMap.Point(e.point.lng, e.point.lat),{icon: destinationIcon})

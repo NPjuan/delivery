@@ -1,0 +1,42 @@
+        /* vant */
+
+
+
+        .btn_pos {
+                /* 
+            position: fixed;
+            bottom: 0 ; */
+
+                text-align: center
+        }
+
+
+
+        .hei100 {
+                height: 100%;
+        }
+
+
+
+
+        .sty11::before {
+
+                content: "";
+        }
+
+
+
+        .showoff {
+                display: none;
+        }
+
+
+        .administratoron {
+                display: none;
+        }
+
+
+
+
+
+        

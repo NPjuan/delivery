@@ -6,29 +6,40 @@ import Friends from '../components/Friends'
 import Message from '../components/Message'
 import Home from '../components/Home'
 
-// 二级路由 我的
-import Login from '../components/home/Login'
-import Register from '../components/home/Register'
 // bz
 import driver from '../components/index/driver'
 import customer from '../components/index/customer'
-// 三级路由
+// 二级路由
 
 // 发布行程
-import route from '../components/index/choices/route'
+import route from '../components/driverindex/choices/route'
 // 附件订单
-import order from '../components/index/choices/order'
+import order from '../components/driverindex/choices/order'
 // 附件订单列表
-import orderlist from '../components/index/choices/orderlist'
+import orderlist from '../components/driverIndex/choices/orderlist'
 // 附件订单详情
-import orderinfo from '../components/index/choices/orderinfo'
+import orderinfo from '../components/driverIndex/choices/orderinfo'
 // 接收邀请
-import invitation from '../components/index/choices/invitation'
-// me
-import HomePage from '../components/HomePage'
-import ConsigneeAddress from '../components/ConsigneeAddress'
-import ConsignorAddress from '../components/ConsignorAddress'
-import FindDriver from '../components/FindDriver'
+import invitation from '../components/driverIndex/choices/invitation'
+// pjy
+import HomePage from '../components/userIndex/HomePage'
+import ConsigneeAddress from '../components/userIndex/ConsigneeAddress'
+import ConsignorAddress from '../components/userIndex/ConsignorAddress'
+import FindDriver from '../components/userIndex/FindDriver'
+
+//yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+import loginselect from '../components/login/loginselect'
+import idselect from "../components/login/idselect"
+import pcmsg from "../components/login/pcmsg"
+import driverselect from "../components/login/driverselect"
+import register from "../components/login/register"
+import registersuccess from "../components/login/registersuccess"
+import login from "../components/login/login"
+
+//yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -44,34 +55,36 @@ export default new Router({
         // 寻找附件司机
         {path: "/findDriver", meta: {index: 1}, name: "findDriverLink", component: FindDriver},
         // 司机 bz
-        {path:"/index/driver",name:"driverLink",component:driver,   children:[
+        {path:"/index/driver", meta: {index: 1}, name:"driverLink",component:driver,   children:[
             // 发布行程
-            {path: "/choices/route", name: "routeLink", component: route},
+            {path: "/choices/route", meta: {index: 2}, name: "routeLink", component: route},
             // 附近订单
-            {path: "/choices/order", name: "orderLink", component: order},
+            {path: "/choices/order", meta: {index: 2}, name: "orderLink", component: order},
             //附近订单列表
-            {path:"/choices/orderlist",name:"listLink",component:orderlist},
+            {path:"/choices/orderlist", meta: {index: 2}, name:"listLink",component:orderlist},
             //订单详情页面
-            {path:"/choices/orderinfo",name:"infoLink",component:orderinfo},
+            {path:"/choices/orderinfo", meta: {index: 2}, name:"infoLink",component:orderinfo},
             //邀我接单
-            {path: "/choices/invitation", name: "inviteLink", component: invitation},
+            {path: "/choices/invitation", meta: {index: 2}, name: "inviteLink", component: invitation},
           ]},
-        {path:"/index/customer",name:"customerLink",component:customer},
+        {path:"/index/customer", meta: {index: 1}, name:"customerLink",component:customer},
       ]},
     // 订单
-    {path: "/friends", name: "friendsLink", component: Friends},
+    {path: "/friends", meta: { index: 0 }, name: "friendsLink", component: Friends},
     // 消息
-    {path: "/message", name: "messageLink", component: Message},
-    // 我的
-    {path: "/home", name: "homeLink", component:Home, redirect: "/home/login",  children: [
-        // 登录
-        {path: "/home/login", name: "loginLink", component: Login},
-        // 注册
-        {path: "/home/register", name: "registerLink", component: Register}
-      ]},
-    // {path: "*", redirect: "/"}
+    {path: "/message",meta: { index: 0 },  name: "messageLink", component: Message},
+
+
+    // yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+      {path:'/loginselect', meta: {index: 1},  component:loginselect},
+      {path:'/login', meta: {index: 1},  component:login},
+      {path:'/pcmsg', meta: {index: 1}, component:pcmsg},
+      {path:'/registersuccess', meta: {index: 1}, component:registersuccess},
+      {path:'/driverselect', meta: {index: 1}, component:driverselect},
+      {path:'/idselect', meta: {index: 1}, component: idselect},
+      {path:'/register', meta: {index: 1}, component:register},
+    // 通用
+    {path: "*", redirect: "/"}
   ],
-
-
   mode:"history"
 })

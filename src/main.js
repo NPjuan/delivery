@@ -9,6 +9,13 @@ import axios from 'axios'
 import 'vant/lib/index.css';
 import { AddressEdit, Toast, Area, Popup, Button, Field, NavBar, Cell, CellGroup, Dialog, DatetimePicker, Uploader, Switch,  List} from 'vant'
 
+
+// yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+import './css/login.css'
+import './css/vue.css'
+import './css/vueup.css'
+// yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
 Vue.use(AddressEdit).use(Area).use(Button).use(Popup).use(Field).use(Cell).use(CellGroup).use(Dialog).use(NavBar).use(List)
 Vue.use(DatetimePicker).use(Uploader).use(Switch)
 
@@ -33,5 +40,6 @@ new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  
 })

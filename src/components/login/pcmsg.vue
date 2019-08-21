@@ -299,13 +299,10 @@ export default {
     //获取身份证号
     let id = document.getElementsByName("msg_iid")[0];
     //获取生日
-    let birthdayv = document.getElementsByClassName("select_2")[0];
-    // let description = document.getElementsByName("description")[0];
     //判断是否填写非空
     var ju =
       name.value &&
       id.value &&
-      birthdayv.textContent &&
       g.user_msg.userInfo.identityCardPicture;
     //填写信息写入user_msg对象---↓↓↓↓↓↓↓↓
     //获取并写入用户名
@@ -313,7 +310,6 @@ export default {
     //获取并写入身份证号
     g.user_msg.userInfo.identityCard = id.value;
     //获取并写入出生日期
-    g.user_msg.userInfo.birthday = birthdayv.textContent;
     console.log(name.value);
     console.log(g.user_msg.userInfo.role);
     //判断身份

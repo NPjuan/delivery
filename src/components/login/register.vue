@@ -408,7 +408,7 @@ export default {
       g.register_judge.password2 &&
       g.register_judge.code &&
       g.register_judge;
-    if (11) {
+    if (ju) {
       let data = {
         //用户注册手机号
         phone: phone.value,

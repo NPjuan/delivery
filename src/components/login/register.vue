@@ -427,4 +427,55 @@
 
 <style scoped>
 
+.test_drag {
+            position: relative;
+
+            height: 40px;
+            background-color: white;
+
+            line-height: 40px;
+        }
+
+        .test_bg {
+            position: absolute;
+
+            width: 0px;
+            height: 100%;
+            background-color: #afd2bf;
+
+
+        }
+
+        .test_text {
+            position: absolute;
+
+            width: 100%;
+            height: 100%;
+            color:  #8d999f;
+
+
+            text-align: center;
+
+            user-select: none;
+        }
+
+        .test_btn {
+            position: absolute;
+
+            width: 40px;
+            height: 40px;
+            border: 1px solid #afd2bf;
+            background-color: #fff;
+
+            color: #afd2bf;
+            font-weight: bolder;
+            text-align: center;
+            line-height: 38px;
+
+            user-select: none;
+            cursor: move;
+        }
+
+        
+
 </style>

@@ -80,9 +80,9 @@ export default new Router({
       {path:'/loginselect', meta: {index: 1,index_:1},  component:loginselect},
 
       
-      {path:'/idselect', meta: {index: 1,index_:2}, component: idselect},
+      {path:'/idselect', meta: {index: 1,index_:2}, component: idselect,name:"idselectLink"},
       {path:'/register', meta: {index: 1,index_:3}, component:register},
-      {path:'/registersuccess', meta: {index: 1,index_:4}, component:registersuccess},
+      {path:'/registersuccess', meta: {index: 1,index_:4}, component:registersuccess,name:"registersuccessLink"},
       {path:'/pcmsg', meta: {index: 1,index_:5}, component:pcmsg},
       {path:'/driverselect', meta: {index: 1,index_:6}, component:driverselect},
 

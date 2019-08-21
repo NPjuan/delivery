@@ -127,8 +127,8 @@ import g from "./global";
 export default {
   data() {
     return {
-        evidence:'',
-        count: 60
+      evidence: "",
+      count: 60
     };
   },
   methods: {
@@ -399,52 +399,58 @@ export default {
   },
   beforeRouteLeave(to, from, next) {
     //获取目标元素
-    let up = document.getElementsByClassName("btn_sent")[0];
-    let phone = document.getElementsByName("phone")[0];
-    let pw = document.getElementsByName("password")[0];
-    let ju =
-      g.register_judge.phone &&
-      g.register_judge.password1 &&
-      g.register_judge.password2 &&
-      g.register_judge.code &&
-      g.register_judge;
-    if (ju) {
-      let data = {
-        //用户注册手机号
-        phone: phone.value,
-        //用户密码
-        password: pw.value,
-        //用户身份
-        registerRole: g.user_msg.userInfo.role
-      };
-      if (g.user_msg.userInfo.role == "管理员") {
-        data.evidence = this.evidence;
+    console.log(to.name);
+    if ((to.name == "registersuccessLink")) {
+      let up = document.getElementsByClassName("btn_sent")[0];
+      let phone = document.getElementsByName("phone")[0];
+      let pw = document.getElementsByName("password")[0];
+      let ju =
+        g.register_judge.phone &&
+        g.register_judge.password1 &&
+        g.register_judge.password2 &&
+        g.register_judge.code &&
+        g.register_judge;
+      if (ju) {
+        let data = {
+          //用户注册手机号
+          phone: phone.value,
+          //用户密码
+          password: pw.value,
+          //用户身份
+          registerRole: g.user_msg.userInfo.role
+        };
+        if (g.user_msg.userInfo.role == "管理员") {
+          data.evidence = this.evidence;
+        }
+        this.ajax(data, "/user/register.do", "registerAfter");
+        next();
+      } else {
+        //若有信息未填写则提示
+        if (!g.register_judge.phone) {
+          let tip = document.getElementsByClassName("tip")[0];
+          tip.innerHTML = "请输入注册手机号";
+          tip.style.color = "red";
+        }
+        if (!g.register_judge.code) {
+          let tip = document.getElementsByClassName("tip")[1];
+          tip.innerHTML = "请输入正确验证码";
+          tip.style.color = "red";
+        }
+        if (!g.register_judge.password1) {
+          let tip = document.getElementsByClassName("tipp")[0];
+          tip.innerHTML = "请输入密码";
+          tip.style.color = "red";
+        }
+        if (!g.register_judge.password2) {
+          let tip = document.getElementsByClassName("tipp")[1];
+          tip.innerHTML = "密码请填写一致";
+          tip.style.color = "red";
+        }
       }
-      this.ajax(data, "/user/register.do", "registerAfter");
-      next();
-    } else {
-      //若有信息未填写则提示
-      if (!g.register_judge.phone) {
-        let tip = document.getElementsByClassName("tip")[0];
-        tip.innerHTML = "请输入注册手机号";
-        tip.style.color = "red";
-      }
-      if (!g.register_judge.code) {
-        let tip = document.getElementsByClassName("tip")[1];
-        tip.innerHTML = "请输入正确验证码";
-        tip.style.color = "red";
-      }
-      if (!g.register_judge.password1) {
-        let tip = document.getElementsByClassName("tipp")[0];
-        tip.innerHTML = "请输入密码";
-        tip.style.color = "red";
-      }
-      if (!g.register_judge.password2) {
-        let tip = document.getElementsByClassName("tipp")[1];
-        tip.innerHTML = "密码请填写一致";
-        tip.style.color = "red";
-      }
+      return;
     }
+
+    next();
   }
 };
 </script>

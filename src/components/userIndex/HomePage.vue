@@ -463,7 +463,7 @@
           query: {
             mes : this.addresses[index],
             // 用户 id
-            id: this.addresses[index].cid,
+            id: this.addresses[index].cid?this.addresses[index].cid:this.consignor.id,
             areaId: this.addresses[index].id
           }
         })

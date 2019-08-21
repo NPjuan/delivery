@@ -1,28 +1,5 @@
-        /* 重置默认样式 */
-        *,
-        *::before,
-        *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
 
-            /* 清除高亮 */
-            -webkit-tap-highlight-color: transparent;
 
-        }
-
-        body {
-            font-family: "Micrisoft YaHei";
-        }
-
-        ul,
-        ol {
-            list-style: none;
-        }
-
-        a {
-            text-decoration: none;
-        }
 
 
 

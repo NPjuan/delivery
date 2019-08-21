@@ -155,6 +155,8 @@
                   self.consignee.name = ""
                   self.consignee.phone = ""
                   console.log(response)
+                }else if(response.data.code == 0) {
+                  self.errorMessage.id = "该用户没有收货资格"
                 }else {
                   self.judge.id = true
                   self.errorMessage.id = ""
@@ -268,19 +270,18 @@
       mounted() {
           // 依次赋值给当前对象
         // this.$route.id = 用户的 id 可以拿来取用
-        console.log(this.$route.query.uid)
+        console.log(this.$route.query.id)
         console.log("-------query--------------")
         // 判断是否有 mes 属性，有则说明时带参数传递并且功能应该为修改默认地址
         if(this.$route.query.hasOwnProperty("mes")){
           let mes = this.$route.query.mes
           this.consignee.areaCode = mes.province + mes.city + mes.district
-          console.log(this.consignee.areaCode)
-          console.log("-----areaCode-----------")
           this.consignee = mes
           // 这一步放在下面覆盖掉上面的 id 赋值
-          this.consignee.id = mes.cid
+          this.consignee.id = this.$route.query.id
           this.judge.id = true
         }
+        this.checkId()
       }
     }
 </script>

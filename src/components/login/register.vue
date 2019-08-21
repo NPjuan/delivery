@@ -3,7 +3,7 @@
     <div class="hei100">
         <div class="van-doc-nav-bar van-nav-bar van-hairline--bottom" style="z-index: 1;">
             <div class="van-nav-bar__left">
-                <i @click="$router.go(-1)" class="van-icon van-icon-arrow-left van-nav-bar__arrow">
+                <i @click="$router.back(-1)" class="van-icon van-icon-arrow-left van-nav-bar__arrow">
                                                                                                                         </i>
             </div>
             <div class="van-nav-bar__title van-ellipsis">注册</div>
@@ -380,7 +380,7 @@
             let ju = g.register_judge.phone && g.register_judge.password1 &&
                 g.register_judge.password2 && g.register_judge.code &&
                 g.register_judge;
-            if (ju) {
+            if (11) {
                 let data = {
                     //用户注册手机号
                     phone: phone.value,
@@ -396,8 +396,6 @@
                 this.ajax(data, "/user/register.do", "registerAfter");
                 next();
             } else {
-              // 如果用户不想注册退出
-
                 //若有信息未填写则提示
                 if (!g.register_judge.phone) {
                     let tip = document.getElementsByClassName("tip")[0];
@@ -428,5 +426,56 @@
 
 
 <style scoped>
+
+.test_drag {
+            position: relative;
+
+            height: 40px;
+            background-color: white;
+
+            line-height: 40px;
+        }
+
+        .test_bg {
+            position: absolute;
+
+            width: 0px;
+            height: 100%;
+            background-color: #afd2bf;
+
+
+        }
+
+        .test_text {
+            position: absolute;
+
+            width: 100%;
+            height: 100%;
+            color:  #8d999f;
+
+
+            text-align: center;
+
+            user-select: none;
+        }
+
+        .test_btn {
+            position: absolute;
+
+            width: 40px;
+            height: 40px;
+            border: 1px solid #afd2bf;
+            background-color: #fff;
+
+            color: #afd2bf;
+            font-weight: bolder;
+            text-align: center;
+            line-height: 38px;
+
+            user-select: none;
+            cursor: move;
+        }
+
+
 
 </style>

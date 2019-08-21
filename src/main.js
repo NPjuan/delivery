@@ -7,12 +7,28 @@ import router from './router'
 import BaiduMap from 'vue-baidu-map'
 import axios from 'axios'
 import 'vant/lib/index.css';
-import { AddressEdit, Toast, Area, Popup, Button, Field, NavBar, Cell, CellGroup, Dialog, DatetimePicker, Uploader, Switch,  List ,Picker} from 'vant'
+import {
+  AddressEdit,
+  Toast,
+  Area,
+  Popup,
+  Button,
+  Field,
+  NavBar,
+  Cell,
+  CellGroup,
+  Dialog,
+  DatetimePicker,
+  Uploader,
+  Switch,
+  List,
+  Picker
+} from 'vant'
 
 
 // yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 // import './css/login.css'
- import './css/vue.css'
+import './css/vue.css'
 import './css/vueup.css'
 // yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
@@ -28,7 +44,7 @@ Vue.prototype.$toast = Toast
 Vue.prototype.$dialog = Dialog
 // 为 toast 统一设置持续时间
 Toast.setDefaultOptions({
-  duration:1200
+  duration: 1200
 })
 export const eventBus = new Vue()
 /****************************************/
@@ -39,7 +55,10 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
-  components: { App },
+  components: {
+    App
+  },
   template: '<App/>',
+  
 
 })

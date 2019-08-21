@@ -77,13 +77,16 @@ export default new Router({
 
     // yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     // 登录注册
-      {path:'/loginselect', meta: {index: 1},  component:loginselect},
-      {path:'/login', meta: {index: 1},  component:login},
-      {path:'/pcmsg', meta: {index: 1}, component:pcmsg},
-      {path:'/registersuccess', meta: {index: 1}, component:registersuccess},
-      {path:'/driverselect', meta: {index: 1}, component:driverselect},
-      {path:'/idselect', meta: {index: 1}, component: idselect},
-      {path:'/register', meta: {index: 1}, component:register},
+      {path:'/loginselect', meta: {index: 1,index_:1},  component:loginselect},
+
+      
+      {path:'/idselect', meta: {index: 1,index_:2}, component: idselect},
+      {path:'/register', meta: {index: 1,index_:3}, component:register},
+      {path:'/registersuccess', meta: {index: 1,index_:4}, component:registersuccess},
+      {path:'/pcmsg', meta: {index: 1,index_:5}, component:pcmsg},
+      {path:'/driverselect', meta: {index: 1,index_:6}, component:driverselect},
+
+      {path:'/login', meta: {index: 1,index_:2},  component:login},
     // 通用
     {path: "*", redirect: "/"}
   ],

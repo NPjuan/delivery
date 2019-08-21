@@ -5,7 +5,7 @@
       <p class = "remind">请先输入您的具体位置</p>
       <van-field class="cellone"
         v-model = "areaCode"
-        type = "text" 
+        type = "text"
         label="出发省/市/区"
         placeholder="选择出发地点"
         :error-message="errorMessage.areaCodeInput"
@@ -14,10 +14,10 @@
       />
     <!-- 省市区弹出框 -->
       <van-popup v-model="mapShow" position="bottom">
-        <van-area 
-        :area-list = "areaList" 
+        <van-area
+        :area-list = "areaList"
         :areaValue = "areaValue"
-         @confirm = "setMap"  
+         @confirm = "setMap"
          @cancel = "showMap"/>
       </van-popup>
 
@@ -32,7 +32,7 @@
         required
         @blur = "checkStrCode"
       />
-      
+
       <van-button type="primary"  @click="summit" class="summit">提交信息</van-button>
     </van-cell-group>
   </div>
@@ -85,12 +85,12 @@ export default {
         this.province = data[0].name
         this.city = data[1].name
         this.district = data[2].name
-        area += data[i].name + ""      
+        area += data[i].name + ""
       }
       this.areaCode = area
       this.mapShow = false,
       this.checkAreaCode()
-       
+
     },
 
 
@@ -113,7 +113,7 @@ export default {
     },
 
 
-    //提交信息的时候，先创建一个对象，放要存的值，再遍历一下消息，查看是否填写完整,之后传值                                               
+    //提交信息的时候，先创建一个对象，放要存的值，再遍历一下消息，查看是否填写完整,之后传值
     summit(){
       let self = this
       let addressMessage = {
@@ -130,14 +130,14 @@ export default {
         }
       }
 
-      axios.post('http://192.168.1.103:8080/userOrder/findNear.do',{
+      axios.post('http://47.96.231.75:8080/deliver/userOrder/findNear.do',{
       //传给接口的值
       province:addressMessage.province1,
       city:addressMessage.city1,
       district:addressMessage.district1,
       town:"七侠镇",
       village:"高手村"
-        
+
       }).then(function(response){//接口返回数据告诉司机查询成功
         if(response.data.code == 0){
           alert(response.data.msg)
@@ -159,7 +159,7 @@ export default {
         }).catch(function(err){
           alert(err)
       });//axios结束
-    
+
     },//summit结束
 
     returndriver(){//返回按钮，返回到我是司机页面
@@ -168,7 +168,7 @@ export default {
     })}
 
   }//method结束
-        
+
 }
 </script>
 

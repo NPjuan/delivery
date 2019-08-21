@@ -98,7 +98,7 @@
         name: "ConsigneeAddress",
         data() {
           return {
-            url: "http://192.168.1.103:8080",
+            url: "http://47.96.231.75:8080/deliver",
             AreaList, // 地址信息
             AreaValue:110101, // 默认为北京市 北京市 东城区 也可以后期导入选择
             mapShow: false, // 地址控件展示
@@ -142,7 +142,7 @@
           // 判断 id 是否填写正确
           checkId() {
             let self = this
-            this.$axios.get("http://118.25.85.198:8080/CATStudio/user/findConsigneeInfo.do",{
+            this.$axios.get(this.url + "/user/findConsigneeInfo.do",{
               params: {
                 authId : self.consignee.id,
               }
@@ -154,6 +154,9 @@
                   // 修改为空
                   self.consignee.name = ""
                   self.consignee.phone = ""
+                  console.log(response)
+                }else if(response.data.code == 0) {
+                  self.errorMessage.id = "该用户没有收货资格"
                 }else {
                   self.judge.id = true
                   self.errorMessage.id = ""
@@ -228,7 +231,7 @@
             //启用转圈圈，发送数据到后台，若成功Toast并切换回主页
             this.loading = true
             // 接口地址
-            let url = "http://192.168.1.103:8080/area/addConsignee.do"
+            let url = this.url + "/area/addConsignee.do"
             // let url = "http://192.168.1.103:8080/userOrder/findNear.do"
             // 发送的数据
             let transmitMes = {
@@ -246,7 +249,7 @@
                 console.log(response.data.data)
                 self.loading = false
                 if(self.judge.status){
-                  self.$axios.post("http://192.168.1.103:8080/area/updateConsignee.do",{
+                  self.$axios.post(self.url + "/area/updateConsignee.do",{
                     uid: Number(self.$route.query.uid),    //登陆用户id
                     areaId: response.data.data             // 地址 id
                   })
@@ -267,19 +270,18 @@
       mounted() {
           // 依次赋值给当前对象
         // this.$route.id = 用户的 id 可以拿来取用
-        console.log(this.$route.query.uid)
+        console.log(this.$route.query.id)
         console.log("-------query--------------")
         // 判断是否有 mes 属性，有则说明时带参数传递并且功能应该为修改默认地址
         if(this.$route.query.hasOwnProperty("mes")){
           let mes = this.$route.query.mes
           this.consignee.areaCode = mes.province + mes.city + mes.district
-          console.log(this.consignee.areaCode)
-          console.log("-----areaCode-----------")
           this.consignee = mes
           // 这一步放在下面覆盖掉上面的 id 赋值
-          this.consignee.id = mes.cid
+          this.consignee.id = this.$route.query.id
           this.judge.id = true
         }
+        this.checkId()
       }
     }
 </script>

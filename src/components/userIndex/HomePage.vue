@@ -4,7 +4,7 @@
       <div class="head-fun-container">
         <span class="search-input-container">
           <img src="../../assets/image/search.svg" alt="">
-          <input type="text"placeholder="地址搜索" class="search-input">
+          <input type="text" placeholder="地址搜索" class="search-input">
         </span>
       </div>
       <div class="head-span-container">
@@ -117,9 +117,7 @@
         </div>
       </div>
       <div v-else class="address-list">
-        <!--:class="{'address-active': judge.addressPick}"-->
-        <!--<input type="text" placeholder="请输入收货人id来选择地址" class="consignee-id-input" v-model="consignee.id" @keyup="searchAddress">-->
-        <div  class="" @touchstart="pressAddress(index)" :ref="index" @touchend="releaseAddress(index)" v-for="(value, index, key) in addresses" :index="index">
+        <div v-if="addresses.length" class="" @touchstart="pressAddress(index)" :ref="index" @touchend="releaseAddress(index)" v-for="(value, index, key) in addresses" :index="index">
           <div class="address-item">
             <p class="address-item-user"><span>{{value.name}}</span><span>{{value.phone}}</span></p>
             <!--通过索引来选择显示的地址-->
@@ -127,6 +125,10 @@
             <img src="../../assets/image/modify.svg" alt="" class="address-item-svg" style="z-index: 50"  @touchstart="modifyAddress(index)">
           </div>
         </div>
+        <div v-else class="none-address">
+          {{errorMessage.noneAddress}}
+        </div>
+
       </div>
     </van-popup>
     <van-popup
@@ -154,7 +156,9 @@
     data() {
       return {
         // 地图信息
-        url: "http://192.168.1.103:8080",
+        // lt http://118.25.85.198:8080/CATStudio/
+        // jb http://47.96.231.75:8080/deliver
+        url: "http://47.96.231.75:8080/deliver",
         order:{ // 订单信息
           userOrderId: []
         },
@@ -186,7 +190,7 @@
         },
         // 发物信息
         deliveryMsg: {
-          uid: 1, // 发货人
+          uid: 1, // 发货人 id
           deliveryStart:"", // 起始发货时间
           deliveryEnd: "", // 截止收货时间
          // goodsPictures: [], // 上传图片数据
@@ -204,7 +208,7 @@
         consignor: {
           id:1,
           role: "consignor",// 角色，发货人
-          name: "1",// 发货人姓名
+          name: "阿乐",// 发货人姓名
           phone: "18666305518",// 电话号码
           areaCode: "",
           province:"",// 省
@@ -212,7 +216,7 @@
           district:"",// 区
           town: "", // 镇
           village: "",// 村
-          detial: "", // 详细地址
+          detail: "", // 详细地址
           areaId: "" // 地址的编号
         },
         // 收货人
@@ -226,7 +230,7 @@
           city:"",// 市
           district:"",// 区
           village: "",// 村
-          detial: "", // 详细地址
+          detail: "", // 详细地址
           areaId:""// 地址的编号
         },
         // 展示组件
@@ -303,6 +307,8 @@
             console.log(err)
           })
       },
+
+      // 留言框高度自适应
       highAdapt() {
         this.$refs.textarea.style.height = 'auto'
         this.$refs.textarea.style.height =  this.$refs.textarea.scrollHeight + "px"
@@ -421,6 +427,10 @@
               self.addresses.push(response.data.data[i])
             }
             // 展现地址栏
+          console.log("FindAddress res")
+          console.log(response)
+          console.log("FindAddress middle")
+          console.log(self.addresses)
             self.show.address = true
           })
             .catch(function (err) {
@@ -453,7 +463,7 @@
           query: {
             mes : this.addresses[index],
             // 用户 id
-            id: this.addresses[index].cid,
+            id: this.addresses[index].cid?this.addresses[index].cid:this.consignor.id,
             areaId: this.addresses[index].id
           }
         })
@@ -515,7 +525,8 @@
             .then(function () {
               //先直接消失
               let areaId = self.addresses[index].id
-              self.$refs[index][0].style.display = "none"
+              // self.$refs[index][0].style.display = "none"
+              // 上面一步删除是因为如果删除的地址下面还有地址的话，就会让下面一个但是未被删除的地址消失不见，vue会自动改变index
               self.$axios.post(self.url + "/area/deleteArea.do",{
                   // 传入地址 id
                   areaId: areaId
@@ -527,10 +538,14 @@
                   if(self[self.judge.role].areaId = self.addresses[index].id){
                     //  addressPick 改为 false 不能让用户继续用
                     self.judge[self.judge.role].addressPick = false
+                    console.log("是我·是我")
                   }
+                  console.log("delete FindAddress")
                   self.findAddress()
+                  console.log("delete FindAddress end")
                 })
                 .catch(function (err) {
+                  self.findAddress()
                   console.log(err)
                 })
             })
@@ -625,33 +640,6 @@
         //   map.removeOverlay(routes[routes.length-1].marker);
         // })
       }
-      // Consignee(obj) {
-      //   this.id = ""
-      //   this.role = "consignee"
-      //   this.province = ""
-      //   this.city = ""
-      //   this.district = ""
-      //   this.village = ""
-      //   this.status = ""
-      //   this.areaCode = ""
-      //   this.areaId = ""
-      // },
-      // Consignor(obj) {
-      //   this.name = ""
-      //   this.phone = ""
-      //   this.uid = ""
-      //   this.role = "consignor"
-      //   this.province = ""
-      //   this.city = ""
-      //   this.district = obj.district
-      //   this.village = obj.village
-      //   this.status = obj.status //obj是后台传回来的对象，通过构造函数来传入状态
-      //   if(obj.province === obj.city){// 如果出现了北京市 北京市 东城区这样的情况，过滤一下
-      //     this.areaCode = obj.city + obj.district
-      //   }else{
-      //     this.areaCode = obj.province  + obj.city + obj.district
-      //   }
-      // },
     },
     // 如果是从地址栏跳转过来则打开选择地址的组件
     beforeRouteEnter(to, from, next){
@@ -707,13 +695,14 @@
     font-size: .25rem;
     text-indent: .65rem;
     border-radius: .25rem;
+    border: 1px solid grey;
   }
   .search-input-container{
     position: relative;
   }
   .search-input-container>img{
     position: absolute;
-    top: .15rem;
+    top: .1rem;
     left: .15rem;
     width: .35rem;
     z-index: 1000;
@@ -806,36 +795,38 @@
   }
   .address-show-container-img>img{
     position: absolute;
-    top:.25rem;
+    top:.15rem;
     left: 1.75rem;
     width: .6rem;
   }
   .address-show-container{
     display: inline-block;
-    height: 1.1rem;
+    height: .7rem;
     width: 4rem;
-    padding: .2rem .1rem;
+    padding: .2rem .1rem .3rem .1rem;
     border-bottom: 2px solid #f8f8f8;
   }
   .address-show-address{
     display: -webkit-box;
-    margin-top: .15rem;
+    margin-top: .16rem;
+    margin-bottom: .15rem;
     font-size: .25rem;
     color: gray;
     letter-spacing: .02rem;
     overflow: hidden;
     text-overflow: ellipsis;
     -webkit-box-orient:vertical;
+    z-index: 100;
     -webkit-line-clamp:2;
   }
   .address-show-user{
-    font-size: .3rem;
+    font-size: .27rem;
   }
   .address-show-user>span:first-child{
     margin-right: .3rem;
   }
   .address-write{
-    height: 1.5rem;
+    height: 1.1rem;
   }
   .address-write>span{
     position: relative;
@@ -857,7 +848,7 @@
   .head-fun-container{
     position: relative;
     height: .9rem;
-    background-color: darkseagreen;
+    background-color: white;
     font-size: .4rem;
     text-align: center;
     line-height: .9rem
@@ -888,7 +879,7 @@
     text-align: center;
     line-height: .5rem;
     font-size: .3rem;
-    background-color: skyblue;
+    background-color: white;
   }
   .container{
     position: relative;
@@ -926,7 +917,7 @@
   .address-item{
     position: relative;
     width:6rem;
-    height: 1rem;
+    height: .8rem;
     padding: .25rem .6rem .25rem .2rem;
     margin: auto;
     border-bottom: 2px #f8f8f8 solid;

@@ -4,13 +4,16 @@
       <span class="go-back-button" @click="goBack">返回</span>
       <span style="height: 100%;line-height: 1rem;font-size: .32rem;">附近司机</span>
     </header>
-    <div class="driver-list">
-        <div class="driver-list-item"  v-for="(value, index ,key) in driver" :index="index">
+    <div class="driver-list" v-if="driver.length !== 0">
+        <div  class="driver-list-item"  v-for="(value, index ,key) in driver" :index="index">
           <p class="driver-list-item-driver"><span>司机</span><span style="color: #7d7e80;padding-right: .2rem">{{value.name}}</span><span>{{value.license}}</span></p>
           <p class="driver-list-item-date"><span>出发时间</span><span>{{value.startDate}}</span></p>
           <p class="driver-list-item-address"><span>出发地</span><span style="display: inline-block;"><span>{{value.startAddress}}</span></span></p>
           <button class="invite-button">邀请他</button>
         </div>
+    </div>
+    <div v-else style="width: 100%;font-size: .3rem;padding-top: 3rem;text-align: center">
+      暂时没发现有顺路司机哦
     </div>
   </div>
 </template>
@@ -20,40 +23,41 @@
         name: "FindDriver",
       data() {
           return {
+            url: "http://47.96.231.75:8080/deliver",
             driver: [],
-            userOrderId: [], // 订单 id
+            userOrderId: [] , // 订单 id
             testDriver:[]
           }
       },
       methods: {
         findDriver() {
           let self = this
-          this.$axios.post("http://192.168.1.103:8080/driverOrder/findNear.do",{
-            userOrderId: 23,
+          console.log(this.userOrderId)
+          console.log("idididididi")
+          this.$axios.post(this.url + "/driverOrder/findNear.do",{
+            userOrderId: Number(self.userOrderId),
           })
             .then(function (response) {
-              console.log()
+              console.log(response)
               self.driver = []
-              for(let i=0,len=response.data.data.length;i<len;i++){
-                let { areas, carNumber, carPicture, goOff, name, phone} = response.data.data[i]
-                let mes = {
-                  startAddress:areas[0].district + areas[0].town + areas[0].village + areas[0].detail,
-                  license:carNumber,
-                  carPicture,
-                  startDate:self.timeFilter(goOff), //时间过滤器
-                  name,
-                  phone
+              // 如果查找不到顺路司机
+              if(response.data.data == null){
+                  console.log("暂无顺路司机")
+                console.log(self.driver.length)
+              }else{
+                for(let i=0,len=response.data.data.length;i<len;i++){
+                  let { areas, carNumber, carPicture, goOff, name, phone} = response.data.data[i]
+                  let mes = {
+                    startAddress:areas[0].district + areas[0].town + areas[0].village + areas[0].detail,
+                    license:carNumber,
+                    carPicture,
+                    startDate:self.timeFilter(goOff), //时间过滤器
+                    name,
+                    phone
+                  }
+                  self.driver.push(mes)
                 }
-                self.driver.push(mes)
               }
-
-              // let { consigneeArea, consigneeName , consigneePhone} = response.data.data
-              // let msg = {
-              //   consigneeArea,
-              //   consigneeName,
-              //   consigneePhone
-              // }
-              // self.driver.push(msg)
             })
         },
         timeFilter(timestamp) {
@@ -121,7 +125,7 @@
     position: relative;
     width: 100%;
     margin: auto;
-    height: 1.8rem;
+    height: 1.6rem;
     padding-top: .2rem;
     background-color: white;
     border-bottom: 1px solid skyblue;
@@ -160,7 +164,7 @@
     display: -webkit-box;
     padding-left: .17rem;
     color: #7d7e80;
-    width: 3rem;
+    width: 2.95rem;
     margin: 0;
     text-overflow: ellipsis;
     -webkit-box-orient:vertical;

@@ -76,10 +76,11 @@ export default new Router({
 
 
     // yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    // 登录注册
       {path:'/loginselect', meta: {index: 1},  component:loginselect},
       {path:'/login', meta: {index: 1},  component:login},
       {path:'/pcmsg', meta: {index: 1}, component:pcmsg},
-      {path:'/registersuccess', meta: {index: 1}, component:registersuccess,name:"registersuccessLink"},
+      {path:'/registersuccess', meta: {index: 1}, component:registersuccess},
       {path:'/driverselect', meta: {index: 1}, component:driverselect},
       {path:'/idselect', meta: {index: 1}, component: idselect},
       {path:'/register', meta: {index: 1}, component:register},

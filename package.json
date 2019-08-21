@@ -13,6 +13,7 @@
     "axios": "^0.19.0",
     "cssnano": "^4.1.10",
     "exif-js": "^2.3.0",
+    "minimalistic-assert": "^1.0.1",
     "postcss-aspect-ratio-mini": "^1.0.1",
     "postcss-cssnext": "^3.1.0",
     "postcss-px-to-viewport": "^1.1.1",

@@ -2,19 +2,31 @@
   <div class="carimage">
     <!-- <van-button type="primary"  @click="returnChoices">返回</van-button> -->
     <!-- router-link默认渲染为a标签,这两个router-link在组件切换后依旧存在 -->
-    <router-link to="/choices/route">发布行程</router-link>
-    <router-link to="/choices/order">附近订单</router-link>
-    <router-link to="/choices/invitation">邀我友捎</router-link>
-    <!-- 路由匹配到的组件将显示在下面这里，在同个页面，切换显示不同组件的相应内容，同时地址栏的地址是会变的 -->
-    <transition mode="out-in">
-      <router-view></router-view>
-    </transition>
+    <header>
+      <span class="go-back-button" @click="goBack">返回</span>
+      <span style="height: 100%;line-height: 1rem;font-size: .32rem;">司机页面</span>
+    </header>
+    <div style="padding-top: 1rem">
+      <router-link to="/choices/route">发布行程</router-link>
+      <router-link to="/choices/order">附近订单</router-link>
+      <router-link to="/choices/invitation">邀我友捎</router-link>
+      <!-- 路由匹配到的组件将显示在下面这里，在同个页面，切换显示不同组件的相应内容，同时地址栏的地址是会变的 -->
+      <transition mode="out-in">
+        <router-view></router-view>
+      </transition>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "driverLink"
+  name: "driverLink",
+  methods: {
+    goBack() {
+      this.$router.go(-1)
+    }
+  }
+
 };
 </script>
 
@@ -24,7 +36,24 @@ export default {
 /* 给HTML的DOM节点加一个不重复data属性(形如：data-v-2311c06a)来表示他的唯一性
 在每句css选择器的末尾（编译后的生成的css语句）加一个当前组件的data属性选择器（如[data-v-2311c06a]）来私有化样式
 大家都知道css样式有一个优先级的说法，scoped的这一操作，虽然达到了组件样式模块化的目的，但是会造成一种后果：每个样式的权重加重了：理论上我们要去修改这个样式，需要更高的权重去覆盖这个样式。这是增加复杂度的其中一个维度。 */
-
+.go-back-button{
+  position: absolute;
+  left:.5rem;
+  height:100%;
+  line-height: 1rem;
+  box-sizing: border-box;
+  font-size: .3rem;
+  float: left;
+  color: skyblue
+}
+header{
+  position: fixed;
+  background-color: white;
+  z-index:10;
+  height: 1rem;
+  width: 100%;
+  text-align: center;
+}
 a {
   width: 33%;
   height: 50px;

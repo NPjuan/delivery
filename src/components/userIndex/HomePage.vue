@@ -117,9 +117,7 @@
         </div>
       </div>
       <div v-else class="address-list">
-        <!--:class="{'address-active': judge.addressPick}"-->
-        <!--<input type="text" placeholder="请输入收货人id来选择地址" class="consignee-id-input" v-model="consignee.id" @keyup="searchAddress">-->
-        <div  class="" @touchstart="pressAddress(index)" :ref="index" @touchend="releaseAddress(index)" v-for="(value, index, key) in addresses" :index="index">
+        <div v-if="addresses.length" class="" @touchstart="pressAddress(index)" :ref="index" @touchend="releaseAddress(index)" v-for="(value, index, key) in addresses" :index="index">
           <div class="address-item">
             <p class="address-item-user"><span>{{value.name}}</span><span>{{value.phone}}</span></p>
             <!--通过索引来选择显示的地址-->
@@ -127,6 +125,10 @@
             <img src="../../assets/image/modify.svg" alt="" class="address-item-svg" style="z-index: 50"  @touchstart="modifyAddress(index)">
           </div>
         </div>
+        <div v-else class="none-address">
+          {{errorMessage.noneAddress}}
+        </div>
+
       </div>
     </van-popup>
     <van-popup
@@ -154,7 +156,9 @@
     data() {
       return {
         // 地图信息
-        url: "http://192.168.1.103:8080",
+        // lt http://118.25.85.198:8080/CATStudio/
+        // jb http://47.96.231.75:8080/deliver
+        url: "http://47.96.231.75:8080/deliver",
         order:{ // 订单信息
           userOrderId: []
         },
@@ -212,7 +216,7 @@
           district:"",// 区
           town: "", // 镇
           village: "",// 村
-          detial: "", // 详细地址
+          detail: "", // 详细地址
           areaId: "" // 地址的编号
         },
         // 收货人
@@ -226,7 +230,7 @@
           city:"",// 市
           district:"",// 区
           village: "",// 村
-          detial: "", // 详细地址
+          detail: "", // 详细地址
           areaId:""// 地址的编号
         },
         // 展示组件
@@ -303,6 +307,8 @@
             console.log(err)
           })
       },
+
+      // 留言框高度自适应
       highAdapt() {
         this.$refs.textarea.style.height = 'auto'
         this.$refs.textarea.style.height =  this.$refs.textarea.scrollHeight + "px"
@@ -625,33 +631,6 @@
         //   map.removeOverlay(routes[routes.length-1].marker);
         // })
       }
-      // Consignee(obj) {
-      //   this.id = ""
-      //   this.role = "consignee"
-      //   this.province = ""
-      //   this.city = ""
-      //   this.district = ""
-      //   this.village = ""
-      //   this.status = ""
-      //   this.areaCode = ""
-      //   this.areaId = ""
-      // },
-      // Consignor(obj) {
-      //   this.name = ""
-      //   this.phone = ""
-      //   this.uid = ""
-      //   this.role = "consignor"
-      //   this.province = ""
-      //   this.city = ""
-      //   this.district = obj.district
-      //   this.village = obj.village
-      //   this.status = obj.status //obj是后台传回来的对象，通过构造函数来传入状态
-      //   if(obj.province === obj.city){// 如果出现了北京市 北京市 东城区这样的情况，过滤一下
-      //     this.areaCode = obj.city + obj.district
-      //   }else{
-      //     this.areaCode = obj.province  + obj.city + obj.district
-      //   }
-      // },
     },
     // 如果是从地址栏跳转过来则打开选择地址的组件
     beforeRouteEnter(to, from, next){
@@ -806,26 +785,27 @@
   }
   .address-show-container-img>img{
     position: absolute;
-    top:.25rem;
+    top:.15rem;
     left: 1.75rem;
     width: .6rem;
   }
   .address-show-container{
     display: inline-block;
-    height: 1.1rem;
+    height: .7rem;
     width: 4rem;
     padding: .2rem .1rem;
     border-bottom: 2px solid #f8f8f8;
   }
   .address-show-address{
     display: -webkit-box;
-    margin-top: .15rem;
+    margin-top: .25rem;
     font-size: .25rem;
     color: gray;
     letter-spacing: .02rem;
     overflow: hidden;
     text-overflow: ellipsis;
     -webkit-box-orient:vertical;
+    z-index: 100;
     -webkit-line-clamp:2;
   }
   .address-show-user{
@@ -835,7 +815,7 @@
     margin-right: .3rem;
   }
   .address-write{
-    height: 1.5rem;
+    height: 1.1rem;
   }
   .address-write>span{
     position: relative;

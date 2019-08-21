@@ -1,7 +1,7 @@
 <template>
   <div class="route">
     <van-cell-group>
-      <van-button plain type="default" size="small" @click="returnDriver" class="comebackdriver"></van-button>
+      <van-button plain type="default" size="small" @click="returnDriver" class="comebackdriver"><</van-button>
       <p class="remind1">请填写您的行程信息</p>
       <van-field
         class="cell1"
@@ -187,7 +187,7 @@ export default {
     showMap() {//用于是否显示弹出框
       this.mapShow = !this.mapShow;
     },
-    
+
     setMap(data) {//用于到达省市区选择的值渲染到页面
       this.areaValue = data[2].code;
       let area = "";
@@ -290,7 +290,7 @@ export default {
         ":00";
 
       this.timeCode = endTimeArr;
-      this.show3 = false, 
+      this.show3 = false,
       this.checkTimeCode();
     },
 
@@ -390,7 +390,7 @@ export default {
           status:6
         },
           //司机目的地址
-         consigneeArea: 
+         consigneeArea:
          { uid:2,
           province: allMessage.province2,
           city: allMessage.city2,

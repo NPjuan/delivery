@@ -98,7 +98,7 @@
         name: "ConsigneeAddress",
         data() {
           return {
-            url: "http://192.168.1.103:8080",
+            url: "http://47.96.231.75:8080/deliver",
             AreaList, // 地址信息
             AreaValue:110101, // 默认为北京市 北京市 东城区 也可以后期导入选择
             mapShow: false, // 地址控件展示
@@ -142,7 +142,7 @@
           // 判断 id 是否填写正确
           checkId() {
             let self = this
-            this.$axios.get("http://118.25.85.198:8080/CATStudio/user/findConsigneeInfo.do",{
+            this.$axios.get(this.url + "/user/findConsigneeInfo.do",{
               params: {
                 authId : self.consignee.id,
               }
@@ -228,7 +228,7 @@
             //启用转圈圈，发送数据到后台，若成功Toast并切换回主页
             this.loading = true
             // 接口地址
-            let url = "http://192.168.1.103:8080/area/addConsignee.do"
+            let url = this.url + "/area/addConsignee.do"
             // let url = "http://192.168.1.103:8080/userOrder/findNear.do"
             // 发送的数据
             let transmitMes = {
@@ -246,7 +246,7 @@
                 console.log(response.data.data)
                 self.loading = false
                 if(self.judge.status){
-                  self.$axios.post("http://192.168.1.103:8080/area/updateConsignee.do",{
+                  self.$axios.post(self.url + "/area/updateConsignee.do",{
                     uid: Number(self.$route.query.uid),    //登陆用户id
                     areaId: response.data.data             // 地址 id
                   })

@@ -20,19 +20,22 @@
         name: "FindDriver",
       data() {
           return {
+            url: "http://47.96.231.75:8080/deliver",
             driver: [],
-            userOrderId: [], // 订单 id
+            userOrderId: [] , // 订单 id
             testDriver:[]
           }
       },
       methods: {
         findDriver() {
           let self = this
-          this.$axios.post("http://192.168.1.103:8080/driverOrder/findNear.do",{
-            userOrderId: 23,
+          console.log(this.userOrderId)
+          console.log("idididididi")
+          this.$axios.post(this.url + "/driverOrder/findNear.do",{
+            userOrderId: Number(self.userOrderId),
           })
             .then(function (response) {
-              console.log()
+              console.log(response)
               self.driver = []
               for(let i=0,len=response.data.data.length;i<len;i++){
                 let { areas, carNumber, carPicture, goOff, name, phone} = response.data.data[i]
@@ -46,14 +49,6 @@
                 }
                 self.driver.push(mes)
               }
-
-              // let { consigneeArea, consigneeName , consigneePhone} = response.data.data
-              // let msg = {
-              //   consigneeArea,
-              //   consigneeName,
-              //   consigneePhone
-              // }
-              // self.driver.push(msg)
             })
         },
         timeFilter(timestamp) {

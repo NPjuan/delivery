@@ -84,7 +84,7 @@
     name: "ConsignorAddress",
     data() {
       return {
-        url: "http://192.168.1.103:8080",
+        url: "http://47.96.231.75:8080/deliver",
         AreaList, // 地址信息
         AreaValue:110101, // 默认为北京市 北京市 东城区 也可以后期导入选择
         mapShow: false, // 地址控件展示
@@ -193,7 +193,7 @@
             console.log(response)
             console.log(self.$route.query.uid)
             if(self.judge.status){
-              self.$axios.post("http://192.168.1.103:8080/area/updateDeliver.do",{
+              self.$axios.post(self.url + "/area/updateDeliver.do",{
                 uid: Number(self.$route.query.uid),    //登陆用户id
                 areaId: response.data.data             // 地址 id
               })
@@ -203,7 +203,7 @@
             }
             self.loading = false
             // 回到上层
-            // self.$router.go(-1)
+            self.$router.go(-1)
           })
           .catch(function (err) {
             self.loading = false
@@ -212,7 +212,7 @@
       },
       checkId() {
         let self = this
-        this.$axios.get("http://118.25.85.198:8080/CATStudio/user/findConsigneeInfo.do",{
+        this.$axios.get(self.url + "/user/findConsigneeInfo.do",{
           params: {
             authId : self.consignor.id,
           }
@@ -224,6 +224,8 @@
               // 修改为空
               self.consignor.name = ""
               self.consignor.phone = ""
+              console.log(response)
+              console.log("===============")
             }else {
               self.judge.id = true
               self.errorMessage.id = ""

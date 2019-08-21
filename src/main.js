@@ -7,7 +7,7 @@ import router from './router'
 import BaiduMap from 'vue-baidu-map'
 import axios from 'axios'
 import 'vant/lib/index.css';
-import { AddressEdit, Toast, Area, Popup, Button, Field, NavBar, Cell, CellGroup, Dialog, DatetimePicker, Uploader, Switch,  List} from 'vant'
+import { AddressEdit, Toast, Area, Popup, Button, Field, NavBar, Cell, CellGroup, Dialog, DatetimePicker, Uploader, Switch,  List ,Picker} from 'vant'
 
 
 // yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -17,7 +17,7 @@ import './css/vueup.css'
 // yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 Vue.use(AddressEdit).use(Area).use(Button).use(Popup).use(Field).use(Cell).use(CellGroup).use(Dialog).use(NavBar).use(List)
-Vue.use(DatetimePicker).use(Uploader).use(Switch)
+Vue.use(DatetimePicker).use(Uploader).use(Switch).use(Picker)
 
 Vue.use(BaiduMap, {
   ak: "ANlGUWwHxTnBFsMnbRaTsRfQ6f37SOTo"

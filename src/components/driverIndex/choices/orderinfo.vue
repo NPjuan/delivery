@@ -94,8 +94,8 @@ export default {
   methods: {
     getOrderInfo(){
       let self = this
-      let baseURL = 'http://192.168.1.103:8080' //拿图片时默认要加在图片前面
-      axios.defaults.baseURL = 'http://192.168.1.103:8080'
+      let baseURL = 'http://47.96.231.75:8080' //拿图片时默认要加在图片前面
+      axios.defaults.baseURL = 'http://47.96.231.75:8080/deliver'
       axios.post('/userOrder/findDetail.do',{
         userOrderId: self.id,//从orderlist传过来的点击某个订单的时候此订单的id
       })

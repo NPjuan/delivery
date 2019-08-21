@@ -3,7 +3,7 @@
     <!-- <van-button type="primary"  @click="returnChoices">返回</van-button> -->
     <!-- router-link默认渲染为a标签,这两个router-link在组件切换后依旧存在 -->
     <header>
-      <span class="go-back-button" @click="goBack">返回</span>
+      <span class="go-back-button" @click="goHomePage">返回主页</span>
       <span style="height: 100%;line-height: 1rem;font-size: .32rem;">司机页面</span>
     </header>
     <div style="padding-top: 1rem">
@@ -22,8 +22,9 @@
 export default {
   name: "driverLink",
   methods: {
-    goBack() {
-      this.$router.go(-1)
+    // 回到主页
+    goHomePage () {
+      this.$router.push("/")
     }
   }
 
@@ -61,6 +62,8 @@ a {
   color: black;
   text-decoration: none;
   float: left;
+  font-size: .3rem;
+  text-align: center;
 }
 .router-link-active {
   color: green;

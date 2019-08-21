@@ -154,6 +154,7 @@
                   // 修改为空
                   self.consignee.name = ""
                   self.consignee.phone = ""
+                  console.log(response)
                 }else {
                   self.judge.id = true
                   self.errorMessage.id = ""

@@ -159,7 +159,7 @@ export default {
 
       timeCode: "",
       show3: false,
-      minDate: new Date(2019, 8, 1),
+      minDate: new Date(),
       maxDate: new Date(2020, 12, 30),
       currentDate: new Date(),
       errorMessage3: {
@@ -168,7 +168,7 @@ export default {
 
       timeCode2: "",
       show4: false,
-      minDate2: new Date(2019, 8, 1),
+      minDate2: new Date(),
       maxDate2: new Date(2020, 12, 30),
       currentDate2: new Date(),
       errorMessage4: {
@@ -378,9 +378,9 @@ export default {
       }
 
       axios
-        .post("http://192.168.1.103:8080/driverOrder/addDriverOrder.do", {
+        .post("http://47.96.231.75:8080/deliver/driverOrder/addDriverOrder.do", {
         originalArea:
-        { uid:2,
+        { uid:1,
           province: allMessage.province1,
           city: allMessage.city1,
           district: allMessage.district1,
@@ -391,7 +391,7 @@ export default {
         },
           //司机目的地址
          consigneeArea:
-         { uid:2,
+         { uid:1,
           province: allMessage.province2,
           city: allMessage.city2,
           district: allMessage.district2,
@@ -402,7 +402,7 @@ export default {
           ,
           //
           driverOrder:{
-          uid:2,
+          uid:1,
           carry: parseInt(allMessage.weight),
           goOff: allMessage.startTime,
           deadline: allMessage.endTime,
@@ -413,8 +413,9 @@ export default {
           //接口返回数据告诉司机发布成功
           if (response.body.code === 0) {
             this.$toast('发布成功');
-            this.$router.go(-1); //暂时先这样,应该跳转到一个页面
+            this.$router.push("/index/driver"); //暂时先这样,应该跳转到一个页面
           }
+          console.log(response)
         })
         .catch(function(err) {
           //还没有可以写的
@@ -433,7 +434,8 @@ export default {
 .remind1 {
   position: absolute;
   left: 30%;
-  top: 1rem;
+  top: .5rem;
+  font-size: .35rem;
   color: #07c160;
   font-weight: bold;
 }

@@ -4,7 +4,7 @@
       <div class="head-fun-container">
         <span class="search-input-container">
           <img src="../../assets/image/search.svg" alt="">
-          <input type="text"placeholder="地址搜索" class="search-input">
+          <input type="text" placeholder="地址搜索" class="search-input">
         </span>
       </div>
       <div class="head-span-container">
@@ -190,7 +190,7 @@
         },
         // 发物信息
         deliveryMsg: {
-          uid: 1, // 发货人
+          uid: 1, // 发货人 id
           deliveryStart:"", // 起始发货时间
           deliveryEnd: "", // 截止收货时间
          // goodsPictures: [], // 上传图片数据
@@ -208,7 +208,7 @@
         consignor: {
           id:1,
           role: "consignor",// 角色，发货人
-          name: "1",// 发货人姓名
+          name: "阿乐",// 发货人姓名
           phone: "18666305518",// 电话号码
           areaCode: "",
           province:"",// 省
@@ -427,6 +427,10 @@
               self.addresses.push(response.data.data[i])
             }
             // 展现地址栏
+          console.log("FindAddress res")
+          console.log(response)
+          console.log("FindAddress middle")
+          console.log(self.addresses)
             self.show.address = true
           })
             .catch(function (err) {
@@ -521,7 +525,8 @@
             .then(function () {
               //先直接消失
               let areaId = self.addresses[index].id
-              self.$refs[index][0].style.display = "none"
+              // self.$refs[index][0].style.display = "none"
+              // 上面一步删除是因为如果删除的地址下面还有地址的话，就会让下面一个但是未被删除的地址消失不见，vue会自动改变index
               self.$axios.post(self.url + "/area/deleteArea.do",{
                   // 传入地址 id
                   areaId: areaId
@@ -533,10 +538,14 @@
                   if(self[self.judge.role].areaId = self.addresses[index].id){
                     //  addressPick 改为 false 不能让用户继续用
                     self.judge[self.judge.role].addressPick = false
+                    console.log("是我·是我")
                   }
+                  console.log("delete FindAddress")
                   self.findAddress()
+                  console.log("delete FindAddress end")
                 })
                 .catch(function (err) {
+                  self.findAddress()
                   console.log(err)
                 })
             })
@@ -686,13 +695,14 @@
     font-size: .25rem;
     text-indent: .65rem;
     border-radius: .25rem;
+    border: 1px solid grey;
   }
   .search-input-container{
     position: relative;
   }
   .search-input-container>img{
     position: absolute;
-    top: .15rem;
+    top: .1rem;
     left: .15rem;
     width: .35rem;
     z-index: 1000;
@@ -793,12 +803,13 @@
     display: inline-block;
     height: .7rem;
     width: 4rem;
-    padding: .2rem .1rem;
+    padding: .2rem .1rem .3rem .1rem;
     border-bottom: 2px solid #f8f8f8;
   }
   .address-show-address{
     display: -webkit-box;
-    margin-top: .25rem;
+    margin-top: .16rem;
+    margin-bottom: .15rem;
     font-size: .25rem;
     color: gray;
     letter-spacing: .02rem;
@@ -809,7 +820,7 @@
     -webkit-line-clamp:2;
   }
   .address-show-user{
-    font-size: .3rem;
+    font-size: .27rem;
   }
   .address-show-user>span:first-child{
     margin-right: .3rem;
@@ -837,7 +848,7 @@
   .head-fun-container{
     position: relative;
     height: .9rem;
-    background-color: darkseagreen;
+    background-color: white;
     font-size: .4rem;
     text-align: center;
     line-height: .9rem
@@ -868,7 +879,7 @@
     text-align: center;
     line-height: .5rem;
     font-size: .3rem;
-    background-color: skyblue;
+    background-color: white;
   }
   .container{
     position: relative;
@@ -906,7 +917,7 @@
   .address-item{
     position: relative;
     width:6rem;
-    height: 1rem;
+    height: .8rem;
     padding: .25rem .6rem .25rem .2rem;
     margin: auto;
     border-bottom: 2px #f8f8f8 solid;

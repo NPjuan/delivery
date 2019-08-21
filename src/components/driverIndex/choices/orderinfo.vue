@@ -48,7 +48,7 @@
               <p v-cloak class="name">描述：{{description}} </p>
               <ul>
                 <li v-for="(item,index) in photo" :key="index">
-                  <img :src="photo[index]" alt = "暂无图片" class="goodsphoto"> 
+                  <img :src="photo[index]" alt = "暂无图片" class="goodsphoto">
                 </li>
               </ul>
             </div>
@@ -117,7 +117,7 @@ export default {
             }
           }
         })//then结束
-        .catch(function(err){          
+        .catch(function(err){
           alert(err)
         });//catch结束
     },//getOrderInfo函数结束，拿到收货人信息
@@ -128,7 +128,7 @@ export default {
       this.consignor.phone = this.orderlist[i].phone
       this.consignor.address = this.orderlist[i].area.province+'-'+this.orderlist[i].area.city+'-'+this.orderlist[i].area.district+'-'+this.orderlist[i].area.town+'-'+this.orderlist[i].area.village+'-'+this.orderlist[i].area.detail
     },//getDelivelyInfo函数结束，拿到发货人信息
-  
+
     timestampToTime(timestamp) {//时间戳转化为日期格式
       var date = new Date(timestamp );//时间戳为10位需*1000，时间戳为13位的话不需乘1000
       var Y = date.getFullYear() + '-';
@@ -148,7 +148,7 @@ export default {
         })                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 .go(-1)
     },
   }
-    
+
   }
 </script>
 
@@ -159,12 +159,16 @@ export default {
 {
     display:none;
 }
-
+.orderinfo{
+  font-size: .3rem;
+}
 .remind3{/*页面中的"以下为订单详情信息*/
   /* position:absolute; */
-  /* top:1rem; */ 
+  /* top:1rem; */
   color:#07c160;
   font-weight:bold;
+  font-size: .35rem;
+  text-align: center;
 }
 .infoul{/*页面中的ul*/
   height:12rem;
@@ -179,6 +183,7 @@ export default {
   margin-top:10px;
   border:2px solid #07c160;
   border-radius:8px;
+  height: .5rem;
 }
 .peopleimg1{/*发货人矢量图*/
   position:absolute;
@@ -207,6 +212,7 @@ export default {
   margin:5px auto;
   border:2px solid #07c160;
   border-radius:8px;
+  height: .5rem;
 }
 .peopleimg2{/*收货人矢量图*/
   position:absolute;
@@ -224,6 +230,7 @@ export default {
   margin:5px auto;
   border:2px solid #07c160;
   border-radius:8px;
+  height: .5rem;
 }
 .boximg{/*货物矢量图*/
   position:absolute;

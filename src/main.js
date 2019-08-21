@@ -13,7 +13,7 @@ import { AddressEdit, Toast, Area, Popup, Button, Field, NavBar, Cell, CellGroup
 // yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 // import './css/login.css'
  import './css/vue.css'
-// import './css/vueup.css'
+import './css/vueup.css'
 // yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 Vue.use(AddressEdit).use(Area).use(Button).use(Popup).use(Field).use(Cell).use(CellGroup).use(Dialog).use(NavBar).use(List)

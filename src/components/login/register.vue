@@ -3,7 +3,7 @@
     <div class="hei100">
         <div class="van-doc-nav-bar van-nav-bar van-hairline--bottom" style="z-index: 1;">
             <div class="van-nav-bar__left">
-                <i @click="$router.back(-1)" class="van-icon van-icon-arrow-left van-nav-bar__arrow">
+                <i @click="$router.go(-1)" class="van-icon van-icon-arrow-left van-nav-bar__arrow">
                                                                                                                         </i>
             </div>
             <div class="van-nav-bar__title van-ellipsis">注册</div>
@@ -396,6 +396,8 @@
                 this.ajax(data, "/user/register.do", "registerAfter");
                 next();
             } else {
+              // 如果用户不想注册退出
+
                 //若有信息未填写则提示
                 if (!g.register_judge.phone) {
                     let tip = document.getElementsByClassName("tip")[0];

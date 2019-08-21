@@ -1,7 +1,7 @@
 <template>
   <div class = "orderlist">
     <van-cell-group>
-      <van-button  plain type="default" size="small" @click="returnWhere" class = "comeback"></van-button>
+      <van-button  plain type="default" size="small" @click="returnWhere" class = "comeback"><</van-button>
       <p class="remind2">以下为附近订单信息</p>
       <ul class = "ul">
         <!-- 遍历路由得到的所有订单发货人信息 -->
@@ -46,7 +46,7 @@ export default {
         name:"orderLink",
         })                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 .go(-1)
     },
-  } 
+  }
 }
 
 </script>
@@ -58,23 +58,26 @@ export default {
   width:100%;
   height:100rem;/*为了附近订单没有数据时不要显示背景图，挡住*/
   background-color: white;
+  font-size: .3rem;
 }
 .remind2{/*页面中的"以下为附近订单信息“*/
   /* position:absolute; */
   /* top:1rem; */
   color:#07c160;
   font-weight:bold;
+  font-size: .35rem;
+  text-align: center;
 }
 .ul{/*页面中的ul*/
-  height:12rem; 
+  height:12rem;
   overflow: scroll;
 }
 .liststyle{/*页面中的信息框*/
   position:relative;
   /* 这个top解决问题 */
   top:10px;
-  width:90%;
-  height:2.5rem;
+  /*width:90%;*/
+  /*height:2.5rem;*/
   margin:.38rem .38rem;
   padding:.2rem .2rem;
   border: 2px solid #07c160;
@@ -92,12 +95,12 @@ export default {
   box-sizing:content-box;
   margin:3px 20px;
   text-align:left;
-  font-weight:510;
+  font-weight:bold;
 }
 .cellsecond{/*发货地址*/
    margin:4px 20px;
    text-align:left;
-   font-weight:510;
+   font-weight:bold;
   /* margin:0 auto;*/
 }
 

@@ -306,9 +306,7 @@
 
 
 <style scoped>
-    /* .van-uploader__upload:last-child {
-                                        width: 136px !important;
-                                    } */
+
     #btn1 {
         width: 100%;
         background-color: white;
@@ -329,4 +327,7 @@
         height: 24px;
         line-height: normal;
     }
+
+
+
 </style>

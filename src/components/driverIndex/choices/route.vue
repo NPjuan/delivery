@@ -1,7 +1,7 @@
 <template>
   <div class="route">
     <van-cell-group>
-      <van-button plain type="default" size="small" @click="returnDriver" class="comebackdriver"><</van-button>
+      <van-button plain type="default" size="small" @click="returnDriver" class="comebackdriver"></van-button>
       <p class="remind1">请填写您的行程信息</p>
       <van-field
         class="cell1"

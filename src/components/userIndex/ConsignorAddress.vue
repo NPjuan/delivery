@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" @click="checkId">
     <van-nav-bar
       title="地址填写"
       left-text="返回"
@@ -240,6 +240,8 @@
             // 修改为空
             self.consignor.name = ""
             self.consignor.phone = ""
+            self.$toast("网络错误，请重试")
+            self.router.push({path: "/homepage"})
             console.log(err)
           })
       },
@@ -251,6 +253,7 @@
       console.log(this.$route.query.id)
       console.log("-------query--------------")
       this.consignor.id = this.$route.query.id
+      this.checkId()
       // 判断是否有 mes 属性，有则说明时带参数传递并且功能应该为修改默认地址
       if(this.$route.query.hasOwnProperty("mes")){
         let mes = this.$route.query.mes
@@ -259,7 +262,7 @@
         this.consignor.city  = mes.city
         this.consignor.district  = mes.district
         // 这一步放在下面覆盖掉上面的 id 赋值
-        this.checkId()
+
       }
     }
   }

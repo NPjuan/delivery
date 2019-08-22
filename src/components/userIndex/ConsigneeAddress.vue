@@ -141,6 +141,7 @@
           },
           // 判断 id 是否填写正确
           checkId() {
+            console.log("检查id")
             let self = this
             this.$axios.get(this.url + "/user/findConsigneeInfo.do",{
               params: {
@@ -155,8 +156,8 @@
                   self.consignee.name = ""
                   self.consignee.phone = ""
                   console.log(response)
-                }else if(response.data.code == 0) {
-                  self.errorMessage.id = "该用户没有收货资格"
+                //else if(response.data.code == 0) {
+                //   // self.errorMessage.id = "该用户没有收货资格"
                 }else {
                   self.judge.id = true
                   self.errorMessage.id = ""
@@ -235,14 +236,14 @@
             // let url = "http://192.168.1.103:8080/userOrder/findNear.do"
             // 发送的数据
             let transmitMes = {
-              uid:this.$route.query.uid, // 发货人 id 从 homepage处获得 ，又或者可以从登陆状态获得
+              uid:this.$route.query.id, // 发货人 id 从 homepage处获得 ，又或者可以从登陆状态获得
               cid:this.consignee.id, // 收货人 id
               province:this.consignee.province,
               city:this.consignee.city,
               district:this.consignee.district,
               town:this.consignee.town, // 镇可以为空
               village:this.consignee.village, // 村可以为空
-            //  detail:this.consignee.detail
+              detail:this.consignee.detail
             }
             this.$axios.post(url,transmitMes)
               .then(function (response) {
@@ -250,7 +251,7 @@
                 self.loading = false
                 if(self.judge.status){
                   self.$axios.post(self.url + "/area/updateConsignee.do",{
-                    uid: Number(self.$route.query.uid),    //登陆用户id
+                    uid: Number(self.$route.query.id),    //登陆用户id
                     areaId: response.data.data             // 地址 id
                   })
                     .then(function (res) {
@@ -272,6 +273,8 @@
         // this.$route.id = 用户的 id 可以拿来取用
         console.log(this.$route.query.id)
         console.log("-------query--------------")
+        /*******************************/
+        /************************************/
         // 判断是否有 mes 属性，有则说明时带参数传递并且功能应该为修改默认地址
         if(this.$route.query.hasOwnProperty("mes")){
           let mes = this.$route.query.mes
@@ -281,7 +284,6 @@
           this.consignee.id = this.$route.query.id
           this.judge.id = true
         }
-        this.checkId()
       }
     }
 </script>

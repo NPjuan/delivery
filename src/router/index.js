@@ -35,6 +35,7 @@ import driverselect from "../components/login/driverselect"
 import register from "../components/login/register"
 import registersuccess from "../components/login/registersuccess"
 import login from "../components/login/login"
+import myInfo from "../components/login/myInfo"
 
 //yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
@@ -87,6 +88,8 @@ export default new Router({
       {path:'/driverselect', meta: {index: 1,index_:6}, component:driverselect},
 
       {path:'/login', meta: {index: 1,index_:2},  component:login},
+
+      {path:'/myInfo', meta: {index: 1},  component:myInfo},
     // 通用
     {path: "*", redirect: "/"}
   ],

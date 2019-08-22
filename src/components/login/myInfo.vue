@@ -18,6 +18,8 @@
 
       <div class="context_C">
           <div></div>
+          <div></div>
+          <div></div>
       </div>
 
 
@@ -106,7 +108,7 @@ export default {
   padding: 20px 30px;
   padding-top: 70px;
   background-color: #ffffff;
-  border-bottom: rgb(182, 182, 182) 1px solid;
+  border-bottom: rgb(214, 214, 214) 1px solid;
 }
 
 .userSet {
@@ -119,6 +121,14 @@ export default {
   background-size: 20px;
 
   vertical-align: sub;
+}
+
+.context_C{
+  height: 40px;
+  background-color: white;
+  margin-top: 20px;
+  padding: 5px 10px ;
+
 }
 
 /* we */

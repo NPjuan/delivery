@@ -1,7 +1,7 @@
 <template>
   <div class="orderinfo">
     <van-cell-group>
-      <van-button plain type="primary" size="small"  @click="returnwhere" class="returnlast"><</van-button>
+      <van-button plain type="primary" size="small"  @click="returnwhere" class="returnlast"></van-button>
       <p class="remind3">以下为订单详细信息</p>
       <ul class="infoul">
         <li >

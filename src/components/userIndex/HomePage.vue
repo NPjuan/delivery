@@ -4,7 +4,7 @@
       <div class="head-fun-container">
         <span class="search-input-container">
           <img src="../../assets/image/search.svg" alt="">
-          <input type="text" placeholder="地址搜索" class="search-input">
+          <input type="text" placeholder="地址搜索" class="search-input" style="width: 100%;">
         </span>
       </div>
       <div class="head-span-container">
@@ -152,6 +152,7 @@
 </template>
 
 <script>
+  
   import  AreaList from '../../assets/area';
   import { eventBus } from "../../main"
   export default {

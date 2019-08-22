@@ -45,7 +45,7 @@
                 <input
                   @blur="YZcheck"
                   type="text"
-                  placeholder="请输入短信验证码"
+                  placeholder="请输入六位数字短信验证码"
                   name="code"
                   class="van-field__control"
                 />
@@ -98,6 +98,7 @@
         <van-cell-group class="administratoron">
           <van-field
             v-model="evidence"
+            :error="errorTip1"
             required
             clearable
             label="管理员证明"
@@ -128,7 +129,8 @@ export default {
   data() {
     return {
       evidence: "",
-      count: 60
+      count: 60,
+      errorTip1:false,
     };
   },
   methods: {
@@ -309,6 +311,9 @@ export default {
     //验证码验证
     YZcheck() {
       let code = document.getElementsByName("code")[0];
+        if(code.value ==''){
+          return;
+        }
       var codetime = undefined;
       codetime = new Date().getTime();
       var data = {
@@ -420,6 +425,10 @@ export default {
           registerRole: g.user_msg.userInfo.role
         };
         if (g.user_msg.userInfo.role == "管理员") {
+          if(this.evidence == ''){
+            this.errorTip1 = true;
+            return;
+          }
           data.evidence = this.evidence;
         }
         this.ajax(data, "/user/register.do", "registerAfter");

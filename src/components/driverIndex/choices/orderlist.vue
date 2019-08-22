@@ -1,7 +1,7 @@
 <template>
   <div class = "orderlist">
     <van-cell-group>
-      <van-button  plain type="default" size="small" @click="returnWhere" class = "comeback"><</van-button>
+      <van-button  plain type="default" size="small" @click="returnWhere" class = "comeback"></van-button>
       <p class="remind2">以下为附近订单信息</p>
       <ul class = "ul">
         <!-- 遍历路由得到的所有订单发货人信息 -->

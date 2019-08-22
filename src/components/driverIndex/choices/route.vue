@@ -412,14 +412,16 @@ export default {
         .then(function(response) {
           //接口返回数据告诉司机发布成功
           console.log("start");
-
           console.log(response.data.code);
           console.log(response);
           
           if (response.data.code == 0) {
             console.log("进入");
-            this.$toast('发布成功');
-            this.$router.push("/index/driver"); //暂时先这样,应该跳转到一个页面
+
+            alert("发布成功");
+            window.location.href = '/index/driver';
+            // this.$toast('发布成功');
+            // this.$router.push("/index/driver"); //暂时先这样,应该跳转到一个页面
           }
         })
         .catch(function(err) {

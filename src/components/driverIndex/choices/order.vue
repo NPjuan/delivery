@@ -182,9 +182,11 @@ export default {
 .remind{/*页面中的"请先输入您的具体位置*/
   position:absolute;
   left:30%;
-  top:1rem;
+  top:5rem;
   color:#07c160;
   font-weight:bold;
+  font-size: 35rem;
+  text-align: center;
 }
 .cellone{/*省市区选择*/
   margin:0 auto;

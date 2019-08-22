@@ -408,7 +408,7 @@ export default {
         g.register_judge.phone &&
         g.register_judge.password1 &&
         g.register_judge.password2 &&
-        // g.register_judge.code &&
+        g.register_judge.code &&
         g.register_judge;
       if (ju) {
         let data = {

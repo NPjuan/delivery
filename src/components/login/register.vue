@@ -48,6 +48,9 @@
                   placeholder="请输入六位数字短信验证码"
                   name="code"
                   class="van-field__control"
+                  onkeyup="this.value=this.value.replace(/\D/g,'')" 
+                  onafterpaste="this.value=this.value.replace(/\D/g,'')"
+                  maxlength="6"
                 />
                 <div class="van-field__button">
                   <button class="van-button van-button--primary van-button--small sent">

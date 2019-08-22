@@ -29,9 +29,9 @@
                 </div>
             </div>
         </section>
-        <button @click="login" style="width: 100%" class="van-button van-button--primary van-button--normal btn_pos">
+        <router-link to="/myInfo" tag="button" style="width: 100%" class="van-button van-button--primary van-button--normal btn_pos">
                         <span class="van-button__text">登录</span>
-                    </button>
+                    </router-link>
     </div>
 </template>
 

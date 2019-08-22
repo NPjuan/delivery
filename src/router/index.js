@@ -80,7 +80,7 @@ export default new Router({
     // 登录注册
       {path:'/loginselect', meta: {index: 1,index_:1},  component:loginselect},
 
-      
+
       {path:'/idselect', meta: {index: 1,index_:2}, component: idselect,name:"idselectLink"},
       {path:'/register', meta: {index: 1,index_:3}, component:register},
       {path:'/registersuccess', meta: {index: 1,index_:4}, component:registersuccess,name:"registersuccessLink"},
@@ -89,7 +89,7 @@ export default new Router({
 
       {path:'/login', meta: {index: 1,index_:2},  component:login},
 
-      {path:'/myInfo', meta: {index: 1},  component:myInfo},
+      // {path:'/myInfo', meta: {index: 1},  component:myInfo},
     // 通用
     {path: "*", redirect: "/"}
   ],

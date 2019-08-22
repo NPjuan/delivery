@@ -210,10 +210,10 @@
         ],
         // 发货人，部分内容由登录状态获取
         consignor: {
-          id:1,
+          id:2,
           role: "consignor",// 角色，发货人
-          name: "阿乐",// 发货人姓名
-          phone: "18666305518",// 电话号码
+          name: "",// 发货人姓名
+          phone: "",// 电话号码
           areaCode: "",
           province:"",// 省
           city:"",// 市
@@ -333,15 +333,14 @@
       },
       // 展示时间控件
       showTime(index) {
+        console.log(this.date.minDate)
         if(!index){
           this.judge.time = 0
-          this.date.minDate = new Date()
         }else if(this.date.sTime == ""){
           this.$toast('请先填写起始起始时间')
           return
         }else {
           this.judge.time = 1
-          this.date.minDate = new Date()
         }
         this.show.timePick = true
       },
@@ -449,13 +448,14 @@
         // 通过判断角色来进入地址
         // let id,areaId
         // areaId = this[this.judge.role].areaId
-        let uid = this.consignor.id
-        this.$router.push({
+        let id = this.consignor.id
+          this.$router.push({
             path:'/' + this.judge.role + 'Address',
             query:{
-              uid,
+              id,
             }
           })
+
         // this.$router.push("/consignorAddress")
       },
       // 点击选择或者跳转
@@ -666,6 +666,7 @@
     },
     mounted() {
       let i = new Date()
+      let self = this
       this.date.minDate = new Date()
       // 如果到了 50 分过后 直接跳过这个小时
       if(i.getMinutes()>=50){
@@ -680,6 +681,16 @@
         this.date.minDate.getUTCDate()+20
       )
       /*******************百度地图*****************************/
+      this.$axios.get(this.url + "/user/findConsigneeInfo.do",{
+        params: {
+          authId : self.consignor.id,
+        }
+      })
+        .then(function (response) {
+        self.consignor.name = response.data.data.name
+        self.consignor.phone = response.data.data.phone
+        console.log("---------------------")
+        })
     },
   }
 </script>

@@ -10,7 +10,10 @@
       <div class="head-span-container">
         <!--点击 span 跳转页面-->
         <!--这里不可以换行显示否则或出现间隙需要用更多的 css 来兼容-->
-        <span class="head-span">我要友捎</span><span class="head-span" @click="driver">我要接单</span><a class="head-span" @click="login">登陆注册</a><span class="head-span">消息</span><span class="head-span">我要接单</span><span class="head-span">我要接单</span>
+        <span class="head-span">我要友捎</span>
+        <span class="head-span" @click="driver">我要接单</span>
+        <a class="head-span" @click="login">登陆注册</a>
+        <span class="head-span">消息</span>
       </div>
     </header>
     <baidu-map id="map" :center="map.center" :zoom=map.zoom :scroll-wheel-zoom=map.scrollWheelZoom @ready="handler">

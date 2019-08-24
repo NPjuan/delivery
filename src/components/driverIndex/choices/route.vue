@@ -1,7 +1,7 @@
 <template>
   <div class="route">
-    <van-cell-group>
-      <van-button plain type="default" size="small" @click="returnDriver" class="comebackdriver"></van-button>
+    <van-cell-group class="cell-group2">
+      <van-button plain type="default" size="small" @click="returnDriver" class="comebackdriver"><</van-button>
       <p class="remind1">请填写您的行程信息</p>
       <van-field
         class="cell1"
@@ -12,6 +12,7 @@
         :error-message="errorMessage.areaCodeInput"
         @click="showMap"
         required
+        readonly="readonly"
       />
       <!-- 出发省市区弹出框 -->
       <van-popup v-model="mapShow" position="bottom">
@@ -40,6 +41,7 @@
         :error-message="errorMessage2.areaCodeInput"
         @click="showMap2"
         required
+        readonly="readonly"
       />
       <!-- 到达省市区弹出框 -->
       <van-popup v-model="mapShow2" position="bottom">
@@ -73,6 +75,7 @@
         :error-message="errorMessage3.timeCodeInput"
         @click="showPopup"
         required
+        readonly="readonly"
       />
 
       <van-popup v-model="show3" position="bottom">
@@ -95,6 +98,7 @@
         :error-message="errorMessage4.timeCodeInput"
         @click="showPopup2"
         required
+        readonly="readonly"
       />
 
       <van-popup v-model="show4" position="bottom">
@@ -181,7 +185,9 @@ export default {
 
   methods: {
     returnDriver() {//返回到司机页面
-      this.$router.go(-1);
+        this.$router.push({
+        name:"driverLink",
+        }) 
     },
 
     showMap() {//用于是否显示弹出框
@@ -409,19 +415,14 @@ export default {
           }
 
         })
-        .then(function(response) {
-          //接口返回数据告诉司机发布成功
-          console.log("start");
-          console.log(response.data.code);
-          console.log(response);
+        .then((response)=> {
           
           if (response.data.code == 0) {
-            console.log("进入");
 
-            alert("发布成功");
-            window.location.href = '/index/driver';
-            // this.$toast('发布成功');
-            // this.$router.push("/index/driver"); //暂时先这样,应该跳转到一个页面
+            // alert("发布成功");
+            // window.location.href = '/index/driver';
+            this.$toast('发布成功');
+            this.$router.push("/index/driver"); //暂时先这样,应该跳转到一个页面
           }
         })
         .catch(function(err) {
@@ -435,16 +436,20 @@ export default {
 <style scoped>
 .route {
   width: 100%;
-  height: 10rem;
-  background-color: white;
+  height: 100rem;
+  background-color:white;
+}
+.cell-group2{
+  height: 100rem;
+  background-color:white;
 }
 .remind1 {
   position: absolute;
   left: 30%;
   top: .5rem;
-  font-size: .35rem;
+  font-size: .3rem;
   color: #07c160;
-  font-weight: bold;
+  /* font-weight: bold; */
 }
 .cell1,
 .cell3,
@@ -452,8 +457,8 @@ export default {
 .cell7 {
   margin: 0 auto;
   width: 80%;
-  border-left: 2px #07c160 solid;
-  border-bottom: 2px #07c160 solid;
+  /* border-left: 2px #07c160 solid;
+  border-bottom: 2px #07c160 solid; */
 }
 
 .cell2,
@@ -461,8 +466,8 @@ export default {
 .cell6 {
   margin: 0 auto;
   width: 80%;
-  border-right: 2px #07c160 solid;
-  border-bottom: 2px #07c160 solid;
+  /* border-right: 2px #07c160 solid;
+  border-bottom: 2px #07c160 solid; */
 }
 
 .comebackdriver {
@@ -474,7 +479,8 @@ export default {
   font-size: 0.5rem;
 }
 .summitRoute {
-  position: absolute;
-  right: 10%;
+    display:block;
+    width:90%;
+    margin :1rem auto
 }
 </style>

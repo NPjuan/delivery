@@ -92,6 +92,5 @@ export default new Router({
       // {path:'/myInfo', meta: {index: 1},  component:myInfo},
     // 通用
     {path: "*", redirect: "/"}
-  ],
-  mode:"history"
+  ]
 })

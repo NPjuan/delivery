@@ -152,7 +152,7 @@
 </template>
 
 <script>
-  
+
   import  AreaList from '../../assets/area';
   import { eventBus } from "../../main"
   export default {
@@ -823,7 +823,8 @@
   }
   .address-show-address{
     display: -webkit-box;
-    margin-top: .16rem;
+    margin-top: 0.05rem;
+    padding-top: 0.05rem;
     margin-bottom: .15rem;
     font-size: .25rem;
     color: gray;
@@ -943,7 +944,8 @@
   .address-item-address{
     display: -webkit-box;
     padding-right: .5rem;
-    margin-top: .15rem;
+    padding-top: 0.05rem;
+    margin-top: .1rem;
     font-size: .25rem;
     color: gray;
     letter-spacing: .02rem;

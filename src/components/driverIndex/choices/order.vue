@@ -1,7 +1,7 @@
 <template>
   <div class="order" >
     <van-cell-group >
-      <van-button plain type="primary" size="small"  @click="returndriver" class = "returndriver"></van-button>
+      <van-button plain type="primary" size="small"  @click="returndriver" class = "returndriver"><</van-button>
       <p class = "remind">请先输入您的具体位置</p>
       <van-field class="cellone"
         v-model = "areaCode"
@@ -11,6 +11,7 @@
         :error-message="errorMessage.areaCodeInput"
         @click="showMap"
         required
+        readonly="readonly"
       />
     <!-- 省市区弹出框 -->
       <van-popup v-model="mapShow" position="bottom">
@@ -138,9 +139,9 @@ export default {
       town:"七侠镇",
       village:"高手村"
 
-      }).then(function(response){//接口返回数据告诉司机查询成功
+      }).then((response)=>{//接口返回数据告诉司机查询成功
         if(response.data.code == 0){
-          alert(response.data.msg)
+          this.$toast(response.data.msg)
           self.nearbyOrderList = response.data.data
           // console.log(self.nearbyOrderList)
           self.length = response.data.data.length
@@ -182,23 +183,23 @@ export default {
 .remind{/*页面中的"请先输入您的具体位置*/
   position:absolute;
   left:30%;
-  top:5rem;
+  top:.5rem;
   color:#07c160;
-  font-weight:bold;
-  font-size: 35rem;
+  /* font-weight:bold; */
+  font-size: .3rem;
   text-align: center;
 }
 .cellone{/*省市区选择*/
   margin:0 auto;
   width:80%;
-  border-right: 2px #07c160 solid;
-  border-bottom: 2px #07c160 solid;
+  /* border-right: 2px #07c160 solid;
+  border-bottom: 2px #07c160 solid; */
 }
 .celltwo{/*详细地址填写*/
   margin:0 auto;
   width:80%;
-  border-left: 2px #07c160 solid;
-  border-bottom: 2px #07c160 solid;
+  /* border-left: 2px #07c160 solid;
+  border-bottom: 2px #07c160 solid; */
 }
 .returndriver{/*返回按钮*/
   position:absolute;
@@ -210,8 +211,10 @@ export default {
 
 }
 .summit{/*提交按钮*/
-  position:absolute;
-  right:10%;
+  /* position:absolute; */
+    display:block;
+    width:90%;
+    margin :1rem auto
 }
 
 </style>

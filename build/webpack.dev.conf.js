@@ -26,10 +26,6 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     historyApiFallback: {
       rewrites: [
         { from: /.*/, to: path.posix.join(config.dev.assetsPublicPath, 'index.html') },
-        // { from: /^\/consigneeAddress/, to: '/consigneeAddress.html'},
-        // { from: /^\/consignorAddress/, to: path.posix.join(config.dev.assetsPublicPath, 'consignorAddress.html')},
-        // { from: /^\/homepage/, to: path.posix.join(config.dev.assetsPublicPath, '/consignorAddress.html')},
-        // { from: /^\/findDriver/, to: '/findDriver.html'},
       ],
     },
     hot: true,

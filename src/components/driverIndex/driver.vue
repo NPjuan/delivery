@@ -1,20 +1,23 @@
 <template>
   <div class="carimage">
+    
     <!-- <van-button type="primary"  @click="returnChoices">返回</van-button> -->
     <!-- router-link默认渲染为a标签,这两个router-link在组件切换后依旧存在 -->
     <header>
-      <span class="go-back-button" @click="goHomePage">返回主页</span>
       <span style="height: 100%;line-height: 1rem;font-size: .32rem;">司机页面</span>
     </header>
+    
+    <van-button plain type="default" size="small" @click="goHomePage" class="go-back-button"><</van-button>
     <div style="padding-top: 1rem">
       <router-link to="/choices/route">发布行程</router-link>
       <router-link to="/choices/order">附近订单</router-link>
       <router-link to="/choices/invitation">邀我友捎</router-link>
+    </div>
       <!-- 路由匹配到的组件将显示在下面这里，在同个页面，切换显示不同组件的相应内容，同时地址栏的地址是会变的 -->
       <transition mode="out-in">
         <router-view></router-view>
       </transition>
-    </div>
+
   </div>
 </template>
 
@@ -39,13 +42,13 @@ export default {
 大家都知道css样式有一个优先级的说法，scoped的这一操作，虽然达到了组件样式模块化的目的，但是会造成一种后果：每个样式的权重加重了：理论上我们要去修改这个样式，需要更高的权重去覆盖这个样式。这是增加复杂度的其中一个维度。 */
 .go-back-button{
   position: absolute;
-  left:.5rem;
-  height:100%;
-  line-height: 1rem;
-  box-sizing: border-box;
-  font-size: .3rem;
-  float: left;
-  color: skyblue
+  left: 0;
+  top:1.15rem;
+  min-width: 0.2rem;
+  border-style: none;
+  color: #07c160;
+  font-size: 0.3rem;
+  background-color:#f6f8f7;
 }
 header{
   position: fixed;
@@ -68,13 +71,13 @@ a {
 .router-link-active {
   color: green;
 }
-button {
+/* button {
   position: fixed;
   bottom: 100px;
   right: 0;
   height: 35px;
   background-color: rgb(32, 187, 135);
-}
+} */
 
 .v-enter,
 .v-leave-to {

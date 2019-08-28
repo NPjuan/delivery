@@ -2,7 +2,6 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import router from './router'
 /*********************************/
 import BaiduMap from 'vue-baidu-map'
 import axios from 'axios'
@@ -31,7 +30,8 @@ import {
 import './css/vue.css'
 import './css/vueup.css'
 // yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
+import router from './router'
+// router最后引入可以解决组件样式在第三方样式之后渲染。
 Vue.use(AddressEdit).use(Area).use(Button).use(Popup).use(Field).use(Cell).use(CellGroup).use(Dialog).use(NavBar).use(List)
 Vue.use(DatetimePicker).use(Uploader).use(Switch).use(Picker)
 
@@ -59,6 +59,6 @@ new Vue({
     App
   },
   template: '<App/>',
-  
+
 
 })

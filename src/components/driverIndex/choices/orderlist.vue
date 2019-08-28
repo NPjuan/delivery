@@ -1,7 +1,7 @@
 <template>
   <div class = "orderlist">
     <van-cell-group>
-      <van-button  plain type="default" size="small" @click="returnWhere" class = "comeback"></van-button>
+      <van-button  plain type="default" size="small" @click="returnWhere" class="comeback"></van-button>
       <p class="remind2">以下为附近订单信息</p>
       <ul class = "ul">
         <!-- 遍历路由得到的所有订单发货人信息 -->
@@ -55,6 +55,7 @@ export default {
 .orderlist{
   /* 本来这里没有设sbsolute时组件有穿透效果 */
   /* position:relative; */
+  padding-top: 1rem;
   width:100%;
   height:100rem;/*为了附近订单没有数据时不要显示背景图，挡住*/
   background-color: white;
@@ -63,6 +64,8 @@ export default {
 .remind2{/*页面中的"以下为附近订单信息“*/
   /* position:absolute; */
   /* top:1rem; */
+  position: unset;
+  height: 100px;
   color:#07c160;
   font-weight:bold;
   font-size: .35rem;

@@ -2,18 +2,28 @@
   <div class="container">
     <header>
       <div class="head-fun-container">
+        <!--个人信息-->
+        <span class="head-span-button head-span-button-left" @click="show.information = !show.information">
+          <img src="../../assets/image/head.svg" alt="" class="head-span-button-img">
+        </span>
+        <!--搜索框-->
         <span class="search-input-container">
-          <img src="../../assets/image/search.svg" alt="">
-          <input type="text" placeholder="地址搜索" class="search-input" style="width: 100%;">
+          <!--<img src="../../assets/image/search.svg" alt="">-->
+          <!--<input type="text" placeholder="地址搜索" class="search-input">-->
+          <span style="font-size: .35rem;color:grey;">用户页面</span>
+        </span>
+        <!--其他-->
+        <span class="head-span-button head-span-button-right" @click="show.more = !show.more">
+          <img src="../../assets/image/other.svg" alt="" class="head-span-button-img">
         </span>
       </div>
       <div class="head-span-container">
         <!--点击 span 跳转页面-->
         <!--这里不可以换行显示否则或出现间隙需要用更多的 css 来兼容-->
-        <span class="head-span">我要友捎</span>
+        <span :class="{'head-span': true,'head-span-active':true}">我要友捎</span>
         <span class="head-span" @click="driver">我要接单</span>
-        <a class="head-span" @click="login">登陆注册</a>
-        <span class="head-span">消息</span>
+        <span class="head-span" @click="message">友稍消息</span>
+        <span class="head-span" @click="login">登陆注册</span>
       </div>
     </header>
     <baidu-map id="map" :center="map.center" :zoom=map.zoom :scroll-wheel-zoom=map.scrollWheelZoom @ready="handler">
@@ -89,6 +99,7 @@
         </div>
       </div>
     </div>
+    <!--地址栏-->
     <van-popup
       v-model="show.address"
       position="bottom"
@@ -134,6 +145,7 @@
 
       </div>
     </van-popup>
+    <!--时间选择器-->
     <van-popup
       v-model="show.timePick"
       position="bottom"
@@ -147,7 +159,51 @@
         @cancel="show.timePick = false"
       />
     </van-popup>
-    <img src="../../assets/image/Origin.svg" alt="">
+    <!--我的信息栏-->
+    <van-popup
+      v-model="show.information"
+      closeable
+      position="left"
+      :style="{ width: '65%', height: '100%' }"
+    >
+      <!--头像-->
+      <div class="user-info-head-img-contianer">
+        <span class="user-info-head-img">
+          <img src="../../assets/image/user.svg" alt="" style="width: 1.5rem">
+        </span>
+      </div>
+      <!--姓名-->
+      <span class="user-info-name">
+        潘某卷
+      </span>
+      <!--电话-->
+      <span class="user-info-name">
+        13642943515
+      </span>
+      <!--订单消息-->
+      <span class="user-info-item">
+        订单信息
+        <img src="../../assets/image/order.svg" alt="订单图片" class="user-info-item-img">
+      </span>
+      <!--积分钱包-->
+      <span class="user-info-item">
+        积分钱包
+        <img src="../../assets/image/wallet.svg" alt="钱包图片" class="user-info-item-img">
+      </span>
+      <!--担保人信息-->
+      <span class="user-info-item">
+        担保人信息
+        <img src="../../assets/image/promise.svg" alt="担保人图片" class="user-info-item-img">
+      </span>
+    </van-popup>
+    <van-popup
+      v-model="show.more"
+      closeable
+      position="right"
+      :style="{ width: '65%', height: '100%' }"
+    >
+    </van-popup>
+    <img src="../../assets/image/Origin.svg" alt="起始地图片">
   </div>
 </template>
 
@@ -162,11 +218,11 @@
         // 地图信息
         // lt http://118.25.85.198:8080/CATStudio/
         // jb http://47.96.231.75:8080/deliver
-        url: "http://47.96.231.75:8080/deliver",
+        url: "http://118.25.85.198:8080/deliver",
         order:{ // 订单信息
           userOrderId: []
         },
-        fileList:[],
+        fileList:[], // 图片文字数组
         map: {
           map:"", // 地图对象
           mk2: "", // 收货人地址 marker
@@ -176,11 +232,11 @@
           scrollWheelZoom: true, // 是否启用滚轮调节缩放， 手机端无用， PC 端有用
           autoLocation: true ,// 是否启用自动定位
           polyline: "" //行车路线
-        },
+        }, // 百度地图
         // 图片信息
         file: {
-          maxSize: 10485760,
-          maxCount: 3
+          maxSize: 10485760, // 最大尺寸
+          maxCount: 3 // 最大数量
         },
         // 时间信息
         date: {
@@ -194,14 +250,14 @@
         },
         // 发物信息
         deliveryMsg: {
-          uid: 1, // 发货人 id
+          uid: 1, // 发货人即用户 id
           deliveryStart:"", // 起始发货时间
           deliveryEnd: "", // 截止收货时间
          // goodsPictures: [], // 上传图片数据
           deliverAreaId: "", // 发货地址
           consigneeAreaId: "", // 收货地址
           description: "", // 留言
-          pay:1000
+          pay:1000 // 发布积分
         },
         areaList: AreaList,
         // 地址数组，通过对应的 id 来 push 内容
@@ -210,11 +266,11 @@
         ],
         // 发货人，部分内容由登录状态获取
         consignor: {
-          id:2,
+          id: 2, // 用户 id
           role: "consignor",// 角色，发货人
           name: "",// 发货人姓名
           phone: "",// 电话号码
-          areaCode: "",
+          areaCode: "", // 省市区对应的编码
           province:"",// 省
           city:"",// 市
           district:"",// 区
@@ -229,7 +285,7 @@
           role: "consignee",// 角色，收货人
           name: "",// 收货人姓名，靠用户填写的id获取
           phone: "",// 电话号码，靠用户填写的id获取
-          areaCode:"",
+          areaCode:"", // 省市区对应的编码
           province:"",// 省
           city:"",// 市
           district:"",// 区
@@ -241,13 +297,15 @@
         show: {
           role: "发货人", // 默认为发货人
           address: false, // 地址组件
-          timePick: false // 时间组件
+          timePick: false, // 时间组件
+          information: false, // 个人信息
+          more: false // 更多信息
         },
-        // 判断矩阵
+        // 判断组件
         judge: {
+          login: false, // 是否登陆成功
           click: false, // 是否为点击事件
           role: "consignor", // 默认为发货人
-          // addressPick: false, // 地址栏是否被点击
           timeOutEvent: 0, // 长按定时器
           time: 0, // 时间选择 0 为起始时间 1 为截止时间
           address: false,
@@ -265,7 +323,6 @@
         },
         // 图片传递参数用 formData
         formData:new FormData(),
-
       }
     },
     methods: {
@@ -273,8 +330,12 @@
       login() {
         this.$router.push('/loginselect')
       },
+      message() {
+        this.$toast('功能尚未开放，敬请期待')
+      },
       // 跳转到司机页面
       driver() {
+        this.$toast('只有注册成为司机才能使用该功能')
         this.$router.push('/index/driver')
       },
       // 上传
@@ -399,6 +460,9 @@
       },
       // 打开地址栏
       showAddress(role) {
+        // if(!this.judge.login){ // 如果用户没有登陆，则跳转到登陆界面
+        //   this.login()
+        // }
         if(role == 'consignor'){
           this.show.role = "发货"
           this.judge.role = role
@@ -411,7 +475,7 @@
 
       },
       // 通过 role 请求地址
-      findAddress() {
+      findAddress() { // 通过用户 id 来寻找地址
         let self = this
         let url
         if(self.judge.role == "consignor") {
@@ -430,10 +494,6 @@
               self.addresses.push(response.data.data[i])
             }
             // 展现地址栏
-          console.log("FindAddress res")
-          console.log(response)
-          console.log("FindAddress middle")
-          console.log(self.addresses)
             self.show.address = true
           })
             .catch(function (err) {
@@ -477,6 +537,7 @@
         // 根据 role 来选择填充数据
         let role = this.judge.role
         // 如果是 收货人 则要接收两个参数
+
         if(role == 'consignee'){
           this[role].name = this.addresses[index].name
           this[role].phone = this.addresses[index].phone
@@ -486,8 +547,6 @@
           this[role].areaId = this.addresses[index].id // 地址 id
           this.deliveryMsg.deliverAreaId = this.addresses[index].id
         }
-        console.log(this.addresses[index].id)
-        console.log("地址id")
         this[role].province = this.addresses[index].province
         this[role].city = this.addresses[index].city
         this[role].district = this.addresses[index].district
@@ -680,7 +739,6 @@
         this.date.minDate.getMonth(),
         this.date.minDate.getUTCDate()+20
       )
-      /*******************百度地图*****************************/
       this.$axios.get(this.url + "/user/findConsigneeInfo.do",{
         params: {
           authId : self.consignor.id,
@@ -689,13 +747,46 @@
         .then(function (response) {
         self.consignor.name = response.data.data.name
         self.consignor.phone = response.data.data.phone
-        console.log("---------------------")
         })
     },
   }
 </script>
 
 <style scoped>
+  .user-info-head-img-contianer{
+    position:relative;
+    text-align:center;
+    height: 1.8rem;
+    margin-top: 1rem
+  }
+  .user-info-head-img{
+    display: inline-block;
+    width: 1.5rem;
+    height: 100%;
+  }
+  .user-info-name{
+    text-align: center;
+    color: #7d7e80;
+    font-size: .4rem;
+    width: 100%;
+    display: inline-block;
+    padding-bottom: .25rem
+  }
+  .user-info-item{
+    position:relative;
+    text-align: center;
+    color: #7d7e80;
+    font-size: .35rem;
+    width: 100%;
+    display: inline-block;
+    padding-top: .4rem
+  }
+  .user-info-item-img{
+    position: absolute;
+    width: .5rem;
+    top: .3rem;
+    left: .75rem
+  }
   .lift{
     font-size: .25rem;
     text-align: center;
@@ -717,7 +808,7 @@
   }
   .search-input-container>img{
     position: absolute;
-    top: .1rem;
+    top: .12rem;
     left: .15rem;
     width: .35rem;
     z-index: 1000;
@@ -873,7 +964,6 @@
     position: relative;
     height: .85rem; /* 为了让滚动条消失不见，高度加大并在父元素上 hidden*/
     white-space: nowrap;
-    overflow-x: scroll;
   }
   .head-span-container::-webkit-scrollbar {
     display: none;
@@ -895,7 +985,29 @@
     text-align: center;
     line-height: .5rem;
     font-size: .3rem;
+    color: #7d7e80;
     background-color: white;
+  }
+  .head-span-active{
+    color: #39a9ed;
+  }
+  .head-span-button{
+    position:absolute;
+    top:.15rem;
+    width: 1rem;
+    height: 2rem;
+  }
+  .head-span-button-left{
+    left:.5rem;
+  }
+  .head-span-button-right{
+    right:.5rem;
+  }
+  .head-span-button-img{
+    width: .55rem;
+    position: absolute;
+    top:.05rem;
+    left:.2rem;
   }
   .container{
     position: relative;

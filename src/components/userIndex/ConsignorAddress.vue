@@ -82,7 +82,8 @@
     name: "ConsignorAddress",
     data() {
       return {
-        url: "http://47.96.231.75:8080/deliver",
+        // http://118.25.85.198:8080/deliver
+        url: "http://118.25.85.198:8080/deliver",
         AreaList, // 地址信息
         AreaValue:110101, // 默认为北京市 北京市 东城区 也可以后期导入选择
         mapShow: false, // 地址控件展示

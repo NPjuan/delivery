@@ -172,29 +172,36 @@
           <img src="../../assets/image/user.svg" alt="" style="width: 1.5rem">
         </span>
       </div>
-      <!--姓名-->
-      <span class="user-info-name">
-        潘某卷
-      </span>
-      <!--电话-->
-      <span class="user-info-name">
-        13642943515
-      </span>
-      <!--订单消息-->
-      <span class="user-info-item">
-        订单信息
-        <img src="../../assets/image/order.svg" alt="订单图片" class="user-info-item-img">
-      </span>
-      <!--积分钱包-->
-      <span class="user-info-item">
-        积分钱包
-        <img src="../../assets/image/wallet.svg" alt="钱包图片" class="user-info-item-img">
-      </span>
-      <!--担保人信息-->
-      <span class="user-info-item">
-        担保人信息
-        <img src="../../assets/image/promise.svg" alt="担保人图片" class="user-info-item-img">
-      </span>
+      <div v-if="consignor.id">
+        <!--姓名-->
+        <span class="user-info-name">
+          {{consignor.name}}
+        </span>
+        <!--电话-->
+        <span class="user-info-name">
+          {{consignor.phone}}
+        </span>
+        <!--订单消息-->
+        <span class="user-info-item">
+          订单信息
+          <img src="../../assets/image/order.svg" alt="订单图片" class="user-info-item-img">
+        </span>
+        <!--积分钱包-->
+        <span class="user-info-item">
+          积分钱包
+          <img src="../../assets/image/wallet.svg" alt="钱包图片" class="user-info-item-img">
+        </span>
+        <!--担保人信息-->
+        <span class="user-info-item">
+          担保人信息
+          <img src="../../assets/image/promise.svg" alt="担保人图片" class="user-info-item-img">
+        </span>
+      </div>
+      <div v-else>
+          <span class="user-info-item">
+          请先登陆再使用功能
+         </span>
+      </div>
     </van-popup>
     <van-popup
       v-model="show.more"
@@ -203,7 +210,6 @@
       :style="{ width: '65%', height: '100%' }"
     >
     </van-popup>
-    <img src="../../assets/image/Origin.svg" alt="起始地图片">
   </div>
 </template>
 
@@ -257,7 +263,7 @@
           deliverAreaId: "", // 发货地址
           consigneeAreaId: "", // 收货地址
           description: "", // 留言
-          pay:1000 // 发布积分
+          pay:1000 // 发布积分, 先默认为 1000
         },
         areaList: AreaList,
         // 地址数组，通过对应的 id 来 push 内容
@@ -266,7 +272,7 @@
         ],
         // 发货人，部分内容由登录状态获取
         consignor: {
-          id: 2, // 用户 id
+          id: "", // 用户 id
           role: "consignor",// 角色，发货人
           name: "",// 发货人姓名
           phone: "",// 电话号码
@@ -451,7 +457,7 @@
         }
         this.show.timePick = false
       },
-      // 百度地图创建
+
       // 时间组件
       timeOnClickRight() {
         // 关闭时间组件
@@ -637,8 +643,9 @@
       handler({BMap, map}) {
         let self = this
         this.map.map = map
-        this.map.center.lng = 113.401
-        this.map.center.lat = 23.044
+        // 默认地址为 教5
+        this.map.center.lng = 113.40104365165
+        this.map.center.lat = 23.044853444999
         this.map.zoom = 13
         // 必须用 require 来请求地址否则报错
         // new BMap.Size 用来控制展现区域大小
@@ -646,7 +653,7 @@
         let originIcon = new BMap.Icon(require("../../assets/image/Origin.svg"), new BMap.Size(30,30),{
           imageSize: new BMap.Size(30,30)
         })
-        map.addEventListener("click", this.showInfo)
+        // map.addEventListener("click", this.showInfo) // 暂时取消点击功能
         var geolocation = new BMap.Geolocation();
         geolocation.getCurrentPosition(function(r){
         	if(this.getStatus() == BMAP_STATUS_SUCCESS){
@@ -684,24 +691,38 @@
           }
         })
       },
-      showInfo(e) {
-        // this.map.center.lat = e.point.lat
-        // this.map.center.lng = e.point.lng
-        console.log('您的位置：'+this.map.center.lng+','+this.map.center.lat);
-        let map = this.map.map
-        map.removeOverlay(this.map.mk2)
-        let destinationIcon = new BMap.Icon(require("../../assets/image/Destination.svg"), new BMap.Size(30,30),{
-          imageSize: new BMap.Size(30,30),
+      // showInfo(e) {
+      //   // this.map.center.lat = e.point.lat
+      //   // this.map.center.lng = e.point.lng
+      //   console.log('您的位置：'+this.map.center.lng+','+this.map.center.lat);
+      //   let map = this.map.map
+      //   map.removeOverlay(this.map.mk2)
+      //   let destinationIcon = new BMap.Icon(require("../../assets/image/Destination.svg"), new BMap.Size(30,30),{
+      //     imageSize: new BMap.Size(30,30),
+      //   })
+      //   this.map.mk2 = new BMap.Marker(new BMap.Point(e.point.lng, e.point.lat),{icon: destinationIcon})
+      //   map.addOverlay(this.map.mk2)
+      //   // 地址浮现
+      //   this.map.driving.search(new BMap.Point(this.map.center.lng, this.map.center.lat), new BMap.Point(e.point.lng, e.point.lat));
+      //   // this.map.driving.setMarkersSetCallback(function (result) {
+      //   //   console.log(result)
+      //   //   map.removeOverlay(routes[0].marker);
+      //   //   map.removeOverlay(routes[routes.length-1].marker);
+      //   // })
+      // },
+      saveId(id) {
+        let self = this
+        this.consignor.id = id
+        //  通过 id 得到 姓名电话
+        this.$axios.get(this.url + "/user/findConsigneeInfo.do",{
+          params: {
+            authId : self.consignor.id,
+          }
         })
-        this.map.mk2 = new BMap.Marker(new BMap.Point(e.point.lng, e.point.lat),{icon: destinationIcon})
-        map.addOverlay(this.map.mk2)
-        // 地址浮现
-        this.map.driving.search(new BMap.Point(this.map.center.lng, this.map.center.lat), new BMap.Point(e.point.lng, e.point.lat));
-        // this.map.driving.setMarkersSetCallback(function (result) {
-        //   console.log(result)
-        //   map.removeOverlay(routes[0].marker);
-        //   map.removeOverlay(routes[routes.length-1].marker);
-        // })
+          .then(function (response) {
+            self.consignor.name = response.data.data.name
+            self.consignor.phone = response.data.data.phone
+          })
       }
     },
     // 如果是从地址栏跳转过来则打开选择地址的组件
@@ -739,16 +760,10 @@
         this.date.minDate.getMonth(),
         this.date.minDate.getUTCDate()+20
       )
-      this.$axios.get(this.url + "/user/findConsigneeInfo.do",{
-        params: {
-          authId : self.consignor.id,
-        }
-      })
-        .then(function (response) {
-        self.consignor.name = response.data.data.name
-        self.consignor.phone = response.data.data.phone
-        })
     },
+    created() {
+      this.$bus.on('login', this.saveId)
+    }
   }
 </script>
 
@@ -972,7 +987,7 @@
     position: fixed;
     top:0;
     height: 1.6rem;
-    width:100%;
+    width:7.5rem;
     background-color: white;
     z-index: 55;
     overflow: hidden;

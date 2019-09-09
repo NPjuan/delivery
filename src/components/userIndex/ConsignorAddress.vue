@@ -1,5 +1,5 @@
 <template>
-  <div class="container" @click="checkId">
+  <div class="container">
     <van-nav-bar
       title="地址填写"
       left-text="返回"

@@ -89,7 +89,7 @@ export default new Router({
 
       {path:'/login', meta: {index: 1,index_:2},  component:login},
 
-      // {path:'/myInfo', meta: {index: 1},  component:myInfo},
+      {path:'/myInfo', meta: {index: 1},  component:myInfo},
     // 通用
     {path: "*", redirect: "/"}
   ],

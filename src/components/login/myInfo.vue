@@ -9,7 +9,7 @@
         <div class="userInfo dis_bl">
           <div class="f_s_big username">{{username}}</div>
           <div class="otherInfo">
-            <div class="dis_bl f_s_te">{{role}}</div>
+            <div class="dis_bl f_s_te ">{{role}}</div>
             <div class="dis_bl f_s_te">id: {{id}}</div>
             <div class="dis_bl userSet"></div>
           </div>
@@ -17,9 +17,9 @@
       </div>
 
       <div class="context_C">
-          <div></div>
-          <div></div>
-          <div></div>
+          <div class="purse dis_bl"></div>
+          <div class="dis_bl f_s_big">钱包</div>
+          <div class="arrow dis_bl"></div>
       </div>
 
 
@@ -129,6 +129,30 @@ export default {
   margin-top: 20px;
   padding: 5px 10px ;
 
+}
+
+.purse{
+  width: 40px;
+  height: 40px;
+  background-image: url("../../assets/image/userInfo/钱包.png");
+  background-position: 50% 50%;
+  background-size: 40px;
+}
+
+
+
+.arrow{
+  width: 15px;
+  height: 15px;
+  background-image: url("../../assets/image/userInfo/右箭头.svg");
+  background-position: 50% 50%;
+  background-size: 20px;
+}
+
+.context_C >div{
+  height: 100%;
+  line-height: 40px;
+  vertical-align: middle
 }
 
 /* we */

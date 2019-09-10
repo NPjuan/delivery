@@ -1,7 +1,7 @@
     <!-- 登录注册选择 -->
 
 <template>
-    <div class="hei100 container" @click="login">
+    <div class="hei100 container">
         <div class="van-doc-nav-bar van-nav-bar van-hairline--bottom" style="z-index: 1;">
             <div class="van-nav-bar__left">
                 <i @click="$router.back(-1)" class="van-icon van-icon-arrow-left van-nav-bar__arrow"></i>
@@ -30,10 +30,8 @@
             }
         },
         methods: {
-          login() {
-            this.$bus.emit("login", 2)
-          }
-        },
+
+        }
     }
 </script>
 

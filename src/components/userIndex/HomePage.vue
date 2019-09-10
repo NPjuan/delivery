@@ -27,7 +27,7 @@
       </div>
     </header>
     <baidu-map id="map" :center="map.center" :zoom=map.zoom :scroll-wheel-zoom=map.scrollWheelZoom @ready="handler">
-      <bm-geolocation anchor="BMAP_ANCHOR_BOTTOM_RIGHT " :showAddressBar="true" :autoLocation="map.annotation"></bm-geolocation>
+      <bm-geolocation anchor="BMAP_ANCHOR_TOP_RIGHT" :showAddressBar="true" :autoLocation="map.annotation"></bm-geolocation>
     </baidu-map>
     <div class="content">
       <div class="content-container">
@@ -172,7 +172,7 @@
           <img src="../../assets/image/user.svg" alt="" style="width: 1.5rem">
         </span>
       </div>
-      <div v-if="consignor.id">
+      <div v-if="judge.loginState">
         <!--姓名-->
         <span class="user-info-name">
           {{consignor.name}}
@@ -216,6 +216,7 @@
 <script>
 
   import  AreaList from '../../assets/area';
+  import g from '../login/global'
   import { eventBus } from "../../main"
   export default {
     name: "homepage",
@@ -309,7 +310,7 @@
         },
         // 判断组件
         judge: {
-          login: false, // 是否登陆成功
+          loginState: false, // 是否登陆成功
           click: false, // 是否为点击事件
           role: "consignor", // 默认为发货人
           timeOutEvent: 0, // 长按定时器
@@ -660,6 +661,24 @@
             var mk = new BMap.Marker(r.point,{icon: originIcon});
             map.addOverlay(mk);
             map.panTo(r.point);
+            let x = r.point.lng
+            let y = r.point.lat
+            // 谷歌浏览器定位问题解决不了的代码
+            // let ggPoint = new BMap.Point(x, y) 谷歌坐标
+            // let translateCallback = function(data){
+            //   if(data.status === 0) {
+            //     var marker = new BMap.Marker(data.points[0],{icon: originIcon});
+            //     map.addOverlay(marker);
+            //     map.setCenter(data.points[0]);
+            //   }
+            // }
+            // setTimeout(function(){
+            //   console.log("1")
+            //   var convertor = new BMap.Convertor();
+            //   var pointArr = [];
+            //   pointArr.push(ggPoint);
+            //   convertor.translate(pointArr, 3, 5, translateCallback)
+            // }, 1000);
             self.map.center.lng = r.point.lng
             self.map.center.lat = r.point.lat
         		console.log('您的位置：'+r.point.lng+','+r.point.lat);
@@ -710,20 +729,6 @@
       //   //   map.removeOverlay(routes[routes.length-1].marker);
       //   // })
       // },
-      saveId(id) {
-        let self = this
-        this.consignor.id = id
-        //  通过 id 得到 姓名电话
-        this.$axios.get(this.url + "/user/findConsigneeInfo.do",{
-          params: {
-            authId : self.consignor.id,
-          }
-        })
-          .then(function (response) {
-            self.consignor.name = response.data.data.name
-            self.consignor.phone = response.data.data.phone
-          })
-      }
     },
     // 如果是从地址栏跳转过来则打开选择地址的组件
     beforeRouteEnter(to, from, next){
@@ -762,8 +767,25 @@
       )
     },
     created() {
-      this.$bus.on('login', this.saveId)
-    }
+      // 如果已经登陆过一次
+      if(g.user_id){
+        let self = this
+        //  通过 id 得到 姓名
+        this.consignor.id = g.user_id
+        this.$axios.get(this.url + "/user/findConsigneeInfo.do",{
+          params: {
+            authId : g.user_id,
+          }
+        })
+          .then(function (response) {
+            console.log(response)
+            self.consignor.name = response.data.data.name
+            self.consignor.phone = response.data.data.phone
+          })
+        this.judge.loginState = true
+      }
+    },
+
   }
 </script>
 

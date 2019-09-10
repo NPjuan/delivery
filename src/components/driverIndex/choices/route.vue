@@ -1,7 +1,7 @@
 <template>
   <div class="route">
     <van-cell-group class="cell-group2">
-      <van-button plain type="default" size="small" @click="returnDriver" class="comebackdriver"><</van-button>
+      <!--<van-button plain type="default" size="small" @click="returnDriver" class="comebackdriver"><</van-button>-->
       <p class="remind1">请填写您的行程信息</p>
       <van-field
         class="cell1"
@@ -187,7 +187,7 @@ export default {
     returnDriver() {//返回到司机页面
         this.$router.push({
         name:"driverLink",
-        }) 
+        })
     },
 
     showMap() {//用于是否显示弹出框
@@ -416,7 +416,7 @@ export default {
 
         })
         .then((response)=> {
-          
+
           if (response.data.code == 0) {
 
             // alert("发布成功");

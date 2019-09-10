@@ -45,8 +45,6 @@
     </div>
 </template>
 
-
-
 <script>
     import g from "./global";
     export default {

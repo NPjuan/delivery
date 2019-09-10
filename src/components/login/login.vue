@@ -56,7 +56,7 @@
                 this.ajax(data, "/user/login.do", "loginss");
             },
             loginss(i){
-                alert(i.msg);
+                this.$toast.fail(i.msg);
             },
             ajax(data, url, func) {
                 //创建ajax

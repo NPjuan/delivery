@@ -99,7 +99,7 @@
                     //写入图片url(驾照,汽车照片)到user_msg中
                     g.user_msg.driverInfo[key] = i.data;
                 } else {
-                    alert("图片上传失败!");
+                    this.$toast.fail('图片上传失败');
                 }
             },
             carselect1() {
@@ -139,9 +139,9 @@
             },
             adregister(i) {
                 if (i.code == 0) {
-                    alert("注册成功!");
+                    this.$toast.success('注册成功');
                 } else {
-                    alert("注册失败!");
+                    this.$toast.fail('注册失败');
                 }
             },
             ajax(data, url, func) {

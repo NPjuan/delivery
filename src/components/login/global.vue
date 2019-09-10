@@ -66,4 +66,11 @@
         user_code,  //用户身份选择
         user_r_msg, //用户身份选择
     }
+
+
+    var l_user = {
+
+
+
+    }
 </script>

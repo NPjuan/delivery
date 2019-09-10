@@ -11,7 +11,7 @@
         </div>
         <section style="text-align:center;">
             <router-link class="van-button van-button--primary van-button--normal btn_pos" to="/login" tag="button" style="width: 50%;margin-bottom: 50px;margin-top: 50%">
-                <span class="van-button__text">登录</span>
+                <span class="van-button__text" >登录</span>
             </router-link>
         </section>
         <section style="text-align:center">
@@ -34,6 +34,7 @@
             this.$bus.emit("login", 2)
           }
         },
+
     }
 </script>
 

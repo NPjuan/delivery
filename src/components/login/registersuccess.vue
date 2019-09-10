@@ -1,14 +1,22 @@
  <!-- 注册成功页面 -->
 <template id="page4">
     <div class="hei100">
-        <div class="van-doc-nav-bar van-nav-bar van-hairline--bottom" style="z-index: 1;">
+        <div class="van-doc-nav-bar van-nav-bar van-hairline--bottom bg_g" style="z-index: 1;" >
             <div class="van-nav-bar__left">
                 <i @click="$router.back(-1)" class="van-icon van-icon-arrow-left van-nav-bar__arrow">
                             </i>
             </div>
             <div class="van-nav-bar__title van-ellipsis">注册成功</div>
             <div class="van-nav-bar__right"></div>
+
         </div>
+
+
+
+
+
+
+
         <section class="van-doc-demo-section demo-field" style="text-align:center">
             <div style="text-align: center;margin-top: 45%;background-color: white;padding: 20px 0">
                 <h2 style="text-align: center">注册成功</h2>
@@ -34,6 +42,11 @@
 
 
 <style scoped>
+
+
+    .bg_g {
+        background-color: #07c160;
+    }
 
 
 

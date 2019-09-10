@@ -47,14 +47,28 @@
 
 
 <script>
+import g from "./global";
+
+
 export default {
   data() {
     return {
-      username: "YulRW",
+      username: "用户名",
       headPic: "http://47.96.231.75:8080/uploads/headPortraits/default.jpg",
-      role: "司机",
-      id: "334851"
+      role: "身份",
+      id: "id",
     };
+  },
+  mounted(){
+    console.log(g.l_user);
+    
+    this.username = g.l_user.userInfo.name;
+    if(g.l_user.userInfo.avatar!==''){
+      let url = "http://47.96.231.75:8080";
+      this.headPic = url + g.l_user.userInfo.avatar;
+    }
+    this.role = g.l_user.user.role;
+    this.id = g.l_user.user.authId;
   },
   methods: {
     ajax(data, url, func) {
@@ -71,7 +85,7 @@ export default {
       ajax.send(stringData);
     }
   },
-  mounted() {}
+  
 };
 </script>
 

@@ -134,7 +134,7 @@ export default {
 .purse{
   width: 40px;
   height: 40px;
-  background-image: url("../../assets/image/userInfo/钱包.png");
+  background-image: url("../../assets/image/userInfo/money.png");
   background-position: 50% 50%;
   background-size: 40px;
 }

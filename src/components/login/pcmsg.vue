@@ -369,6 +369,9 @@ export default {
       next();
     }
     if (g.user_msg.userInfo.role == "司机" && name.value && id.value) {
+      if(this.IDcardTip !=''){
+        return
+      }
       //如果身份是司机并且写了用户名和身份证号
       next();
     }

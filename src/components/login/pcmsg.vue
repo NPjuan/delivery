@@ -63,7 +63,13 @@
         </div>
       </div>
       <van-popup v-model="show" position="bottom">
-        <van-area :area-list="areaList" value="110101" @click="popShow('show')" @confirm="setArea" title="请选择你的地域" />
+        <van-area
+          :area-list="areaList"
+          value="110101"
+          @click="popShow('show')"
+          @confirm="setArea"
+          title="请选择你的地域"
+        />
       </van-popup>
 
       <!-- 出生日期 -->
@@ -78,7 +84,13 @@
         </div>
       </div>
       <van-popup v-model="show2" position="bottom">
-        <van-datetime-picker v-model="currentDate" type="date" @click="popShow('show2')" @confirm="birtime" title="请选择出生日期" />
+        <van-datetime-picker
+          v-model="currentDate"
+          type="date"
+          @click="popShow('show2')"
+          @confirm="birtime"
+          title="请选择出生日期"
+        />
       </van-popup>
 
       <!-- 身份证号码 -->
@@ -88,8 +100,9 @@
         </div>
         <div class="van-cell__value">
           <div class="van-field__body">
-            <input type="text" placeholder="请输入身份证号" class="van-field__control" name="msg_iid" />
+            <input v-model="IDcard" type="text" placeholder="请输入身份证号" class="van-field__control" name="msg_iid" @blur="checkID"/>
           </div>
+          <div style="text-align: left;color:red">{{IDcardTip}}</div>
         </div>
       </div>
 
@@ -143,7 +156,9 @@ export default {
       areaList,
       setadd: "选择所在地",
       birtext: "选择你的出生日期",
-      currentDate: new Date()
+      currentDate: new Date(),
+      IDcard: "",
+      IDcardTip: "",
     };
   },
   methods: {
@@ -151,6 +166,14 @@ export default {
       g.user_msg.userInfo.gender = picker;
       this.sexInfo = picker;
       this.show1 = false;
+    },
+    checkID() {
+      let re = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
+      if (!re.test(this.IDcard)) {
+        this.IDcardTip = '请输入正确的身份证格式'
+      }else{
+        this.IDcardTip = '';
+      }
     },
     //显示弹出框
     popShow(count) {
@@ -261,17 +284,17 @@ export default {
         //写入图片url(头像,身份证)到user_msg中
         g.user_msg.userInfo[key] = i.data;
       } else {
-        this.$toast.fail('头像上传失败');
+        this.$toast.fail("头像上传失败");
       }
     },
     //注册ajax发送后的回调函数
     adregister(i) {
       if (i.code == 0) {
-        this.$toast.success('注册成功!');
+        this.$toast.success("注册成功!");
         //跳转到登录注册选择页面
         // next();
       } else {
-        this.$toast.fail('注册失败!');
+        this.$toast.fail("注册失败!");
       }
     }
   },
@@ -300,10 +323,8 @@ export default {
     let id = document.getElementsByName("msg_iid")[0];
     //获取生日
     //判断是否填写非空
-    var ju =
-      name.value &&
-      id.value &&
-      g.user_msg.userInfo.identityCardPicture;
+    var ju = name.value && id.value && g.user_msg.userInfo.identityCardPicture;
+
     //填写信息写入user_msg对象---↓↓↓↓↓↓↓↓
     //获取并写入用户名
     g.user_msg.userInfo.name = name.value;
@@ -336,6 +357,9 @@ export default {
       next();
     }
     if (g.user_msg.userInfo.role == "用户" && name.value && id.value) {
+      if(this.IDcardTip !=''){
+        return
+      }
       //如果身份是用户并且写了用户名和身份证号
       let ad_msg = {
         userInfo: g.user_msg.userInfo,

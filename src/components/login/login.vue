@@ -3,7 +3,7 @@
   <div class="hei100">
     <div class="van-doc-nav-bar van-nav-bar van-hairline--bottom" style="z-index: 1;">
       <div class="van-nav-bar__left">
-        <i @click="$router.back(-1)" class="van-icon van-icon-arrow-left van-nav-bar__arrow"></i>
+        <i class="van-icon van-icon-arrow-left van-nav-bar__arrow"></i>
       </div>
       <div class="van-nav-bar__title van-ellipsis">个人登录</div>
       <div class="van-nav-bar__right"></div>
@@ -65,7 +65,7 @@ export default {
       pass: false,
       username: "",
       password: ""
-    };
+    }
   },
 
   beforeRouteLeave(to, from, next) {
@@ -82,6 +82,10 @@ export default {
     this.ajax(data, "/user/login.do", "loginss");
   },
   methods: {
+    goHome() {
+      this.$router.push('/homepage')
+      console.log('111')
+    },
     loginss(i) {
       g.l_user = i.data;
       console.log(g.l_user);
@@ -91,7 +95,7 @@ export default {
         this.$toast.success(i.msg);
         console.log(this.pass);
         this.pass = true;
-        
+
         this.$router.push({ path: "/myInfo" });
       }
     },

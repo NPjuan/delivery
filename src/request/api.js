@@ -1,4 +1,4 @@
-import { get,post } from './http'
+import { get, post } from './http'
 //banner接口
 export const apiBanner = banner => get('api/v1/banner',banner)
 

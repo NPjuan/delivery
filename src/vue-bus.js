@@ -1,5 +1,5 @@
 // 中央事件车
-import {get, post} from './request/http'
+
 const install = (Vue) => {
   const Bus = new Vue({
     methods: {

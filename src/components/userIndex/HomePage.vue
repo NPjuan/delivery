@@ -225,7 +225,8 @@
         // 地图信息
         // lt http://118.25.85.198:8080/CATStudio/
         // jb http://47.96.231.75:8080/deliver
-        url: "http://118.25.85.198:8080/deliver",
+        // 192.168.1.102:8080
+        url: "http://47.96.231.75:8080/deliver",
         order:{ // 订单信息
           userOrderId: []
         },
@@ -483,8 +484,13 @@
       },
       // 通过 role 请求地址
       findAddress() { // 通过用户 id 来寻找地址
+        if(!g.user_id){
+          this.$toast('请先登陆后使用')
+          return
+        }
         let self = this
         let url
+        // 给 url 赋值
         if(self.judge.role == "consignor") {
           url = this.url + "/area/queryAllDeliver.do"
         }else {
@@ -492,7 +498,7 @@
         }
         this.$axios.post(url,
         {
-          uid: Number(self.consignor.id)
+          uid: Number(g.user_id)
         }
           ).then(function (response) {
             // 重新设置地址数组
@@ -768,6 +774,7 @@
     },
     created() {
       // 如果已经登陆过一次
+      console.log(g.user_id+" ididididi")
       if(g.user_id){
         let self = this
         //  通过 id 得到 姓名

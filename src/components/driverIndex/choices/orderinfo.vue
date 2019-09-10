@@ -1,8 +1,8 @@
 <template>
   <div class="orderinfo">
-    <van-cell-group>
-      <van-button plain type="primary" size="small"  @click="returnwhere" class="returnlast"></van-button>
-      <p class="remind3">以下为订单详细信息</p>
+    <van-cell-group class="cell-group">
+      <button plain type="primary" size="small"  @click="returnwhere" class="returnlast"><</button>
+      <p class="remind3">订单详情</p>
       <ul class="infoul">
         <li >
           <div class="consignor">
@@ -25,7 +25,7 @@
           <div class="consignee">
             <div class="people2">
               <span >
-                <img src="../../../assets/image/人.png" class="peopleimg2">
+                <img src="../../../assets/image/个人 (1).png" class="peopleimg2">
               </span>
               <h3 class="title">收货人信息</h3>
             </div>
@@ -160,92 +160,121 @@ export default {
     display:none;
 }
 .orderinfo{
-  font-size: .3rem;
+  font-size: .2rem;
+  height:1280px;
+  background-color:#f6f8f7;
+}
+.cell-group{
+  background-color:#f6f8f7;
 }
 .remind3{/*页面中的"以下为订单详情信息*/
-  /* position:absolute; */
-  /* top:1rem; */
+  position:relative;
+  top:-1.5rem;
   color:#07c160;
-  font-weight:bold;
-  font-size: .35rem;
+  /* font-weight:bold; */
+  height:1300px;
+  font-size: .3rem;
   text-align: center;
+  background-color:#f6f8f7;
+  padding-top: 12px;
 }
 .infoul{/*页面中的ul*/
-  height:12rem;
-  overflow:scroll
+  position:absolute;
+  top:38px;
+  height:13rem;
+  overflow:scroll;
+   /* background-color:red; */
+  background-color:#f6f8f7;
 }
 .consignor{/*页面中的发货人框*/
   width:90%;
   margin:0 auto;
+  background-color:white;
+  border-radius: 5px;
+  height:3.5rem;
 }
 .people1{/*发货人标题框*/
   position:relative;
-  margin-top:10px;
-  border:2px solid #07c160;
+  margin-top:2px;
+  /* border:1px solid #07c160; */
+  /* border-bottom:1px solid #f6f8f7; */
   border-radius:8px;
   height: .5rem;
 }
 .peopleimg1{/*发货人矢量图*/
   position:absolute;
   /* 原本没有remind3时这个imgtop：84px把元素撑宽了 */
-  top:-2px;
-  left:23%;
-  width:.6rem;
-  height:.6rem;
+  top:0px;
+  left:32%;
+  width:.5rem;
+  height:.5rem;
 }
 .title{/*各个本题*/
+  line-height: .5rem;
   text-align:center
 }
 .name,.phone,.address,.time-scope{/*文本框*/
-  padding:.3rem .2rem;
-  border-bottom:2px solid #fcb77e;
+  padding:.15rem .15rem;
+  /* border-bottom:1px solid #f6f8f7; */
   text-align:left;
 }
 
 .consignee{/*页面中的收货人框*/
   margin:0 auto;
   width:90%;
+  background-color:white;
+  border-radius: 5px;
+  height:2.5rem;
 
 }
 .people2{/*收货人标题框*/
   position:relative;
-  margin:5px auto;
-  border:2px solid #07c160;
+  margin:10px auto;
+  /* border:1px solid #07c160; */
+  /* border-bottom:1px solid #f6f8f7; */
   border-radius:8px;
   height: .5rem;
 }
 .peopleimg2{/*收货人矢量图*/
   position:absolute;
-  left:23%;
-  top:-2px;
-  width:.6rem;
-  height:.6rem;
+  left:32%;
+  top:0px;
+  width:.5rem;
+  height:.5rem;
 }
 .goods{/*页面中的货物框*/
   margin:0 auto;
   width:90%;
+  background-color:white;
+  border-radius: 5px;
+  height:3.5rem;
 }
 .box{/*货物标题框*/
   position:relative;
-  margin:5px auto;
-  border:2px solid #07c160;
+  margin:10px auto;
+  /* border:1px solid #07c160; */
+  /* border-bottom:1px solid #f6f8f7; */
   border-radius:8px;
   height: .5rem;
+  background-color:white;
 }
 .boximg{/*货物矢量图*/
   position:absolute;
-  left:23%;
-  width:.6rem;
-  height:.6rem;
+  left:32%;
+  width:.5rem;
+  height:.5rem;
 }
 
 .returnlast{ /*返回按钮*/
-  position:absolute;
+  position:relative;
+  top:-.9rem;
   left:0;
   border-style:none;
   min-width:.7rem;
   color:#07c160;
   font-size:.5rem;
+  background-color:#f6f8f7;
+  z-index:2;
 }
 .goodsphoto{/*拿到的货物的照片*/
   width:33%;

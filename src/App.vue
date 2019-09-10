@@ -28,7 +28,6 @@ export default {
   },
   watch: {
     $route(to, from) {
-      console.log(to);
       let toName = to.name;
 
       const toIndex = to.meta.index_;

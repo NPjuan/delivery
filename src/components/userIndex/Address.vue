@@ -174,6 +174,7 @@
       },
       data (){
           return{
+            url: "http://118.25.85.198:8080/deliver",
             isConsigneeField:true,// 背景样式
             isConsignorField:true,
             areaList:AreaList,// 引入地区列表为组件服务
@@ -222,7 +223,7 @@
         },
         checkId() {// http://education.gdutcat.top:8080/gdutcat/Banner/getBanners.do
           let self = this
-          axios.get('http://118.25.85.198:8080/CATStudio/user/findConsigneeInfo.do?authId='+this.consignee.cid)
+          axios.get(this.url + '/user/findConsigneeInfo.do?authId='+this.consignee.cid)
             .then(function (response) {// 匹配正确
               // 接下来要显示其姓名和电话
               console.log(response)
@@ -301,7 +302,7 @@
           Dialog.confirm({
             title: '确认删除所填信息'
           }).then(() => {
-            axios.get("http://118.25.85.198:8080/CATStudio/area/deleteConsignee.do?areaId="+self.consignee.areaId )
+            axios.get(this.url + "/area/deleteConsignee.do?areaId="+self.consignee.areaId )
               .then(function (response) {
 
               })
@@ -340,7 +341,7 @@
               uid:this.consignor.uid
           }
           // 解构赋值
-          let url = "http://118.25.85.198:8080/CATStudio/area/addConsigneeArea.do?"
+          let url = this.url + "/area/addConsigneeArea.do?"
           for(let item in transmitMes){
             if(transmitMes[item] == ""){// 判断输入是否完整
               Toast("请输入完整的地址")
@@ -366,7 +367,7 @@
           this.save()
           // http://118.25.85.198:8080/CATStudio
           let self = this
-          axios.get("http://118.25.85.198:8080/CATStudio/area/updateConsignee.do?uid="+ self.consignor.uid+"&areaId="+self.consignee.areaId)
+          axios.get(this.url +  "/area/updateConsignee.do?uid="+ self.consignor.uid+"&areaId="+self.consignee.areaId)
             .then(function (res) {
               console.log(res)
             })

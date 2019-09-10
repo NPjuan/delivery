@@ -1,6 +1,6 @@
 <template>
   <div class = "orderlist">
-    <van-cell-group>
+    <van-cell-group class="cell-group2">
       <van-button  plain type="default" size="small" @click="returnWhere" class = "comeback"></van-button>
       <p class="remind2">以下为附近订单信息</p>
       <ul class = "ul">
@@ -56,21 +56,31 @@ export default {
   /* 本来这里没有设sbsolute时组件有穿透效果 */
   /* position:relative; */
   width:100%;
-  height:100rem;/*为了附近订单没有数据时不要显示背景图，挡住*/
-  background-color: white;
-  font-size: .3rem;
+  height:18rem;/*为了附近订单没有数据时不要显示背景图，挡住*/
+  background-color: #f6f8f7;
+  font-size: .2rem;
 }
 .remind2{/*页面中的"以下为附近订单信息“*/
-  /* position:absolute; */
-  /* top:1rem; */
+  position:relative;
+  top:-.8rem;
   color:#07c160;
-  font-weight:bold;
-  font-size: .35rem;
+  height:10000px;
+  /* font-weight:bold; */
+  font-size: .3rem;
   text-align: center;
+  background-color:#f6f8f7;
 }
+.cell-group2{
+  background-color:#f6f8f7;
+}
+
 .ul{/*页面中的ul*/
-  height:12rem;
+  position:absolute;
+  top:28px;
+  width:100%;
+  height:10rem;
   overflow: scroll;
+  background-color:#f6f8f7;
 }
 .liststyle{/*页面中的信息框*/
   position:relative;
@@ -80,27 +90,27 @@ export default {
   /*height:2.5rem;*/
   margin:.38rem .38rem;
   padding:.2rem .2rem;
-  border: 2px solid #07c160;
+  border: 2px solid #f6f8f7;
   border-radius: 10px;
-  background-color: #d7fcf3;
+  background-color: white;
   color:black;
 }
 .listimg{/*矢量图*/
   position:absolute;
-  left:0;
-  width:.6rem;
-  height:.6rem;
+  left:.2rem;
+  width:.3rem;
+  height:.3rem;
 }
 .cellfirst{/*发货人姓名*/
   box-sizing:content-box;
   margin:3px 20px;
   text-align:left;
-  font-weight:bold;
+
 }
 .cellsecond{/*发货地址*/
    margin:4px 20px;
    text-align:left;
-   font-weight:bold;
+
   /* margin:0 auto;*/
 }
 
@@ -111,5 +121,7 @@ export default {
   border-style:none;
   color:#07c160;
   font-size:.5rem;
+  z-index:2;
+  background-color:#f6f8f7;
 }
 </style>

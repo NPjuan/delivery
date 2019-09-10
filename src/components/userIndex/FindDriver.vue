@@ -23,7 +23,9 @@
         name: "FindDriver",
       data() {
           return {
-            url: "http://47.96.231.75:8080/deliver",
+            // http://118.25.85.198:8080/deliver
+            // http://47.96.231.75:8080/deliver
+            url: "http://118.25.85.198:8080/deliver",
             driver: [],
             userOrderId: [] , // 订单 id
             testDriver:[]
@@ -32,13 +34,10 @@
       methods: {
         findDriver() {
           let self = this
-          console.log(this.userOrderId)
-          console.log("idididididi")
           this.$axios.post(this.url + "/driverOrder/findNear.do",{
             userOrderId: Number(self.userOrderId),
           })
             .then(function (response) {
-              console.log(response)
               self.driver = []
               // 如果查找不到顺路司机
               if(response.data.data == null){

@@ -25,7 +25,9 @@ import {
   Picker
 } from 'vant'
 
+import VueBus from './vue-bus'
 
+Vue.use(VueBus) // 开启事件车
 // yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 // import './css/login.css'
 import './css/vue.css'
@@ -59,6 +61,6 @@ new Vue({
     App
   },
   template: '<App/>',
-  
+
 
 })

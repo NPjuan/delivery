@@ -774,21 +774,12 @@
     },
     created() {
       // 如果已经登陆过一次
-      console.log(g.user_id+" ididididi")
-      if(g.user_id){
-        let self = this
+      console.log(g.l_user.user.authId)
+      if(g.l_user.user.authId){
         //  通过 id 得到 姓名
-        this.consignor.id = g.user_id
-        this.$axios.get(this.url + "/user/findConsigneeInfo.do",{
-          params: {
-            authId : g.user_id,
-          }
-        })
-          .then(function (response) {
-            console.log(response)
-            self.consignor.name = response.data.data.name
-            self.consignor.phone = response.data.data.phone
-          })
+        this.consignor.id = g.l_user.user.authId
+        this.consignor.name = g.l_user.userInfo.name
+        this.consignor.phone = g.l_user.user.phone
         this.judge.loginState = true
       }
     },

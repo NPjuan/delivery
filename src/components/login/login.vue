@@ -3,7 +3,7 @@
   <div class="hei100">
     <div class="van-doc-nav-bar van-nav-bar van-hairline--bottom" style="z-index: 1;">
       <div class="van-nav-bar__left">
-        <i class="van-icon van-icon-arrow-left van-nav-bar__arrow"></i>
+        <i @click="$router.back(-1)" class="van-icon van-icon-arrow-left van-nav-bar__arrow"></i>
       </div>
       <div class="van-nav-bar__title van-ellipsis">个人登录</div>
       <div class="van-nav-bar__right"></div>
@@ -49,7 +49,10 @@
       style="width: 100%"
       class="van-button van-button--primary van-button--normal btn_pos"
     >
-      <span class="van-button__text">登录</span>
+      <span class="van-button__text">
+        <van-loading size="24px" type="spinner" color="white" v-show="show1" />
+        {{login}}
+      </span>
     </router-link>
   </div>
 </template>
@@ -64,33 +67,43 @@ export default {
     return {
       pass: false,
       username: "",
-      password: ""
-    }
+      password: "",
+      show1: false,
+      login: "登录"
+    };
   },
 
   beforeRouteLeave(to, from, next) {
 
-      if(this.pass==true){
-          alert(111)
+      console.log(to);
+      
+      if(to.path == '/loginselect'){
           next();
+          return
       }
+
+    if (this.pass == true) {
+      next();
+    }
     // ...
     var data = {
       id: this.username,
       password: this.password
     };
+    this.show1 = true;
+    this.login = "";
     this.ajax(data, "/user/login.do", "loginss");
+
+    
   },
   methods: {
-    goHome() {
-      this.$router.push('/homepage')
-      console.log('111')
-    },
     loginss(i) {
       g.l_user = i.data;
       console.log(g.l_user);
       if (i.code == 1) {
         this.$toast.fail(i.msg);
+        this.show1 = false;
+        this.login = "登录";
       } else {
         this.$toast.success(i.msg);
         console.log(this.pass);
@@ -104,8 +117,8 @@ export default {
       var ajax = new XMLHttpRequest();
       var stringData = JSON.stringify(data);
       //请求行(发送方式/发送目标url)
-      // ajax.open("post", "http://47.96.231.75:8080/deliver" + url);
-      ajax.open("post", "http://192.168.1.102:8080" + url);
+      ajax.open("post", "http://47.96.231.75:8080/deliver" + url);
+    //   ajax.open("post", "http://192.168.1.102:8080" + url);
       //请求头
       ajax.setRequestHeader("Content-type", "application/json;charset=UTF-8");
       //回调函数
@@ -128,4 +141,7 @@ export default {
 
 
 <style scoped>
+.loading {
+  color: white;
+}
 </style>

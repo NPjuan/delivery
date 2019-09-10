@@ -261,17 +261,17 @@ export default {
         //写入图片url(头像,身份证)到user_msg中
         g.user_msg.userInfo[key] = i.data;
       } else {
-        alert("头像上传失败!");
+        this.$toast.fail('头像上传失败');
       }
     },
     //注册ajax发送后的回调函数
     adregister(i) {
       if (i.code == 0) {
-        alert("注册成功!");
+        this.$toast.success('注册成功!');
         //跳转到登录注册选择页面
         // next();
       } else {
-        alert("注册失败!");
+        this.$toast.fail('注册失败!');
       }
     }
   },

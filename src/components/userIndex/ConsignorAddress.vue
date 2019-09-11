@@ -77,6 +77,7 @@
 </template>
 
 <script>
+  import g from '../login/global'
   import  AreaList from '../../assets/area'; // 地址列表
   export default {
     name: "ConsignorAddress",
@@ -89,7 +90,7 @@
         mapShow: false, // 地址控件展示
         loading: false, // 保存按钮发送数据时的状态
         consignor:{ // 发货人，通过用户登录来获取 id，姓名，电话目前固定不可再此修改，只能通过其他方式改变
-          id:1, // 发货人 id
+          id: "", // 发货人 id
           role: "consignor", // 角色，发货人
           name: "", // 发货人姓名
           phone: "", // 电话号码
@@ -209,52 +210,53 @@
             console.log(err)
           })
       },
-      checkId() {
-        let self = this
-        this.$axios.get(self.url + "/user/findConsigneeInfo.do",{
-          params: {
-            authId : self.consignor.id,
-          }
-        })
-          .then(function (response) {
-            if(response.data.code == 400){
-              self.judge.id = false
-              self.errorMessage.id = response.data.msg
-              // 修改为空
-              self.consignor.name = ""
-              self.consignor.phone = ""
-              console.log(response)
-              console.log("===============")
-            }else {
-              self.judge.id = true
-              self.errorMessage.id = ""
-              self.consignor.name = response.data.data.name
-              self.consignor.phone = response.data.data.phone
-              console.log("---------------------")
-              console.log(self.consignor.phone)
-              console.log(self.consignor.name)
-            }
-          })
-          .catch(function (err) {
-            self.judge.id = false
-            self.errorMessage.id = "查询不到该用户"
-            // 修改为空
-            self.consignor.name = ""
-            self.consignor.phone = ""
-            self.$toast("网络错误，请重试")
-            self.router.push({path: "/homepage"})
-            console.log(err)
-          })
-      },
+    // checkId() {
+    //     let self = this
+    //     this.$axios.get(self.url + "/user/findConsigneeInfo.do",{
+    //       params: {
+    //         authId : self.consignor.id,
+    //       }
+    //     })
+    //       .then(function (response) {
+    //         if(response.data.code == 400){
+    //           self.judge.id = false
+    //           self.errorMessage.id = response.data.msg
+    //           // 修改为空
+    //           self.consignor.name = ""
+    //           self.consignor.phone = ""
+    //           console.log(response)
+    //           console.log("===============")
+    //         }else {
+    //           self.judge.id = true
+    //           self.errorMessage.id = ""
+    //           self.consignor.name = response.data.data.name
+    //           self.consignor.phone = response.data.data.phone
+    //           console.log("---------------------")
+    //           console.log(self.consignor.phone)
+    //           console.log(self.consignor.name)
+    //         }
+    //       })
+    //       .catch(function (err) {
+    //         self.judge.id = false
+    //         self.errorMessage.id = "查询不到该用户"
+    //         // 修改为空
+    //         self.consignor.name = ""
+    //         self.consignor.phone = ""
+    //         self.$toast("网络错误，请重试")
+    //         // self.$router.push({path: "/homepage"})
+    //         console.log(self.consignor.id)
+    //         console.log(err)
+    //       })
+    //   },
     },
     // 根据父组件传来的 id 进行匹配，若匹配失败则弹出网络错误并返回父组件
     mounted() {
       // 依次赋值给当前对象
       // this.$route.id = 用户的 id 可以拿来取用
-      console.log(this.$route.query.id)
-      console.log("-------query--------------")
       this.consignor.id = this.$route.query.id
-      this.checkId()
+      // this.checkId()
+      this.consignor.name = g.l_user.userInfo.name
+      this.consignor.phone = g.l_user.user.phone
       // 判断是否有 mes 属性，有则说明时带参数传递并且功能应该为修改默认地址
       if(this.$route.query.hasOwnProperty("mes")){
         let mes = this.$route.query.mes

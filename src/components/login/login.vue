@@ -76,7 +76,7 @@ export default {
   beforeRouteLeave(to, from, next) {
 
       console.log(to);
-      
+
       if(to.path == '/loginselect'){
           next();
           return
@@ -93,13 +93,9 @@ export default {
     this.show1 = true;
     this.login = "";
     this.ajax(data, "/user/login.do", "loginss");
-
-    
   },
   methods: {
     loginss(i) {
-      g.l_user = i.data;
-      console.log(g.l_user);
       if (i.code == 1) {
         this.$toast.fail(i.msg);
         this.show1 = false;
@@ -108,9 +104,10 @@ export default {
         this.$toast.success(i.msg);
         console.log(this.pass);
         this.pass = true;
-
+        g.l_user = i.data;
         this.$router.push({ path: "/myInfo" });
       }
+      console.log(i);
     },
     ajax(data, url, func) {
       //创建ajax

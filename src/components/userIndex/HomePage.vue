@@ -22,7 +22,7 @@
         <!--这里不可以换行显示否则或出现间隙需要用更多的 css 来兼容-->
         <span :class="{'head-span': true,'head-span-active':true}">我要友捎</span>
         <span class="head-span" @click="driver">我要接单</span>
-        <span class="head-span" @click="message">友稍消息</span>
+        <span class="head-span" @click="message">友捎消息</span>
         <span class="head-span" @click="login">登陆注册</span>
       </div>
     </header>
@@ -169,7 +169,7 @@
       <!--头像-->
       <div class="user-info-head-img-contianer">
         <span class="user-info-head-img">
-          <img src="../../assets/image/user.svg" alt="" style="width: 1.5rem">
+          <img :src="consignor.headPicUrl" alt="" style="width: 1.5rem">
         </span>
       </div>
       <div v-if="judge.loginState">
@@ -181,20 +181,9 @@
         <span class="user-info-name">
           {{consignor.phone}}
         </span>
-        <!--订单消息-->
-        <span class="user-info-item">
-          订单信息
-          <img src="../../assets/image/order.svg" alt="订单图片" class="user-info-item-img">
-        </span>
-        <!--积分钱包-->
-        <span class="user-info-item">
-          积分钱包
-          <img src="../../assets/image/wallet.svg" alt="钱包图片" class="user-info-item-img">
-        </span>
-        <!--担保人信息-->
-        <span class="user-info-item">
-          担保人信息
-          <img src="../../assets/image/promise.svg" alt="担保人图片" class="user-info-item-img">
+        <span v-for="(value, index, key) in userlist" class="user-info-item" :index="index" @touchstart="userList(index)" :ref="'user'+index" @touchend="offUserList(index)">
+          <img :src="value.src" :alt="value.alt" class="user-info-item-img">
+          {{value.text}}
         </span>
       </div>
       <div v-else>
@@ -230,6 +219,23 @@
         order:{ // 订单信息
           userOrderId: []
         },
+        userlist:[ // 个人信息 span
+          {
+            src: require("../../assets/image/order.svg"), // 图片路径
+            text: "订单信息",
+            alt: "订单信息"
+          },
+          {
+            src: require("../../assets/image/wallet.svg"), // 图片路径
+            text: "积分钱包",
+            alt: "积分钱包"
+          },
+          {
+            src: require("../../assets/image/promise.svg"), // 图片路径
+            text: "担保人信息",
+            alt: "担保人信息"
+          }
+        ],
         fileList:[], // 图片文字数组
         map: {
           map:"", // 地图对象
@@ -258,7 +264,7 @@
         },
         // 发物信息
         deliveryMsg: {
-          uid: 1, // 发货人即用户 id
+          uid: "", // 发货人即用户 id
           deliveryStart:"", // 起始发货时间
           deliveryEnd: "", // 截止收货时间
          // goodsPictures: [], // 上传图片数据
@@ -274,6 +280,7 @@
         ],
         // 发货人，部分内容由登录状态获取
         consignor: {
+          cid: "", // 数据库对应的 id
           id: "", // 用户 id
           role: "consignor",// 角色，发货人
           name: "",// 发货人姓名
@@ -285,7 +292,8 @@
           town: "", // 镇
           village: "",// 村
           detail: "", // 详细地址
-          areaId: "" // 地址的编号
+          areaId: "", // 地址的编号
+          headPicUrl: "http://47.96.231.75:8080/uploads/headPortraits/default.jpg" // 头像的地址
         },
         // 收货人
         consignee: {
@@ -334,6 +342,13 @@
       }
     },
     methods: {
+      // 用户信息列表
+      userList(index) {
+        this.$refs['user'+index][0].style.backgroundColor = "#AFEEEE"
+      },
+      offUserList(index) {
+        this.$refs['user'+index][0].style.backgroundColor = "white"
+      },
       // 跳转到登陆界面
       login() {
         this.$router.push('/loginselect')
@@ -484,22 +499,23 @@
       },
       // 通过 role 请求地址
       findAddress() { // 通过用户 id 来寻找地址
-        if(!g.user_id){
+
+        if(!g.l_user){
           this.$toast('请先登陆后使用')
           return
-        }
-        let self = this
-        let url
-        // 给 url 赋值
-        if(self.judge.role == "consignor") {
-          url = this.url + "/area/queryAllDeliver.do"
-        }else {
-          url = this.url + "/area/queryAllConsignee.do"
-        }
-        this.$axios.post(url,
-        {
-          uid: Number(g.user_id)
-        }
+        }else{
+          let self = this
+          let url
+          // 给 url 赋值
+          if(self.judge.role == "consignor") {
+            url = this.url + "/area/queryAllDeliver.do"
+          }else {
+            url = this.url + "/area/queryAllConsignee.do"
+          }
+          this.$axios.post(url,
+            {
+              uid: Number(g.l_user.user.id)
+            }
           ).then(function (response) {
             // 重新设置地址数组
             self.addresses = []
@@ -512,6 +528,7 @@
             .catch(function (err) {
               console.log(err)
             })
+        }
       },
       // 地址选择栏
       onClickLeft() {
@@ -521,7 +538,7 @@
         // 通过判断角色来进入地址
         // let id,areaId
         // areaId = this[this.judge.role].areaId
-        let id = this.consignor.id
+        let id = this.consignor.cid
           this.$router.push({
             path:'/' + this.judge.role + 'Address',
             query:{
@@ -540,7 +557,7 @@
           query: {
             mes : this.addresses[index],
             // 用户 id
-            id: this.addresses[index].cid?this.addresses[index].cid:this.consignor.id,
+            id: this.addresses[index].cid?this.addresses[index].cid:this.consignor.cid,
             areaId: this.addresses[index].id
           }
         })
@@ -614,15 +631,11 @@
                   if(self[self.judge.role].areaId = self.addresses[index].id){
                     //  addressPick 改为 false 不能让用户继续用
                     self.judge[self.judge.role].addressPick = false
-                    console.log("是我·是我")
                   }
-                  console.log("delete FindAddress")
                   self.findAddress()
-                  console.log("delete FindAddress end")
                 })
                 .catch(function (err) {
                   self.findAddress()
-                  console.log(err)
                 })
             })
             // 取消则什么也不做
@@ -774,16 +787,17 @@
     },
     created() {
       // 如果已经登陆过一次
-      console.log(g.l_user.user.authId)
-      if(g.l_user.user.authId){
+      if(g.l_user){
         //  通过 id 得到 姓名
+        this.deliveryMsg.uid = g.l_user.user.id // 发货对应的 id
+        this.consignor.cid = g.l_user.user.id // 数据库对应的 id 设置地址的时候要用到
         this.consignor.id = g.l_user.user.authId
         this.consignor.name = g.l_user.userInfo.name
         this.consignor.phone = g.l_user.user.phone
+        this.consignor.headPicUrl = "http://47.96.231.75:8080" + g.l_user.userInfo.avatar
         this.judge.loginState = true
       }
     },
-
   }
 </script>
 
@@ -792,12 +806,12 @@
     position:relative;
     text-align:center;
     height: 1.8rem;
-    margin-top: 1rem
+    margin-top: 1rem;
   }
   .user-info-head-img{
+    border-radius: 50%;
     display: inline-block;
     width: 1.5rem;
-    height: 100%;
   }
   .user-info-name{
     text-align: center;
@@ -814,12 +828,17 @@
     font-size: .35rem;
     width: 100%;
     display: inline-block;
-    padding-top: .4rem
+    height: .75rem;
+    line-height: .75rem;
+    transition: .5s all ease;
+  }
+  .user-info-item-active{
+    background-color: #39a9ed;
   }
   .user-info-item-img{
     position: absolute;
     width: .5rem;
-    top: .3rem;
+    top: .1rem;
     left: .75rem
   }
   .lift{

@@ -296,11 +296,13 @@ export default {
         let time = setInterval(() => {
           console.log(this.count);
           btn.style.backgroundColor = "gray";
+          btn.style.border = "gray";
           btn.innerHTML = this.count + "s重新发送";
           //若倒计时结束,则重置
           if (this.count == 0) {
             this.count = 60;
             btn.style.backgroundColor = "#07c160";
+            btn.style.border = "#07c160";
             btn.innerHTML = "发送验证码";
             clearInterval(time);
           }

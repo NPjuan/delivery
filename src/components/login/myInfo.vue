@@ -49,25 +49,32 @@
 <script>
 import g from "./global";
 
-
 export default {
   data() {
     return {
       username: "用户名",
       headPic: "http://47.96.231.75:8080/uploads/headPortraits/default.jpg",
       role: "身份",
-      id: "id",
+      id: "id"
     };
   },
-  mounted(){
+  mounted() {
     console.log(g.l_user);
-    
+
     this.username = g.l_user.userInfo.name;
-    if(g.l_user.userInfo.avatar!==''){
+    if (g.l_user.userInfo.avatar !== "") {
       let url = "http://47.96.231.75:8080";
       this.headPic = url + g.l_user.userInfo.avatar;
     }
-    this.role = g.l_user.user.role;
+    if (g.l_user.user.role == 0) {
+      this.role == "游客";
+    } else if (g.l_user.user.role == 1) {
+      this.role == "用户";
+    } else if (g.l_user.user.role == 2) {
+      this.role == "司机";
+    } else if (g.l_user.user.role == 3) {
+      this.role == "管理员";
+    }
     this.id = g.l_user.user.authId;
   },
   methods: {
@@ -84,8 +91,7 @@ export default {
       };
       ajax.send(stringData);
     }
-  },
-  
+  }
 };
 </script>
 
@@ -93,7 +99,7 @@ export default {
 <style scoped>
 /* 快捷 */
 
-.mt_0{
+.mt_0 {
   margin-top: 0 !important;
 }
 
@@ -173,7 +179,6 @@ export default {
   background-size: 40px;
 }
 
-
 .setting {
   width: 40px;
   height: 40px;
@@ -181,8 +186,6 @@ export default {
   background-position: 50% 50%;
   background-size: 40px;
 }
-
-
 
 .order {
   width: 40px;
@@ -192,15 +195,9 @@ export default {
   background-size: 40px;
 }
 
-
-
-
-
-
-
 .arrow {
   width: 15px;
-  height: 15px ;
+  height: 15px;
   background-image: url("../../assets/image/userInfo/右箭头.svg");
   background-position: 50% 50%;
   background-size: 20px;

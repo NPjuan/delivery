@@ -19,7 +19,7 @@
         <div>
             <!-- 汽车行驶路线 -->
             <div class="van-cell-group van-hairline--top-bottom description">
-                <h2 class="van-doc-demo-block__title">汽车行驶路线描述</h2>
+                <h2 class="van-doc-demo-block__title" style="padding-top:12px;color:black;font-size:15px">汽车行驶路线描述</h2>
                 <div class="van-cell van-field">
                     <div class="van-cell__value">
                         <div class="van-field__body">

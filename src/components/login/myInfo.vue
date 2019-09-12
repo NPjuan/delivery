@@ -3,7 +3,7 @@
     <div class="out">
       <div class="van-doc-nav-bar van-nav-bar van-hairline--bottom" style="z-index: 1;">
         <div class="van-nav-bar__left">
-          <i @click="$router.back(-1)" class="van-icon van-icon-arrow-left van-nav-bar__arrow"></i>
+          <i @click="$router.push('/homepage')" class="van-icon van-icon-arrow-left van-nav-bar__arrow"></i>
         </div>
         <div class="van-nav-bar__title van-ellipsis">我的</div>
         <div class="van-nav-bar__right"></div>
@@ -40,6 +40,11 @@
         <div class="dis_bl f_s_big">设置</div>
         <div class="arrow dis_bl"></div>
       </div>
+
+
+
+
+      <van-button plain hairline type="primary" block @click="cancel" class="btn1">注销</van-button>
     </div>
   </div>
 </template>
@@ -90,6 +95,12 @@ export default {
         }
       };
       ajax.send(stringData);
+    },
+    cancel(){
+      g.l_user = '';
+      g.login_status = false;
+      this.$toast.success("注销成功!");
+      this.$router.push('/homepage');
     }
   }
 };
@@ -207,6 +218,11 @@ export default {
   /* height: 100%; */
   line-height: 40px;
   vertical-align: middle;
+}
+
+.btn1{
+  position: fixed;
+  bottom: 0;
 }
 
 /* we */

@@ -72,17 +72,18 @@ export default {
       login: "登录"
     };
   },
+  
 
   beforeRouteLeave(to, from, next) {
+    console.log(to);
 
-      console.log(to);
-      
-      if(to.path == '/loginselect'){
-          next();
-          return
-      }
+    if (to.path == "/loginselect") {
+      next();
+      return;
+    }
 
     if (this.pass == true) {
+      g.login_status = true;
       next();
     }
     // ...
@@ -93,8 +94,6 @@ export default {
     this.show1 = true;
     this.login = "";
     this.ajax(data, "/user/login.do", "loginss");
-
-    
   },
   methods: {
     loginss(i) {
@@ -118,7 +117,7 @@ export default {
       var stringData = JSON.stringify(data);
       //请求行(发送方式/发送目标url)
       ajax.open("post", "http://47.96.231.75:8080/deliver" + url);
-    //   ajax.open("post", "http://192.168.1.102:8080" + url);
+      //   ajax.open("post", "http://192.168.1.102:8080" + url);
       //请求头
       ajax.setRequestHeader("Content-type", "application/json;charset=UTF-8");
       //回调函数

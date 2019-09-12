@@ -391,7 +391,7 @@ export default {
     },
     show() {
       let show = document.getElementsByClassName("administratoron")[0];
-      if (g.user_msg.userInfo.role == "管理员") {
+      if (g.user_msg.userInfo.role == "3") {
         show.style.display = "block";
       }
     }
@@ -429,7 +429,7 @@ export default {
           //用户身份
           registerRole: g.user_msg.userInfo.role
         };
-        if (g.user_msg.userInfo.role == "管理员") {
+        if (g.user_msg.userInfo.role == "3") {
           if(this.evidence == ''){
             this.errorTip1 = true;
             return;

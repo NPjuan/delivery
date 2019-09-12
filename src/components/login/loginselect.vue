@@ -35,23 +35,20 @@
 
 <script>
 import g from "./global";
-    export default {
-        data() {
-            return {
-            }
-        },
-        methods: {
-            jump(){
-                this.$router.push({ path: "/homepage" });
-
-            },
-          login() {
-            this.$bus.emit("login", 2)
-          },
-          
-        },
-
+export default {
+  data() {
+    return {};
+  },
+  
+  methods: {
+    jump() {
+      this.$router.push({ path: "/homepage" });
+    },
+    login() {
+      this.$bus.emit("login", 2);
     }
+  }
+};
 </script>
 
 

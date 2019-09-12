@@ -23,7 +23,7 @@
         <span :class="{'head-span': true,'head-span-active':true}">我要友捎</span>
         <span class="head-span" @click="driver">我要接单</span>
         <span class="head-span" @click="message">友稍消息</span>
-        <span class="head-span" @click="login">登陆注册</span>
+        <span class="head-span" @click="login">{{login_msg}}</span>
       </div>
     </header>
     <baidu-map id="map" :center="map.center" :zoom=map.zoom :scroll-wheel-zoom=map.scrollWheelZoom @ready="handler">
@@ -214,13 +214,15 @@
 </template>
 
 <script>
-
+  import g from "../login/global";
   import  AreaList from '../../assets/area';
   import { eventBus } from "../../main"
   export default {
     name: "homepage",
     data() {
       return {
+        // 登录注册文本
+        login_msg:"登录注册",
         // 地图信息
         // lt http://118.25.85.198:8080/CATStudio/
         // jb http://47.96.231.75:8080/deliver
@@ -725,6 +727,14 @@
           })
       }
     },
+    beforeRouteLeave (to, from, next) {
+      // ...
+    if (to.path == "/loginselect" && g.login_status == true) {
+      this.$router.push({ path: "/myInfo" });
+    } else {
+      next();
+    }
+  },
     // 如果是从地址栏跳转过来则打开选择地址的组件
     beforeRouteEnter(to, from, next){
       // 如果是从填写地址跳转过来则自动弹出下拉地址选择栏
@@ -745,6 +755,17 @@
       }
     },
     mounted() {
+
+      //登录注册状态 文本
+      if(g.login_status==true){
+        //如果用户为已登录状态则在主页面按钮中 显示 "我的"
+        this.login_msg = '我的';
+      }else{
+        // 否则显示 "登录注册"
+        this.login_msg = '登录注册';
+      }
+
+
       let i = new Date()
       let self = this
       this.date.minDate = new Date()

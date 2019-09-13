@@ -3,10 +3,10 @@
     <div class="hei100">
         <div class="van-doc-nav-bar van-nav-bar van-hairline--bottom bg_g" style="z-index: 1;" >
             <div class="van-nav-bar__left">
-                <i @click="$router.back(-1)" class="van-icon van-icon-arrow-left van-nav-bar__arrow">
+                <i @click="$router.back(-1)" class="van-icon van-icon-arrow-left van-nav-bar__arrow" style="color:white">
                             </i>
             </div>
-            <div class="van-nav-bar__title van-ellipsis" style="color:white">注册成功</div>
+            <div class="van-nav-bar__title van-ellipsis" style="color:white">注册</div>
             <div class="van-nav-bar__right"></div>
 
         </div>

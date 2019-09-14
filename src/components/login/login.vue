@@ -1,61 +1,51 @@
 <!-- //登录界面 -->
 <template id="page7">
   <div class="hei100">
-    <div class="van-doc-nav-bar van-nav-bar van-hairline--bottom" style="z-index: 1;">
+    <!-- <div class="van-doc-nav-bar van-nav-bar van-hairline--bottom" style="z-index: 1;">
       <div class="van-nav-bar__left">
         <i @click="$router.back(-1)" class="van-icon van-icon-arrow-left van-nav-bar__arrow"></i>
       </div>
       <div class="van-nav-bar__title van-ellipsis">个人登录</div>
       <div class="van-nav-bar__right"></div>
+    </div>-->
+
+    <img src="..\..\assets\image\userInfo\login_bg.png" width="100vw" style="width:100vw" />
+    <div class="van-nav-bar__left arrow">
+      <i @click="$router.back(-1)" class="van-icon van-icon-arrow-left van-nav-bar__arrow"></i>
     </div>
-    <section class="van-doc-demo-block">
-      <h2 class="van-doc-demo-block__title">登录个人用户</h2>
-      <div class="van-cell-group van-hairline--top-bottom">
-        <div class="van-cell van-cell--required van-field">
-          <div class="van-cell__title van-field__label">
-            <span>用户名</span>
-          </div>
-          <div class="van-cell__value">
-            <div class="van-field__body">
-              <input v-model="username" type="text" placeholder="请输入用户名" class="van-field__control" />
-              <div class="van-field__right-icon">
-                <i class="van-icon van-icon-question-o">
-                  <!---->
-                </i>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="van-cell van-cell--required van-field">
-          <div class="van-cell__title van-field__label">
-            <span>密码</span>
-          </div>
-          <div class="van-cell__value">
-            <div class="van-field__body">
-              <input
-                v-model="password"
-                type="password"
-                placeholder="请输入密码"
-                class="van-field__control"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <router-link
-      to="/myInfo"
-      tag="button"
-      style="width: 100%"
-      class="van-button van-button--primary van-button--normal btn_pos"
-    >
-      <span class="van-button__text">
+
+    <van-cell-group class="pos_1">
+      <van-field
+        v-model="username"
+        clearable
+        label="用户名"
+        right-icon="question-o"
+        placeholder="请输入用户名"
+        left-icon="user-o"
+        @click-right-icon="$toast('使用手机号或者id登录')"
+      />
+
+      <van-field
+        v-model="password"
+        type="password"
+        label="密码"
+        placeholder="请输入密码"
+        left-icon="hotel-o"
+      />
+    </van-cell-group>
+
+    <div class="pos_1">
+      <van-button type="primary" size="large" to="/myInfo">
         <van-loading size="24px" type="spinner" color="white" v-show="show1" />
         {{login}}
-      </span>
-    </router-link>
+      </van-button>
+    </div>
   </div>
 </template>
+
+
+
+
 
 
 
@@ -72,7 +62,6 @@ export default {
       login: "登录"
     };
   },
-  
 
   beforeRouteLeave(to, from, next) {
     console.log(to);
@@ -142,5 +131,15 @@ export default {
 <style scoped>
 .loading {
   color: white;
+}
+
+.arrow {
+  position: absolute;
+
+  top: 2vh;
+}
+
+.pos_1 {
+  padding-top: 3vh;
 }
 </style>

@@ -1,61 +1,51 @@
 <!-- //登录界面 -->
 <template id="page7">
   <div class="hei100">
-    <div class="van-doc-nav-bar van-nav-bar van-hairline--bottom" style="z-index: 1;">
+    <!-- <div class="van-doc-nav-bar van-nav-bar van-hairline--bottom" style="z-index: 1;">
       <div class="van-nav-bar__left">
         <i @click="$router.back(-1)" class="van-icon van-icon-arrow-left van-nav-bar__arrow"></i>
       </div>
       <div class="van-nav-bar__title van-ellipsis">个人登录</div>
       <div class="van-nav-bar__right"></div>
+    </div>-->
+
+    <img src="..\..\assets\image\userInfo\login_bg.png" width="100vw" style="width:100vw" />
+    <div class="van-nav-bar__left arrow">
+      <i @click="$router.back(-1)" class="van-icon van-icon-arrow-left van-nav-bar__arrow"></i>
     </div>
-    <section class="van-doc-demo-block">
-      <h2 class="van-doc-demo-block__title">登录个人用户</h2>
-      <div class="van-cell-group van-hairline--top-bottom">
-        <div class="van-cell van-cell--required van-field">
-          <div class="van-cell__title van-field__label">
-            <span>用户名</span>
-          </div>
-          <div class="van-cell__value">
-            <div class="van-field__body">
-              <input v-model="username" type="text" placeholder="请输入用户名" class="van-field__control" />
-              <div class="van-field__right-icon">
-                <i class="van-icon van-icon-question-o">
-                  <!---->
-                </i>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="van-cell van-cell--required van-field">
-          <div class="van-cell__title van-field__label">
-            <span>密码</span>
-          </div>
-          <div class="van-cell__value">
-            <div class="van-field__body">
-              <input
-                v-model="password"
-                type="password"
-                placeholder="请输入密码"
-                class="van-field__control"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <router-link
-      to="/myInfo"
-      tag="button"
-      style="width: 100%"
-      class="van-button van-button--primary van-button--normal btn_pos"
-    >
-      <span class="van-button__text">
+
+    <van-cell-group class="pos_1">
+      <van-field
+        v-model="username"
+        clearable
+        label="用户名"
+        right-icon="question-o"
+        placeholder="请输入用户名"
+        left-icon="user-o"
+        @click-right-icon="$toast('使用手机号或者id登录')"
+      />
+
+      <van-field
+        v-model="password"
+        type="password"
+        label="密码"
+        placeholder="请输入密码"
+        left-icon="hotel-o"
+      />
+    </van-cell-group>
+
+    <div class="pos_1">
+      <van-button type="primary" size="large" to="/myInfo">
         <van-loading size="24px" type="spinner" color="white" v-show="show1" />
         {{login}}
-      </span>
-    </router-link>
+      </van-button>
+    </div>
   </div>
 </template>
+
+
+
+
 
 
 
@@ -74,15 +64,15 @@ export default {
   },
 
   beforeRouteLeave(to, from, next) {
+    console.log(to);
 
-      console.log(to);
-
-      if(to.path == '/loginselect'){
-          next();
-          return
-      }
+    if (to.path == "/loginselect") {
+      next();
+      return;
+    }
 
     if (this.pass == true) {
+      g.login_status = true;
       next();
     }
     // ...
@@ -96,6 +86,8 @@ export default {
   },
   methods: {
     loginss(i) {
+      g.l_user = i.data;
+      console.log(g.l_user);
       if (i.code == 1) {
         this.$toast.fail(i.msg);
         this.show1 = false;
@@ -104,10 +96,9 @@ export default {
         this.$toast.success(i.msg);
         console.log(this.pass);
         this.pass = true;
-        g.l_user = i.data;
+
         this.$router.push({ path: "/myInfo" });
       }
-      console.log(i);
     },
     ajax(data, url, func) {
       //创建ajax
@@ -115,7 +106,7 @@ export default {
       var stringData = JSON.stringify(data);
       //请求行(发送方式/发送目标url)
       ajax.open("post", "http://47.96.231.75:8080/deliver" + url);
-    //   ajax.open("post", "http://192.168.1.102:8080" + url);
+      //   ajax.open("post", "http://192.168.1.102:8080" + url);
       //请求头
       ajax.setRequestHeader("Content-type", "application/json;charset=UTF-8");
       //回调函数
@@ -140,5 +131,15 @@ export default {
 <style scoped>
 .loading {
   color: white;
+}
+
+.arrow {
+  position: absolute;
+
+  top: 2vh;
+}
+
+.pos_1 {
+  padding-top: 3vh;
 }
 </style>

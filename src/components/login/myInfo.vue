@@ -3,7 +3,7 @@
     <div class="out">
       <div class="van-doc-nav-bar van-nav-bar van-hairline--bottom" style="z-index: 1;">
         <div class="van-nav-bar__left">
-          <i @click="$router.back(-1)" class="van-icon van-icon-arrow-left van-nav-bar__arrow"></i>
+          <i @click="$router.push('/homepage')" class="van-icon van-icon-arrow-left van-nav-bar__arrow"></i>
         </div>
         <div class="van-nav-bar__title van-ellipsis">我的</div>
         <div class="van-nav-bar__right"></div>
@@ -40,6 +40,11 @@
         <div class="dis_bl f_s_big">设置</div>
         <div class="arrow dis_bl"></div>
       </div>
+
+
+
+
+      <van-button plain hairline type="primary" block @click="cancel" class="btn1">注销</van-button>
     </div>
   </div>
 </template>
@@ -49,25 +54,32 @@
 <script>
 import g from "./global";
 
-
 export default {
   data() {
     return {
       username: "用户名",
       headPic: "http://47.96.231.75:8080/uploads/headPortraits/default.jpg",
       role: "身份",
-      id: "id",
+      id: "id"
     };
   },
-  mounted(){
+  mounted() {
     console.log(g.l_user);
-    
+
     this.username = g.l_user.userInfo.name;
-    if(g.l_user.userInfo.avatar!==''){
+    if (g.l_user.userInfo.avatar !== "") {
       let url = "http://47.96.231.75:8080";
       this.headPic = url + g.l_user.userInfo.avatar;
     }
-    this.role = g.l_user.user.role;
+    if (g.l_user.user.role == 0) {
+      this.role == "游客";
+    } else if (g.l_user.user.role == 1) {
+      this.role == "用户";
+    } else if (g.l_user.user.role == 2) {
+      this.role == "司机";
+    } else if (g.l_user.user.role == 3) {
+      this.role == "管理员";
+    }
     this.id = g.l_user.user.authId;
   },
   methods: {
@@ -83,9 +95,14 @@ export default {
         }
       };
       ajax.send(stringData);
+    },
+    cancel(){
+      g.l_user = '';
+      g.login_status = false;
+      this.$toast.success("注销成功!");
+      this.$router.push('/homepage');
     }
-  },
-  
+  }
 };
 </script>
 
@@ -93,7 +110,7 @@ export default {
 <style scoped>
 /* 快捷 */
 
-.mt_0{
+.mt_0 {
   margin-top: 0 !important;
 }
 
@@ -173,7 +190,6 @@ export default {
   background-size: 40px;
 }
 
-
 .setting {
   width: 40px;
   height: 40px;
@@ -181,8 +197,6 @@ export default {
   background-position: 50% 50%;
   background-size: 40px;
 }
-
-
 
 .order {
   width: 40px;
@@ -192,15 +206,9 @@ export default {
   background-size: 40px;
 }
 
-
-
-
-
-
-
 .arrow {
   width: 15px;
-  height: 15px ;
+  height: 15px;
   background-image: url("../../assets/image/userInfo/右箭头.svg");
   background-position: 50% 50%;
   background-size: 20px;
@@ -210,6 +218,11 @@ export default {
   /* height: 100%; */
   line-height: 40px;
   vertical-align: middle;
+}
+
+.btn1{
+  position: fixed;
+  bottom: 0;
 }
 
 /* we */

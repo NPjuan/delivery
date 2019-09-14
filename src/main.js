@@ -24,8 +24,10 @@ import {
   List,
   Picker,
   Circle,
-  Loading
+  Loading,
+  Image,
 } from 'vant'
+
 
 
 
@@ -39,7 +41,7 @@ import './css/vueup.css'
 // yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 Vue.use(AddressEdit).use(Area).use(Button).use(Popup).use(Field).use(Cell).use(CellGroup).use(Dialog).use(NavBar).use(List)
-Vue.use(DatetimePicker).use(Uploader).use(Switch).use(Picker).use(Circle).use(Loading)
+Vue.use(DatetimePicker).use(Uploader).use(Switch).use(Picker).use(Circle).use(Loading).use(Image)
 
 Vue.use(BaiduMap, {
   ak: "ANlGUWwHxTnBFsMnbRaTsRfQ6f37SOTo"

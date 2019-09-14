@@ -59,18 +59,20 @@
     var user_r_msg = {
         status: ""
     }
+
+    var l_user = {}
+
+    //用户登录状态
+    var login_status = false;
     export default {
         register_judge, //用户输入信息状态
-        user_msg,   //验证码存储
-        user_id,    //用户id存放
+        user_msg,   //用户id存放
+        user_id,    //验证码存储
         user_code,  //用户身份选择
         user_r_msg, //用户身份选择
+        login_status, //用户登录状态
+        l_user,        //用户登录后的个人信息获取
     }
 
 
-    var l_user = {
-
-
-
-    }
 </script>

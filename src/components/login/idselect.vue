@@ -16,7 +16,7 @@
     </div>
     <section style="text-align:center;">
       <router-link
-        to="/register?status=用户"
+        to="/register?status=1"
         tag="button"
         @click="status1"
         class="van-button van-button--primary van-button--normal btn_pos m_status"
@@ -27,7 +27,7 @@
     </section>
     <section style="text-align:center">
       <router-link
-        to="/register?status=司机"
+        to="/register?status=2"
         @click="status2"
         class="van-button van-button--primary van-button--normal btn_pos m_status"
         tag="button"
@@ -38,7 +38,7 @@
     </section>
     <section style="text-align:center">
       <router-link
-        to="/register?status=管理员"
+        to="/register?status=3"
         @click="status3"
         tag="button"
         class="van-button van-button--primary van-button--normal btn_pos m_status"
@@ -60,13 +60,13 @@ export default {
   },
   methods: {
     status1() {
-      g.user_msg.userInfo.role = "用户";
+      g.user_msg.userInfo.role = "1";       // 1->身份为 "用户"
     },
     status2() {
-      g.user_msg.userInfo.role = "司机";
+      g.user_msg.userInfo.role = "2";    // 2->身份为 "司机"
     },
     status3() {
-      g.user_msg.userInfo.role = "管理员";
+      g.user_msg.userInfo.role = "3";    // 3->身份为 "管理员"
     }
   }
   // beforeRouteLeave (to, from, next) {
@@ -87,7 +87,7 @@ export default {
 
     .bg_t{
         width: 100%;
-        height: 200px;
+        height: 25vh;
 
         border-bottom-right-radius: 50px 20px;
         border-bottom-left-radius:50px 20px;

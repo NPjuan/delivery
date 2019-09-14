@@ -299,7 +299,7 @@ export default {
     }
   },
   created() {
-    if (g.user_msg.userInfo.role == "司机") {
+    if (g.user_msg.userInfo.role == "2") {
       this.ids = "/driverselect";
     }
   },
@@ -308,7 +308,7 @@ export default {
     console.log(g.user_msg);
     let adoff = document.getElementsByClassName("administratoroff");
     let adon = document.getElementsByClassName("administratoron");
-    if (g.user_msg.userInfo.role == "管理员") {
+    if (g.user_msg.userInfo.role == "3") {
       adoff[0].style.display = "none";
       adoff[1].style.display = "none";
       adoff[2].style.display = "none";
@@ -334,7 +334,7 @@ export default {
     console.log(name.value);
     console.log(g.user_msg.userInfo.role);
     //判断身份
-    if (g.user_msg.userInfo.role == "管理员" && name.value) {
+    if (g.user_msg.userInfo.role == "3" && name.value) {
       //如果身份是管理员并且写了用户名
       console.log("成功-管理员");
       let ad_msg = {
@@ -356,7 +356,7 @@ export default {
       this.ajax(ad_msg, "/userInfo/userInfoRegister.do", "adregister");
       next();
     }
-    if (g.user_msg.userInfo.role == "用户" && name.value && id.value) {
+    if (g.user_msg.userInfo.role == "1" && name.value && id.value) {
       if(this.IDcardTip !=''){
         return
       }
@@ -368,7 +368,7 @@ export default {
       this.ajax(ad_msg, "/userInfo/userInfoRegister.do", "adregister");
       next();
     }
-    if (g.user_msg.userInfo.role == "司机" && name.value && id.value) {
+    if (g.user_msg.userInfo.role == "2" && name.value && id.value) {
       if(this.IDcardTip !=''){
         return
       }

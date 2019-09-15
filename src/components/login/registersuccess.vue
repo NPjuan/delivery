@@ -11,14 +11,23 @@
 
         </div>
 
-        <div class="bg_t text">
+
+
+
+        <div style="text-align:center">
+            <img src="../../assets/image/userinfo/success.png" alt="success" width="200px" style="display:inline-block">
+
+
+
+        </div>
+        <div class="bg_t text" style="color:black">
 
         注册成功
 
         </div>
 
         <section class="van-doc-demo-section demo-field" style="text-align:center">
-            <div style="text-align: center;margin-top: 20%;background-color: white;padding: 20px 0">
+            <div style="text-align: center;margin-top: 10%;padding: 20px 0">
                 <h4 style="text-align: center;font-size:25px" class="pad_10">你的个人id是:</h4>
                 <h4 class="user_id pad_10" style="text-align: center;color: green;font-weight: bold;font-size:30px"></h4>
                 <h5 style="text-align: center;color:gray" class="pad_10">个人id是用户的唯一身份凭证,可用于今后的登录</h5>
@@ -48,18 +57,17 @@
     }
 
     .bg_t{
-        width: 100%;
+        /* width: 100%;
         height: 25vh;
 
         border-bottom-right-radius: 50px 20px;
         border-bottom-left-radius:50px 20px;
-        background-color: #07c160;
+        background-color: #07c160; */
     }
 
     .text{
         text-align: center;
-        font-size: 30px;
-        line-height: 200px;
+        font-size: 25px;
         color: white;
     }
 

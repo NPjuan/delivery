@@ -6,7 +6,7 @@
                 <i @click="$router.back(-1)" class="van-icon van-icon-arrow-left van-nav-bar__arrow" style="color:white">
                             </i>
             </div>
-            <div class="van-nav-bar__title van-ellipsis" style="color:white">注册</div>
+            <div class="van-nav-bar__title van-ellipsis" style="color:white">注册成功</div>
             <div class="van-nav-bar__right"></div>
 
         </div>
@@ -16,12 +16,6 @@
         注册成功
 
         </div>
-
-
-
-
-
-
 
         <section class="van-doc-demo-section demo-field" style="text-align:center">
             <div style="text-align: center;margin-top: 20%;background-color: white;padding: 20px 0">

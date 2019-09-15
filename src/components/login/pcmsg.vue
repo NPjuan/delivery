@@ -315,6 +315,12 @@ export default {
     }
   },
   beforeRouteLeave(to, from, next) {
+
+    if(to.path=='/registersuccess'){
+      next();
+      return;
+    }
+
     console.log("开启离开填写信息页面");
     //填写完个人信息后保存执行:
     //获取用户名值

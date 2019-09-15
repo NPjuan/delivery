@@ -1,7 +1,7 @@
     <!-- //身份选择 -->
 <template id="page2">
   <div class="hei100">
-    <div class="van-doc-nav-bar van-nav-bar van-hairline--bottom bg" style="z-index: 1;">
+    <!-- <div class="van-doc-nav-bar van-nav-bar van-hairline--bottom bg" style="z-index: 1;">
       <div class="van-nav-bar__left">
         <i
           @click="$router.back(-1)"
@@ -11,7 +11,14 @@
       </div>
       <div class="van-nav-bar__title van-ellipsis" style="color:white">注册选择</div>
       <div class="van-nav-bar__right"></div>
-    </div>
+    </div>-->
+
+    <van-nav-bar
+      title="注册选择"
+      left-text=""
+      left-arrow
+      @click-left="back"
+    />
 
     <div class="bg_t text">选择您注册的身份</div>
     <!-- <section style="text-align:center;">
@@ -46,25 +53,22 @@
       >
         <span class="van-button__text">管理员</span>
       </router-link>
-    </section> -->
+    </section>-->
 
     <div style="text-align:center">
       <router-link class="ids" to="/register?status=1" tag="div">
-        <img src="../../assets/image/userinfo/用户.png" alt="用户"  width="70px"/>
+        <img src="../../assets/image/userinfo/用户.png" alt="用户" width="70px" />
         <span>用户</span>
       </router-link>
       <router-link class="ids" to="/register?status=2" tag="div">
-        <img src="../../assets/image/userinfo/司机.png" alt="司机" width="70px"/>
+        <img src="../../assets/image/userinfo/司机.png" alt="司机" width="70px" />
         <span>司机</span>
       </router-link>
       <router-link class="ids" to="/register?status=3" tag="div">
-        <img src="../../assets/image/userinfo/管理员.png" alt="管理员" width="70px"/>
+        <img src="../../assets/image/userinfo/管理员.png" alt="管理员" width="70px" />
         <span>管理员</span>
       </router-link>
     </div>
-
-
-
   </div>
 </template>
 
@@ -77,6 +81,9 @@ export default {
     return {};
   },
   methods: {
+    back(){
+      this.$router.back(-1);
+    },
     status1() {
       g.user_msg.userInfo.role = "1"; // 1->身份为 "用户"
     },
@@ -125,25 +132,22 @@ export default {
   background-color: white;
 
   text-align: left;
-  box-shadow: -1px 1px 8px  rgb(179, 178, 178);
+  box-shadow: -1px 1px 8px rgb(179, 178, 178);
   border-radius: 5px;
 }
 
-
-.ids img{
+.ids img {
   padding-left: 20px;
   display: inline-block;
   vertical-align: top;
 }
 
-.ids span{
-  display: inline-block;  
+.ids span {
+  display: inline-block;
   font-size: 17px;
   font-weight: bold;
-    line-height: 8vh;
-    width: 55vw;
-    text-align: center;
+  line-height: 8vh;
+  width: 55vw;
+  text-align: center;
 }
-
-
 </style>

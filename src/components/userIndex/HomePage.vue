@@ -95,7 +95,7 @@
               <textarea ref="textarea" maxlength="150" @keyup="highAdapt" placeholder="可输入留言,最大字数150"  v-model="deliveryMsg.description"></textarea>
             </div>
           </div>
-          <van-button type="primary" class="delivery-button" @click="delivery">发单</van-button>
+          <van-button type="primary" class="delivery-button" @click="sendOrder">发单</van-button>
         </div>
       </div>
     </div>
@@ -181,14 +181,14 @@
         <span class="user-info-name">
           {{consignor.phone}}
         </span>
-        <span v-for="(value, index, key) in userlist" class="user-info-item" :index="index" @touchstart="userList(index)" :ref="'user'+index" @touchend="offUserList(index)">
+        <span v-for="(value, index, key) in userlist" class="user-info-item" :index="index" @touchstart="userList(index)" :ref="'user'+index" @touchend="offUserList(index)" @click="funCase(index)">
           <img :src="value.src" :alt="value.alt" class="user-info-item-img">
           {{value.text}}
         </span>
       </div>
       <div v-else>
           <span class="user-info-item">
-          请先登陆再使用功能
+          尚未登陆，请先去登陆吧
          </span>
       </div>
     </van-popup>
@@ -362,7 +362,7 @@
         this.$router.push('/index/driver')
       },
       // 上传
-      delivery() {
+      sendOrder() {
         let self = this
         const instance=this.$axios.create({
           withCredentials: true
@@ -380,7 +380,6 @@
               .then(function (response) {
                 // 订单
                 self.order.userOrderId.push(response.data.data)
-
                 // 跳转到查找附件司机的页面
                  self.$router.push(
                    {
@@ -395,7 +394,19 @@
             console.log(err)
           })
       },
-
+      // 查看订单
+      funCase(index) {
+        let self = this
+        if(index == 0){
+          self.$router.push(
+            {
+              path: '/findDriver',// 跳转到查找司机页面
+              query:{
+                userOrderId:self.order.userOrderId
+              } // 传递 orderId 数组
+            })
+        }
+      },
       // 留言框高度自适应
       highAdapt() {
         this.$refs.textarea.style.height = 'auto'
@@ -773,21 +784,19 @@
       let self = this
       this.date.minDate = new Date()
       // 如果到了 50 分过后 直接跳过这个小时
-      if(i.getMinutes()>=50){
-       this.date.minDate.setTime(i.getTime() + 1000*60*10)
-      }else{
+      if (i.getMinutes() >= 50) {
+        this.date.minDate.setTime(i.getTime() + 1000 * 60 * 10)
+      } else {
         this.date.currentDate = this.date.minDate
       }
-    // 设置未来最大持续时间为 20 天
-      this.date.maxDate = new Date (
+      // 设置未来最大持续时间为 20 天
+      this.date.maxDate = new Date(
         this.date.minDate.getFullYear(),
         this.date.minDate.getMonth(),
-        this.date.minDate.getUTCDate()+20
+        this.date.minDate.getUTCDate() + 20
       )
-    },
-    created() {
-      // 如果已经登陆过一次
-      if(g.l_user){
+
+      if (g.l_user.user.id !== undefined) {
         //  通过 id 得到 姓名
         this.deliveryMsg.uid = g.l_user.user.id // 发货对应的 id
         this.consignor.cid = g.l_user.user.id // 数据库对应的 id 设置地址的时候要用到
@@ -797,6 +806,9 @@
         this.consignor.headPicUrl = "http://47.96.231.75:8080" + g.l_user.userInfo.avatar
         this.judge.loginState = true
       }
+    },
+    created() {
+      // 如果已经登陆过一次
     },
   }
 </script>
@@ -830,7 +842,7 @@
     display: inline-block;
     height: .75rem;
     line-height: .75rem;
-    transition: .5s all ease;
+    transition: .2s all ease;
   }
   .user-info-item-active{
     background-color: #39a9ed;

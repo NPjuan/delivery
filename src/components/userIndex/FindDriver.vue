@@ -9,11 +9,11 @@
           <p class="driver-list-item-driver"><span>司机</span><span style="color: #7d7e80;padding-right: .2rem">{{value.name}}</span><span>{{value.license}}</span></p>
           <p class="driver-list-item-date"><span>出发时间</span><span>{{value.startDate}}</span></p>
           <p class="driver-list-item-address"><span>出发地</span><span style="display: inline-block;"><span>{{value.startAddress}}</span></span></p>
-          <button class="invite-button">邀请他</button>
+          <button class="invite-button" @click="inviteDriver">邀请他</button>
         </div>
     </div>
     <div v-else style="width: 100%;font-size: .3rem;padding-top: 3rem;text-align: center">
-      暂时没发现有顺路司机哦
+      {{ msg }}
     </div>
   </div>
 </template>
@@ -28,12 +28,21 @@
             url: "http://118.25.85.198:8080/deliver",
             driver: [],
             userOrderId: [] , // 订单 id
-            testDriver:[]
+            testDriver:[],
+            msg: "暂时还没有顺路司机哦"
           }
       },
       methods: {
+        inviteDriver() {
+          this.$toast('已向司机发送邀请')
+        },
         findDriver() {
           let self = this
+          // 从未发布订单
+          if(self.userOrderId.length === 0){
+            this.msg = "未发布订单，无法寻找顺路司机"
+            return
+          }
           this.$axios.post(this.url + "/driverOrder/findNear.do",{
             userOrderId: Number(self.userOrderId),
           })
@@ -41,7 +50,6 @@
               self.driver = []
               // 如果查找不到顺路司机
               if(response.data.data == null){
-                  console.log("暂无顺路司机")
                 console.log(self.driver.length)
               }else{
                 for(let i=0,len=response.data.data.length;i<len;i++){

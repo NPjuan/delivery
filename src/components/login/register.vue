@@ -48,7 +48,7 @@
                   placeholder="请输入六位数字短信验证码"
                   name="code"
                   class="van-field__control"
-                  onkeyup="this.value=this.value.replace(/\D/g,'')" 
+                  onkeyup="this.value=this.value.replace(/\D/g,'')"
                   onafterpaste="this.value=this.value.replace(/\D/g,'')"
                   maxlength="6"
                 />
@@ -382,6 +382,8 @@ export default {
         g.user_id = i.data.userAuthId;
         g.user_msg.userInfo.uid = i.data.userId;
         g.user_msg.area.uid = i.data.userId;
+        // pjy
+        // g.l_user.user.id = i.data.userAuthId;
         let idd = document.getElementsByClassName("user_id")[0];
         idd.innerHTML = g.user_id;
         // alert("注册成功!");

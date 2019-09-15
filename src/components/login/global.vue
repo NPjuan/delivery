@@ -71,7 +71,8 @@
         user_code,  //用户身份选择
         user_r_msg, //用户身份选择
         login_status, //用户登录状态
-        l_user,        //用户登录后的个人信息获取
+        l_user        //用户登录后的个人信息获取
+
     }
 
 

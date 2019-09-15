@@ -1,7 +1,7 @@
 <template>
   <div class="orderinfo">
     <van-cell-group class="cell-group">
-      <button plain type="primary" size="small"  @click="returnwhere" class="returnlast"><</button>
+      <!-- <button plain type="primary" size="small"  @click="returnwhere" class="returnlast"></button> -->
       <p class="remind3">订单详情</p>
       <ul class="infoul">
         <li >
@@ -54,6 +54,24 @@
             </div>
           </div>
         </li>
+        <li>
+          <van-button type="primary"  @click="confirm" class="confirm">确认接单</van-button>
+          <van-popup v-model="confirmShow">
+            <van-field class = "guarantee"
+            v-model = "idStr"
+            label = "担保人id"
+            type = "textarea"
+            placeholder = "请输入担保人id"
+            rows="1"
+            autosize
+            required
+            @blur = "checkId"
+            />
+          </van-popup>
+          <van-popup v-model="confirmShow2" class = "confirm-again">
+            <van-button type="primary"  @click="confirm1" class = "confirm-last">无需担保人，确认接单</van-button>
+          </van-popup>
+        </li>
       </ul>
     </van-cell-group>
   </div>
@@ -83,6 +101,8 @@ export default {
     deliveryEnd:"",
     description:"",
     photo:[],
+    confirmShow:false,
+    idStr:"",
     };
   },//data结束
 
@@ -147,6 +167,60 @@ export default {
         }
         })                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 .go(-1)
     },
+    confirm(){
+      let self = this
+      axios.defaults.baseURL = 'http://118.25.85.198:8080/deliver'
+      axios.post('/order/validateNeedSafety.do',{
+        userOrderId: 58,//从orderlist传过来的点击某个订单的时候此订单的id
+        driverUid:1
+      })
+      .then(function(response){
+          if(response.data.msg === "不需要担保人"){
+            self.confirmShow2 = true;
+          }
+          if(response.data.msg === "需要担保人"){
+            self.confirmShow = true;
+          }
+      })
+    },
+    checkId(){
+      axios.defaults.baseURL = 'http://118.25.85.198:8080/deliver'
+      axios.post('/order/validateSafety.do',{
+        userOrderId: 58,
+        suretyAuthId:"4"
+      })
+      .then((response)=>{
+          if(response.data.msg == "该担保人符合要求"){
+            this.$router.push({//查询成功后路由跳转，传附近订单所有所有发货人信息给orderlist
+            name:"guaranteeLink",
+            params:{
+              guaranteeId:this.idStr,
+              guaranteeName:response.data.data.name,
+              guaranteePhone:response.data.data.phone,
+            }
+        })
+          }
+          else{
+            this.$toast("id不存在，请重新填写")
+            this.confirmShow = true;
+          }
+      })
+
+    },
+    confirm1(){
+      axios.defaults.baseURL = 'http://118.25.85.198:8080/deliver'
+      axios.post('/order/receive.do',{
+        userOrderId:25,
+        driverUid:1,
+        suretyAuthId:"4"
+      })
+        .then((response)=>{
+            this.$toast(response.data.msg)
+            this.$router.push({
+            name:"orderLink",
+      })
+      })
+    }
   }
 
   }
@@ -169,7 +243,7 @@ export default {
 }
 .remind3{/*页面中的"以下为订单详情信息*/
   position:relative;
-  top:-1.5rem;
+  top:-.8rem;
   color:#07c160;
   /* font-weight:bold; */
   height:1300px;
@@ -179,6 +253,7 @@ export default {
   padding-top: 12px;
 }
 .infoul{/*页面中的ul*/
+  width:100%;
   position:absolute;
   top:38px;
   height:13rem;
@@ -247,7 +322,7 @@ export default {
   width:90%;
   background-color:white;
   border-radius: 5px;
-  height:3.5rem;
+  height:5.0rem;
 }
 .box{/*货物标题框*/
   position:relative;
@@ -279,5 +354,20 @@ export default {
 .goodsphoto{/*拿到的货物的照片*/
   width:33%;
   float:left;
+}
+.confirm {
+  margin:0 16px;
+  width:90%;
+}
+.guarantee{
+  width:230px;
+}
+.confirm-again{
+  width:90%;
+  margin:0 auto;
+}
+.confirm-last{
+  margin:0 60px;
+
 }
 </style>

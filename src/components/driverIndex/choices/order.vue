@@ -1,7 +1,7 @@
 <template>
   <div class="order" >
     <van-cell-group >
-      <van-button plain type="primary" size="small"  @click="returndriver" class = "returndriver">&lt;</van-button>
+      <!-- <van-button plain type="primary" size="small"  @click="returndriver" class = "returndriver"></van-button> -->
       <p class = "remind">请先输入您的具体位置</p>
       <van-field class="cellone"
         v-model = "areaCode"
@@ -137,7 +137,7 @@ export default {
       city:addressMessage.city1,
       district:addressMessage.district1,
       town:"七侠镇",
-      village:"高手村"
+      village:"石头"
 
       }).then((response)=>{//接口返回数据告诉司机查询成功
         if(response.data.code == 0){

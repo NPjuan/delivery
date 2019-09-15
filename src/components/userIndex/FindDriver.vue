@@ -37,7 +37,7 @@
           let self = this
           this.$toast('已向司机发送邀请')
           this.$axios.post(this.url + "/order/inviteDriver.do",{
-            userOrderId: self.driver[index].id, // 订单 id
+            userOrderId: self.userOrderId[0], // 订单 id
             driverUid: self.driver[index].uid // 司机 id
           })
             .then(function (res) {

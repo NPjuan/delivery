@@ -116,7 +116,8 @@
               town:"", // 镇
               village: "", // 村
               detail: "",// 详细地址
-              status: "" // 状态地址
+              status: "", // 状态地址
+              cid: "" // 查找用的id
             },
             errorMessage: { // 错误信息
               id:"",
@@ -150,7 +151,7 @@
               }
             })
               .then(function (response) {
-                if(response.data.code == 400){
+                if(response.data.code == 1){
                   self.judge.id = false
                   self.errorMessage.id = response.data.msg
                   // 修改为空
@@ -164,6 +165,7 @@
                   self.errorMessage.id = ""
                   self.consignee.name = response.data.data.name
                   self.consignee.phone = response.data.data.phone
+                  self.consignee.cid = response.data.data.cid
                 }
               })
               .catch(function (err) {
@@ -238,7 +240,7 @@
             // 发送的数据
             let transmitMes = {
               uid:this.$route.query.id, // 发货人 id 从 homepage处获得 ，又或者可以从登陆状态获得
-              cid:this.consignee.id, // 收货人 id
+              cid:this.consignee.cid, // 收货人 id
               province:this.consignee.province,
               city:this.consignee.city,
               district:this.consignee.district,

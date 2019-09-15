@@ -49,19 +49,22 @@
     </section> -->
 
     <div style="text-align:center">
-      <div class="ids">
+      <router-link class="ids" to="/register?status=1" tag="div">
         <img src="../../assets/image/userinfo/用户.png" alt="用户"  width="70px"/>
         <span>用户</span>
-      </div>
-      <div class="ids">
+      </router-link>
+      <router-link class="ids" to="/register?status=2" tag="div">
         <img src="../../assets/image/userinfo/司机.png" alt="司机" width="70px"/>
         <span>司机</span>
-      </div>
-      <div class="ids">
+      </router-link>
+      <router-link class="ids" to="/register?status=3" tag="div">
         <img src="../../assets/image/userinfo/管理员.png" alt="管理员" width="70px"/>
         <span>管理员</span>
-      </div>
+      </router-link>
     </div>
+
+
+
   </div>
 </template>
 

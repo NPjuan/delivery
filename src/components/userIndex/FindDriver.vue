@@ -9,7 +9,7 @@
           <p class="driver-list-item-driver"><span>司机</span><span style="color: #7d7e80;padding-right: .2rem">{{value.name}}</span><span>{{value.license}}</span></p>
           <p class="driver-list-item-date"><span>出发时间</span><span>{{value.startDate}}</span></p>
           <p class="driver-list-item-address"><span>出发地</span><span style="display: inline-block;"><span>{{value.startAddress}}</span></span></p>
-          <button class="invite-button" @click="inviteDriver">邀请他</button>
+          <button class="invite-button" @click="inviteDriver(index)">邀请他</button>
         </div>
     </div>
     <div v-else style="width: 100%;font-size: .3rem;padding-top: 3rem;text-align: center">
@@ -33,8 +33,19 @@
           }
       },
       methods: {
-        inviteDriver() {
+        inviteDriver(index) {
+          let self = this
           this.$toast('已向司机发送邀请')
+          this.$axios.post(this.url + "/order/inviteDriver.do",{
+            userOrderId: self.driver[index].id, // 订单 id
+            driverUid: self.driver[index].uid // 司机 id
+          })
+            .then(function (res) {
+              console.log(res)
+            })
+            .catch(function (err) {
+              console.log(err)
+            })
         },
         findDriver() {
           let self = this
@@ -47,6 +58,7 @@
             userOrderId: Number(self.userOrderId),
           })
             .then(function (response) {
+              console.log(response)
               self.driver = []
               // 如果查找不到顺路司机
               if(response.data.data == null){
@@ -60,7 +72,9 @@
                     carPicture,
                     startDate:self.timeFilter(goOff), //时间过滤器
                     name,
-                    phone
+                    phone,
+                    uid:areas[0].uid, // 司机 id
+                    areaId: areas[0].id // 地址 id
                   }
                   self.driver.push(mes)
                 }

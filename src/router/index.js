@@ -21,6 +21,8 @@ import orderlist from '../components/driverIndex/choices/orderlist'
 import orderinfo from '../components/driverIndex/choices/orderinfo'
 // 接收邀请
 import invitation from '../components/driverIndex/choices/invitation'
+//担保人
+import guarantee from '../components/driverIndex/choices/guarantee'
 // pjy
 import HomePage from '../components/userIndex/HomePage'
 import ConsigneeAddress from '../components/userIndex/ConsigneeAddress'
@@ -65,6 +67,8 @@ export default new Router({
             {path:"/choices/orderlist", meta: {index: 2}, name:"listLink",component:orderlist},
             //订单详情页面
             {path:"/choices/orderinfo", meta: {index: 2}, name:"infoLink",component:orderinfo},
+            //担保人页面
+            {path:"/choices/guarantee", meta: {index: 2}, name:"guaranteeLink",component:guarantee},
             //邀我接单
             {path: "/choices/invitation", meta: {index: 2}, name: "inviteLink", component: invitation},
           ]},

@@ -317,6 +317,11 @@ export default {
   width:.5rem;
   height:.5rem;
 }
+.confirm{
+  display: block;
+  width: 90%;
+  margin: auto;
+}
 .goods{/*页面中的货物框*/
   margin:0 auto;
   width:90%;

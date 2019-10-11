@@ -87,6 +87,8 @@ export default {
   methods: {
     loginss(i) {
       g.l_user = i.data;
+      // pjy 加入 login 判断是否为登陆成功状态
+      g.l_user.login = true
       console.log(g.l_user);
       if (i.code == 1) {
         this.$toast.fail(i.msg);

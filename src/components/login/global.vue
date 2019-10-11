@@ -60,7 +60,9 @@
         status: ""
     }
 
-    var l_user = {}
+    var l_user = {
+      login: false
+    }
 
     //用户登录状态
     var login_status = false;

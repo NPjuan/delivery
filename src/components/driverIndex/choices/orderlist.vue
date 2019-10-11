@@ -88,6 +88,7 @@ export default {
   top:10px;
   /*width:90%;*/
   /*height:2.5rem;*/
+  line-height: 16px;
   margin:.38rem .38rem;
   padding:.2rem .2rem;
   border: 2px solid #f6f8f7;

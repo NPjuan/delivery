@@ -56,14 +56,14 @@
         background-color: #07c160;
     }
 
-    .bg_t{
-        /* width: 100%;
+    /* .bg_t{
+        width: 100%;
         height: 25vh;
 
         border-bottom-right-radius: 50px 20px;
         border-bottom-left-radius:50px 20px;
-        background-color: #07c160; */
-    }
+        background-color: #07c160;
+    } */
 
     .text{
         text-align: center;

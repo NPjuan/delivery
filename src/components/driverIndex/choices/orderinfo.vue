@@ -187,7 +187,7 @@ export default {
       axios.defaults.baseURL = 'http://118.25.85.198:8080/deliver'
       axios.post('/order/validateSafety.do',{
         userOrderId: 58,
-        suretyAuthId:"4"
+        suretyAuthId: "2222222222"
       })
       .then((response)=>{
           if(response.data.msg == "该担保人符合要求"){

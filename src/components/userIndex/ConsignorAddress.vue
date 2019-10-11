@@ -294,6 +294,7 @@
   }
   .container{
     background-color: #f8f8f8;
+    overflow: auto;
   }
   .message{
     margin: .4rem auto;

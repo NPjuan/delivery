@@ -20,7 +20,6 @@
         max-width: 640px;
         min-width: 320px;
         font-size: 5px;
-        overflow: hidden;
         font-family: "Micrisoft YaHei";
       }
       *::before,
@@ -57,15 +56,4 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
-  <script>
-    var fontSizeAuto = function(oriWidth){
-      return function(){
-        var viewportWidth = document.documentElement.clientWidth;
-        if(viewportWidth > 640){ viewportWidth = 640; }
-        if(viewportWidth < 320){ viewportWidth = 320; }
-        document.documentElement.style.fontSize = viewportWidth/(oriWidth/100) +'px';
-      }
-    }
-    window.onresize = fontSizeAuto(750)();
-  </script>
 </html>

@@ -342,7 +342,7 @@
       }
     },
     methods: {
-      // 用户信息列表
+      // 用户信息列表触摸
       userList(index) {
         this.$refs['user'+index][0].style.backgroundColor = "#AFEEEE"
       },
@@ -361,7 +361,7 @@
         this.$toast('只有注册成为司机才能使用该功能')
         this.$router.push('/index/driver')
       },
-      // 上传
+      // 上传订单
       sendOrder() {
         let self = this
         const instance=this.$axios.create({
@@ -397,13 +397,11 @@
       // 查看订单
       funCase(index) {
         let self = this
+        // index 值做区分 0 为订单
         if(index == 0){
-          self.$router.push(
+          this.$router.push(
             {
-              path: '/findDriver',// 跳转到查找司机页面
-              query:{
-                userOrderId:self.order.userOrderId
-              } // 传递 orderId 数组
+              path: '/userOrderList',// 跳转到查找司机页面
             })
         }
       },
@@ -510,8 +508,7 @@
       },
       // 通过 role 请求地址
       findAddress() { // 通过用户 id 来寻找地址
-
-        if(!g.l_user){
+        if(!g.l_user.login){
           this.$toast('请先登陆后使用')
           return
         }else{
@@ -796,7 +793,7 @@
         this.date.minDate.getUTCDate() + 20
       )
 
-      if (g.l_user.user.id !== undefined) {
+      if (g.l_user.login) {
         //  通过 id 得到 姓名
         this.deliveryMsg.uid = g.l_user.user.id // 发货对应的 id
         this.consignor.cid = g.l_user.user.id // 数据库对应的 id 设置地址的时候要用到

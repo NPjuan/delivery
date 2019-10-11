@@ -293,7 +293,8 @@
 
 <style scoped>
   .default{
-    margin: 10px 0
+    margin: 10px 0;
+    background-color: white;
   }
   .default::after{
     content: ".";
@@ -314,6 +315,7 @@
   }
   .container{
     background-color: #f8f8f8;
+    overflow: auto;
   }
   .message{
     margin: .4rem auto;

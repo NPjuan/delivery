@@ -28,7 +28,9 @@ import {
   Image,
 } from 'vant'
 
-
+// pjy 的个人组件
+import normalHeader from './components/userIndex/NormalHeader'
+Vue.component("normalHeader",normalHeader)
 
 
 import VueBus from './vue-bus'

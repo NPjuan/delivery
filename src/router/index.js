@@ -28,6 +28,7 @@ import HomePage from '../components/userIndex/HomePage'
 import ConsigneeAddress from '../components/userIndex/ConsigneeAddress'
 import ConsignorAddress from '../components/userIndex/ConsignorAddress'
 import FindDriver from '../components/userIndex/FindDriver'
+import UserOrderList from '../components/userIndex/UserOrderList'
 
 //yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 import loginselect from '../components/login/loginselect'
@@ -57,6 +58,8 @@ export default new Router({
         {path: "/consignorAddress", meta: {index: 1}, name: "consignorAddressLink", component: ConsignorAddress},
         // 寻找附件司机
         {path: "/findDriver", meta: {index: 1}, name: "findDriverLink", component: FindDriver},
+        // 订单详情
+        {path: "/userOrderList", meta: {index: 1}, name: "userOrderListLink", component: UserOrderList},
         // 司机 bz
         {path:"/index/driver", meta: {index: 1}, name:"driverLink",component:driver,   children:[
             // 发布行程

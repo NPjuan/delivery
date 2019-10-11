@@ -294,7 +294,6 @@ export default {
       if (i.code == 0) {
         g.user_code.data = i.data;
         let time = setInterval(() => {
-          console.log(this.count);
           btn.style.backgroundColor = "gray";
           btn.style.border = "gray";
           btn.innerHTML = this.count + "s重新发送";

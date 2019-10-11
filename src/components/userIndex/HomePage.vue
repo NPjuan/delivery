@@ -116,7 +116,7 @@
       <div v-if="judge.role == 'consignor'" class="address-list">
         <!--:class="{'address-active': judge.addressPick}"-->
         <div v-if="addresses.length">
-          <div  class="" @touchstart="pressAddress(index)" :ref="index" @touchend="releaseAddress(index)" v-for="(value, index, key) in addresses" :index="index">
+          <div  class="" @touchstart="pressAddress(index)" :ref="index" @touchend="releaseAddress(index)" v-for="(value, index, key) in addresses" :index="index" :key="key" >
             <div class="address-item">
               <!--因为用户的姓名和电话是登录的时候就已经完成了，所有直接引用-->
               <p class="address-item-user"><span>{{consignor.name}}</span><span>{{consignor.phone}}</span></p>
@@ -131,7 +131,7 @@
         </div>
       </div>
       <div v-else class="address-list">
-        <div v-if="addresses.length" class="" @touchstart="pressAddress(index)" :ref="index" @touchend="releaseAddress(index)" v-for="(value, index, key)  in addresses" :index="index">
+        <div v-if="addresses.length"  class="" @touchstart="pressAddress(index)" :ref="index" @touchend="releaseAddress(index)" v-for="(value, index, key) in addresses" :key="key" :index="index">
           <div class="address-item">
             <p class="address-item-user"><span>{{value.name}}</span><span>{{value.phone}}</span></p>
             <!--通过索引来选择显示的地址-->
@@ -181,7 +181,7 @@
         <span class="user-info-name">
           {{consignor.phone}}
         </span>
-        <span v-for="(value, index, key) in userlist" class="user-info-item" :index="index" @touchstart="userList(index)" :ref="'user'+index" @touchend="offUserList(index)" @click="funCase(index)">
+        <span v-for="(value, index, key) in userlist" :key="key" class="user-info-item" :index="index" @touchstart="userList(index)" :ref="'user'+index" @touchend="offUserList(index)" @click="funCase(index)">
           <img :src="value.src" :alt="value.alt" class="user-info-item-img">
           {{value.text}}
         </span>

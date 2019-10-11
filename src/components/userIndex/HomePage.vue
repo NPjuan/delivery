@@ -23,7 +23,7 @@
         <span :class="{'head-span': true,'head-span-active':true}">我要友捎</span>
         <span class="head-span" @click="driver">我要接单</span>
         <span class="head-span" @click="message">友捎消息</span>
-        <span class="head-span" @click="login">登陆注册</span>
+        <span class="head-span" @click="login">{{loginStatus}}</span>
       </div>
     </header>
     <baidu-map id="map" :center="map.center" :zoom=map.zoom :scroll-wheel-zoom=map.scrollWheelZoom @ready="handler">
@@ -131,7 +131,7 @@
         </div>
       </div>
       <div v-else class="address-list">
-        <div v-if="addresses.length" class="" @touchstart="pressAddress(index)" :ref="index" @touchend="releaseAddress(index)" v-for="(value, index, key) in addresses" :index="index">
+        <div v-if="addresses.length" class="" @touchstart="pressAddress(index)" :ref="index" @touchend="releaseAddress(index)" v-for="(value, index, key)  in addresses" :index="index">
           <div class="address-item">
             <p class="address-item-user"><span>{{value.name}}</span><span>{{value.phone}}</span></p>
             <!--通过索引来选择显示的地址-->
@@ -211,6 +211,7 @@
     name: "homepage",
     data() {
       return {
+        loginStatus:"注册信息",
         // 地图信息
         // lt http://118.25.85.198:8080/CATStudio/
         // jb http://47.96.231.75:8080/deliver
@@ -779,7 +780,24 @@
         next()
       }
     },
+    beforeRouteLeave (to, from, next) {
+      if(to.path=="/loginselect"&&g.login_status){
+        this.$router.push({
+          path: `/myInfo`
+        })
+      }
+      next();
+    },
     mounted() {
+      /**         yxxxxxxxxxxxxxxxxx        */
+
+      if(g.login_status==true){
+        this.loginStatus = "我的";
+      }else{
+        this.loginStatus = "登录注册";
+      }
+      /**         yxxxxxxxxxxxxxxxxx        */
+
       let i = new Date()
       let self = this
       this.date.minDate = new Date()

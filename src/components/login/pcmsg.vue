@@ -1,6 +1,8 @@
     <!-- 个人信息填写页面 -->
 <template id="page5">
-  <div class="hei100">
+
+  <!-- 标记,overflow使用 -->
+  <div class="hei100" style="overflow:auto">        
     <div class="van-doc-nav-bar van-nav-bar van-hairline--bottom" style="z-index: 1;">
       <div class="van-nav-bar__left">
         <i @click="$router.back(-1)" class="van-icon van-icon-arrow-left van-nav-bar__arrow"></i>

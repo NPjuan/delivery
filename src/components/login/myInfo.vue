@@ -66,20 +66,27 @@ export default {
   mounted() {
     console.log(g.l_user);
 
+    //赋值用户名
     this.username = g.l_user.userInfo.name;
+
+    //赋值头像
     if (g.l_user.userInfo.avatar !== "") {
       let url = "http://47.96.231.75:8080";
       this.headPic = url + g.l_user.userInfo.avatar;
     }
+      
+    //赋值身份
     if (g.l_user.user.role == 0) {
-      this.role == "游客";
-    } else if (g.l_user.user.role == 1) {
-      this.role == "用户";
+      this.role = "游客";
+    } else if (g.l_user.user.role == 1) { 
+      this.role = "用户";
     } else if (g.l_user.user.role == 2) {
-      this.role == "司机";
+      this.role = "司机";
     } else if (g.l_user.user.role == 3) {
-      this.role == "管理员";
+      this.role = "管理员";
     }
+
+    //赋值id
     this.id = g.l_user.user.authId;
   },
   methods: {
@@ -96,8 +103,14 @@ export default {
       };
       ajax.send(stringData);
     },
+
+    //注销
     cancel(){
+
+      //清空用户信息
       g.l_user = '';
+
+      //登录
       g.login_status = false;
       this.$toast.success("注销成功!");
       this.$router.push('/homepage');

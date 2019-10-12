@@ -30,7 +30,7 @@
       </section>
       <div class="test_drag ver_m10">
         <div class="test_bg"></div>
-        <div class="test_text" style="font-size:15px">请拖动滑块验证</div>
+        <div class="test_text" style="font-size:25px">请拖动滑块验证</div>
         <div class="test_btn">>></div>
       </div>
       <section class="van-doc-demo-block showoff">
@@ -294,7 +294,6 @@ export default {
       if (i.code == 0) {
         g.user_code.data = i.data;
         let time = setInterval(() => {
-          console.log(this.count);
           btn.style.backgroundColor = "gray";
           btn.style.border = "gray";
           btn.innerHTML = this.count + "s重新发送";

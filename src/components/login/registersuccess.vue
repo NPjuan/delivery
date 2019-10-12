@@ -14,7 +14,7 @@
 
 
 
-        <div style="text-align:center">
+        <div style="text-align:center;padding-top:5vh;">
             <img src="../../assets/image/userinfo/success.png" alt="success" width="200px" style="display:inline-block">
 
 

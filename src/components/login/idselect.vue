@@ -1,74 +1,36 @@
     <!-- //身份选择 -->
 <template id="page2">
   <div class="hei100">
-    <!-- <div class="van-doc-nav-bar van-nav-bar van-hairline--bottom bg" style="z-index: 1;">
-      <div class="van-nav-bar__left">
-        <i
-          @click="$router.back(-1)"
-          class="van-icon van-icon-arrow-left van-nav-bar__arrow"
-          style="color:white"
-        ></i>
-      </div>
-      <div class="van-nav-bar__title van-ellipsis" style="color:white">注册选择</div>
-      <div class="van-nav-bar__right"></div>
-    </div>-->
+    <van-nav-bar title="注册选择" left-text left-arrow @click-left="back" />
 
-    <van-nav-bar
-      title="注册选择"
-      left-text=""
-      left-arrow
-      @click-left="back"
-    />
+    <div class="bg_t text">你好!请选择您注册的身份</div>
 
-    <div class="bg_t text">选择您注册的身份</div>
-    <!-- <section style="text-align:center;">
-      <router-link
-        to="/register?status=1"
-        tag="button"
-        @click="status1"
-        class="van-button van-button--primary van-button--normal btn_pos m_status"
-        style="width: 50%;margin-bottom: 50px;margin-top: 20%"
-      >
-        <span class="van-button__text">用户</span>
+    <div class="out">
+      <router-link  to="/register?status=1" tag="div" class="nids">
+        <div class="f1">
+          <img src="../../assets/image/userinfo/用户.png" alt="用户" width="70px" />
+        </div>
+        <div class="f2">用户</div>
       </router-link>
-    </section>
-    <section style="text-align:center">
-      <router-link
-        to="/register?status=2"
-        @click="status2"
-        class="van-button van-button--primary van-button--normal btn_pos m_status"
-        tag="button"
-        style="width: 50%;margin-bottom: 50px"
-      >
-        <span class="van-button__text">司机</span>
-      </router-link>
-    </section>
-    <section style="text-align:center">
-      <router-link
-        to="/register?status=3"
-        @click="status3"
-        tag="button"
-        class="van-button van-button--primary van-button--normal btn_pos m_status"
-        style="width: 50%;margin-bottom: 50px"
-      >
-        <span class="van-button__text">管理员</span>
-      </router-link>
-    </section>-->
 
-    <div style="text-align:center">
-      <router-link class="ids" to="/register?status=1" tag="div">
-        <img src="../../assets/image/userinfo/用户.png" alt="用户" width="70px" />
-        <span>用户</span>
+      <router-link  to="/register?status=2" tag="div" class="nids">
+        <div class="f1">
+          <img src="../../assets/image/userinfo/司机.png" alt="司机" width="70px" />
+        </div>
+        <div class="f2">司机</div>
       </router-link>
-      <router-link class="ids" to="/register?status=2" tag="div">
-        <img src="../../assets/image/userinfo/司机.png" alt="司机" width="70px" />
-        <span>司机</span>
+
+      <router-link  to="/register?status=3" tag="div" class="nids">
+        <div class="f1">
+          <img src="../../assets/image/userinfo/管理员.png" alt="管理员" width="70px" />
+        </div>
+        <div class="f2">管理员</div>
       </router-link>
-      <router-link class="ids" to="/register?status=3" tag="div">
-        <img src="../../assets/image/userinfo/管理员.png" alt="管理员" width="70px" />
-        <span>管理员</span>
-      </router-link>
+
+
     </div>
+
+
   </div>
 </template>
 
@@ -81,7 +43,7 @@ export default {
     return {};
   },
   methods: {
-    back(){
+    back() {
       this.$router.back(-1);
     },
     status1() {
@@ -102,6 +64,8 @@ export default {
 
 
 <style scoped>
+
+
 .bg {
   background-color: #07c160;
 }
@@ -118,36 +82,39 @@ export default {
 .text {
   text-align: center;
   font-size: 20px;
-  line-height: 200px;
-  color: rgb(44, 44, 44);
+  line-height: 18vh;
+  color: rgb(104, 104, 104);
 }
+.nids {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
 
-.ids {
-  display: inline-block;
-  margin: 30px 0px;
+  margin: 30px auto;
   padding: 15px 0px;
   height: 8vh;
   width: 80vw;
 
   background-color: white;
-
-  text-align: left;
   box-shadow: -1px 1px 8px rgb(179, 178, 178);
   border-radius: 5px;
 }
 
-.ids img {
-  padding-left: 20px;
-  display: inline-block;
-  vertical-align: top;
-}
+  .f1{
+    flex:3;
+    /* margin: 0 auto; */
+  }
 
-.ids span {
-  display: inline-block;
-  font-size: 17px;
-  font-weight: bold;
-  line-height: 8vh;
-  width: 55vw;
-  text-align: center;
-}
+   .f1 img{
+     margin: 0 auto;
+   }
+
+  .f2{
+    flex:7;
+    text-align: center;
+    font-size: 25px;
+  }
+
 </style>

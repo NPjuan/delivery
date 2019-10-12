@@ -1,19 +1,18 @@
 <!-- //登录界面 -->
 <template id="page7">
   <div class="hei100">
-    <!-- <div class="van-doc-nav-bar van-nav-bar van-hairline--bottom" style="z-index: 1;">
-      <div class="van-nav-bar__left">
-        <i @click="$router.back(-1)" class="van-icon van-icon-arrow-left van-nav-bar__arrow"></i>
-      </div>
-      <div class="van-nav-bar__title van-ellipsis">个人登录</div>
-      <div class="van-nav-bar__right"></div>
-    </div>-->
+
+    <!-- 登录界面 -->
 
     <img src="..\..\assets\image\userInfo\login_bg.png" width="100vw" style="width:100vw" />
+    
+    <!-- 返回键 -->
     <div class="van-nav-bar__left arrow">
       <i @click="$router.back(-1)" class="van-icon van-icon-arrow-left van-nav-bar__arrow"></i>
     </div>
 
+
+    <!-- 密码和用户名输入框 -->
     <van-cell-group class="pos_1">
       <van-field
         v-model="username"
@@ -34,11 +33,20 @@
       />
     </van-cell-group>
 
-    <div class="pos_1">
+
+
+    <!-- 登录按钮 -->
+    <div class="pos_1 btn">
       <van-button type="primary" size="large" to="/myInfo">
         <van-loading size="24px" type="spinner" color="white" v-show="show1" />
         {{login}}
       </van-button>
+    </div>
+
+    <!-- 找回密码 && 登录 -->
+    <div>
+      <router-link class="ib" style="float:left" tag="div" to="/register">找回密码</router-link>
+      <router-link class="ib" style="float:right" tag="div" to="/idselect">注册</router-link>
     </div>
   </div>
 </template>
@@ -66,7 +74,7 @@ export default {
   beforeRouteLeave(to, from, next) {
     console.log(to);
 
-    if (to.path == "/loginselect") {
+    if (to.path == "/idselect"||to.path == "/homepage") {
       next();
       return;
     }
@@ -142,6 +150,20 @@ export default {
 }
 
 .pos_1 {
-  padding-top: 3vh;
+  /* width: 90vw; */
+  padding-top: 6vh;
+}
+
+.btn{
+  width: 95vw;
+  margin: 0 auto;
+}
+
+
+.ib{
+  display: inline-block;
+  padding: 20px 10px;
+  color: gray;
+  font-size: 16px;
 }
 </style>

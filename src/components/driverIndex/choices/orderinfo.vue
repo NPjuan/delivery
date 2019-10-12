@@ -102,6 +102,7 @@ export default {
     description:"",
     photo:[],
     confirmShow:false,
+      confirmShow2: false,
     idStr:"",
     };
   },//data结束
@@ -234,8 +235,9 @@ export default {
     display:none;
 }
 .orderinfo{
+  /*overflow: auto;*/
   font-size: .2rem;
-  height:1280px;
+  height: 50vh;
   background-color:#f6f8f7;
 }
 .cell-group{

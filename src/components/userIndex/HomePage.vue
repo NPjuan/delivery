@@ -352,7 +352,7 @@
       },
       // 跳转到登陆界面
       login() {
-        this.$router.push('/loginselect')
+        this.$router.push('/login')
       },
       message() {
         this.$toast('功能尚未开放，敬请期待')
@@ -781,7 +781,7 @@
       }
     },
     beforeRouteLeave (to, from, next) {
-      if(to.path=="/loginselect"&&g.login_status){
+      if(to.path=="/login"&&g.login_status){
         this.$router.push({
           path: `/myInfo`
         })

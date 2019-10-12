@@ -45,7 +45,7 @@
 
     <!-- 找回密码 && 登录 -->
     <div>
-      <router-link class="ib" style="float:left" tag="div" to="/register">找回密码</router-link>
+      <router-link class="ib" style="float:left" tag="div" to="/password">找回密码</router-link>
       <router-link class="ib" style="float:right" tag="div" to="/idselect">注册</router-link>
     </div>
   </div>
@@ -74,7 +74,7 @@ export default {
   beforeRouteLeave(to, from, next) {
     console.log(to);
 
-    if (to.path == "/idselect"||to.path == "/homepage") {
+    if (to.path == "/idselect"||to.path == "/homepage"||to.path == "/password") {
       next();
       return;
     }
@@ -153,7 +153,8 @@ export default {
 }
 
 .btn{
-  width: 95vw;
+  width: 95vw; 
+  
   margin: 0 auto;
 }
 

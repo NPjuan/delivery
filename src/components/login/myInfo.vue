@@ -44,7 +44,7 @@
 
 
 
-      <van-button plain hairline type="primary" block @click="cancel" class="btn1">注销</van-button>
+      <van-button plain hairline type="danger" block @click="cancel" class="btn1">注销</van-button>
     </div>
   </div>
 </template>
@@ -200,7 +200,8 @@ export default {
   height: 40px;
   background-image: url("../../assets/image/userInfo/money.png");
   background-position: 50% 50%;
-  background-size: 40px;
+  background-size: 25px;
+  background-repeat: no-repeat;
 }
 
 .setting {
@@ -208,7 +209,8 @@ export default {
   height: 40px;
   background-image: url("../../assets/image/userInfo/setting.png");
   background-position: 50% 50%;
-  background-size: 40px;
+  background-size: 25px;
+  background-repeat: no-repeat;
 }
 
 .order {
@@ -216,7 +218,8 @@ export default {
   height: 40px;
   background-image: url("../../assets/image/userInfo/订单.png");
   background-position: 50% 50%;
-  background-size: 40px;
+  background-size: 35px;
+  background-repeat: no-repeat;
 }
 
 .arrow {

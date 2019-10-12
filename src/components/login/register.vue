@@ -30,8 +30,8 @@
       </section>
       <div class="test_drag ver_m10">
         <div class="test_bg"></div>
-        <div class="test_text" style="font-size:25px">请拖动滑块验证</div>
-        <div class="test_btn">>></div>
+        <div class="test_text" style="font-size:20px">请拖动滑块验证</div>
+        <div class="test_btn" style="font-size:20px">>></div>
       </div>
       <section class="van-doc-demo-block showoff">
         <!-- <h2 class="van-doc-demo-block__title">插入按钮</h2> -->

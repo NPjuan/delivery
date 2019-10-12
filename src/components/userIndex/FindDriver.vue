@@ -25,7 +25,7 @@
           return {
             // http://118.25.85.198:8080/deliver
             // http://47.96.231.75:8080/deliver
-            url: "http://118.25.85.198:8080/deliver",
+            url: "http://47.96.231.75:8080/deliver",
             driver: [],
             userOrderId: [] , // 订单 id
             testDriver:[],

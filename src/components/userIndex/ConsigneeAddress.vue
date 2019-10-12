@@ -99,7 +99,7 @@
         data() {
           return {
             //  http://118.25.85.198:8080/deliver
-            url: "http://118.25.85.198:8080/deliver",
+            url: "http://47.96.231.75:8080/deliver",
             AreaList, // 地址信息
             AreaValue:110101, // 默认为北京市 北京市 东城区 也可以后期导入选择
             mapShow: false, // 地址控件展示
@@ -274,8 +274,6 @@
       mounted() {
           // 依次赋值给当前对象
         // this.$route.id = 用户的 id 可以拿来取用
-        console.log(this.$route.query.id)
-        console.log("-------query--------------")
         /*******************************/
         /************************************/
         // 判断是否有 mes 属性，有则说明时带参数传递并且功能应该为修改默认地址

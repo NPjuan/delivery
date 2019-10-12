@@ -213,7 +213,7 @@
       return {
         loginStatus:"注册信息",
         // 地图信息
-        // lt http://118.25.85.198:8080/CATStudio/
+        // lt http://118.25.85.198:8080/deliver
         // jb http://47.96.231.75:8080/deliver
         // 192.168.1.102:8080
         url: "http://47.96.231.75:8080/deliver",

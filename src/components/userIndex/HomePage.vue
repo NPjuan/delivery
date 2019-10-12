@@ -358,7 +358,11 @@
       },
       // 跳转到司机页面
       driver() {
-        this.$toast('只有注册成为司机才能使用该功能，当前再')
+        if(!g.l_user.login){
+          this.$toast('请先登陆后使用')
+          return
+        }
+        this.$toast('只有注册成为司机才能使用该功能，当前在测试阶段')
         this.$router.push('/index/driver')
       },
       // 上传订单

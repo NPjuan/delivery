@@ -44,7 +44,7 @@
 
 
 
-      <van-button plain hairline type="danger" block @click="cancel" class="btn1">注销</van-button>
+      <van-button  hairline type="danger" block @click="cancel" class="btn1">注销</van-button>
     </div>
   </div>
 </template>

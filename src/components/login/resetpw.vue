@@ -108,12 +108,12 @@ export default {
     },
     resetpw(i) {
       if (i.code == 0) {
-        this.$toast.success("密码重置成功!");
+        this.$toast.success("密码修改成功!");
         this.$router.push({
           path: "/login"
         });
       } else {
-        this.$toast.fail("密码重置失败!");
+        this.$toast.fail("密码修改失败!");
       }
     }
   },

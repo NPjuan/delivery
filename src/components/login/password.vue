@@ -46,7 +46,10 @@ export default {
       disabled2: true,
       count: 60,
       errormessage:"",
-      errormessage2: ""
+      errormessage2: "",
+
+      //是否发送过验证码
+      codeF:false,
     };
   },
 
@@ -57,6 +60,7 @@ export default {
       var data = {
         phone: this.phone
       };
+      this.codeF = true;
       //手机号传至后台，并发送验证码
       this.ajax(data, "/user/getPhoneCode.do", "codeSent");
     },
@@ -115,7 +119,7 @@ export default {
     //核对验证码验证的回调函数
     codeCheck(i) {
       if (i.code == 0) {
-        g.register_judge.code = true;
+        // g.register_judge.code = true;
         g.pwphone = this.phone;
         this.$router.push({ path: `/resetpw` });
       } else {
@@ -123,7 +127,7 @@ export default {
       }
     },
     checkmsg() {
-      if (this.sms != "" && this.phone != ""&&!(this.errormessage == "该手机号未注册")) {
+      if (this.sms != "" && this.phone != ""&&!(this.errormessage == "该手机号未注册")&&this.codeF) {
         this.disabled2 = false;
       } else {
         this.disabled2 = true;

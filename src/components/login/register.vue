@@ -30,7 +30,7 @@
       </section>
       <div class="test_drag ver_m10">
         <div class="test_bg"></div>
-        <div class="test_text" style="font-size:20px">请拖动滑块验证</div>
+        <div class="test_text" style="font-size:15px">请拖动滑块验证</div>
         <div class="test_btn" style="font-size:20px">>></div>
       </div>
       <section class="van-doc-demo-block showoff">

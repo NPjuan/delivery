@@ -39,6 +39,8 @@ import register from "../components/login/register"
 import registersuccess from "../components/login/registersuccess"
 import login from "../components/login/login"
 import myInfo from "../components/login/myInfo"
+import password from "../components/login/password"
+import resetpw from "../components/login/resetpw"
 
 //yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
@@ -93,7 +95,11 @@ export default new Router({
 
       {path:'/login', meta: {index: 1,index_:2},  component:login},
 
-      {path:'/myInfo', meta: {index: 1},  component:myInfo},
+      {path:'/myInfo', meta: {index: 1,index_:3},  component:myInfo},
+
+      {path:'/password', meta: {index: 1,index_:3},  component:password},
+
+      {path:'/resetpw', meta: {index: 1,index_:4},  component:resetpw},
     // 通用
     {path: "*", redirect: "/"}
   ]

@@ -320,7 +320,7 @@ export default {
   height:.5rem;
 }
 .confirm{
-  display: block;
+  display: inline-block;
   width: 90%;
   margin: auto;
 }
@@ -363,7 +363,8 @@ export default {
   float:left;
 }
 .confirm {
-  margin:0 16px;
+  display: block;
+  margin:0 auto;
   width:90%;
 }
 .guarantee{

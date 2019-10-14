@@ -26,9 +26,7 @@
         <span class="head-span" @click="login">{{loginStatus}}</span>
       </div>
     </header>
-    <baidu-map id="map" :center="map.center" :zoom=map.zoom :scroll-wheel-zoom=map.scrollWheelZoom @ready="handler">
-      <bm-geolocation anchor="BMAP_ANCHOR_TOP_RIGHT" :showAddressBar="true" :autoLocation="map.annotation"></bm-geolocation>
-    </baidu-map>
+    <Amap></Amap>
     <div class="content">
       <div class="content-container">
         <!--发货地址填写-->
@@ -207,8 +205,12 @@
   import  AreaList from '../../assets/area';
   import g from '../login/global'
   import { eventBus } from "../../main"
+  import Amap from './Amap'
   export default {
     name: "homepage",
+    components:{
+      Amap
+    },
     data() {
       return {
         loginStatus:"注册信息",
@@ -238,16 +240,6 @@
           }
         ],
         fileList:[], // 图片文字数组
-        map: {
-          map:"", // 地图对象
-          mk2: "", // 收货人地址 marker
-          driving: "", // 驾车路线
-          center: {lng: 0, lat: 0}, // 经纬度
-          zoom: 15, // 放大等级
-          scrollWheelZoom: true, // 是否启用滚轮调节缩放， 手机端无用， PC 端有用
-          autoLocation: true ,// 是否启用自动定位
-          polyline: "" //行车路线
-        }, // 百度地图
         // 图片信息
         file: {
           maxSize: 10485760, // 最大尺寸
@@ -673,94 +665,6 @@
         // 选择地址
         this.choiceAddress(index)
       },
-      handler({BMap, map}) {
-        let self = this
-        this.map.map = map
-        // 默认地址为 教5
-        this.map.center.lng = 113.40104365165
-        this.map.center.lat = 23.044853444999
-        this.map.zoom = 13
-        // 必须用 require 来请求地址否则报错
-        // new BMap.Size 用来控制展现区域大小
-        // imageSize 用来控制图片大小
-        let originIcon = new BMap.Icon(require("../../assets/image/Origin.svg"), new BMap.Size(30,30),{
-          imageSize: new BMap.Size(30,30)
-        })
-        // map.addEventListener("click", this.showInfo) // 暂时取消点击功能
-        var geolocation = new BMap.Geolocation();
-        geolocation.getCurrentPosition(function(r){
-        	if(this.getStatus() == BMAP_STATUS_SUCCESS){
-            var mk = new BMap.Marker(r.point,{icon: originIcon});
-            map.addOverlay(mk);
-            map.panTo(r.point);
-            let x = r.point.lng
-            let y = r.point.lat
-            // 谷歌浏览器定位问题解决不了的代码
-            // let ggPoint = new BMap.Point(x, y) 谷歌坐标
-            // let translateCallback = function(data){
-            //   if(data.status === 0) {
-            //     var marker = new BMap.Marker(data.points[0],{icon: originIcon});
-            //     map.addOverlay(marker);
-            //     map.setCenter(data.points[0]);
-            //   }
-            // }
-            // setTimeout(function(){
-            //   console.log("1")
-            //   var convertor = new BMap.Convertor();
-            //   var pointArr = [];
-            //   pointArr.push(ggPoint);
-            //   convertor.translate(pointArr, 3, 5, translateCallback)
-            // }, 1000);
-            self.map.center.lng = r.point.lng
-            self.map.center.lat = r.point.lat
-        		console.log('您的位置：'+r.point.lng+','+r.point.lat);
-        	}
-        	else {
-        		alert('failed'+this.getStatus());
-        	}
-        },{enableHighAccuracy: true})
-        this.map.driving = new BMap.DrivingRoute(
-          map,
-          {renderOptions:{map: map, autoViewport: false},
-            onPolylinesSet:function(routes) {
-              let searchRoute = routes[0].getPolyline();//导航路线
-              // map.addOverlay(searchRoute);
-            },
-            onMarkersSet:function(routes) {
-              map.removeOverlay(routes[0].marker); //删除起点
-              map.removeOverlay(routes[1].marker);//删除终点
-            }
-          })
-        this.map.driving.setSearchCompleteCallback(function(){
-          let driving = self.map.driving
-          var plan = driving.getResults().getPlan(0);
-          for(var i=0;i<plan.getNumRoutes();i+=2){
-            var pts =plan.getRoute(i).getPath();
-            //重点在这   这个地方是关于修改颜色的
-            var polyline = new BMap.Polyline(pts,{ strokeColor: "deepskyblue", strokeWeight: 5, strokeOpacity: 1 });
-            map.addOverlay(polyline);
-          }
-        })
-      },
-      // showInfo(e) {
-      //   // this.map.center.lat = e.point.lat
-      //   // this.map.center.lng = e.point.lng
-      //   console.log('您的位置：'+this.map.center.lng+','+this.map.center.lat);
-      //   let map = this.map.map
-      //   map.removeOverlay(this.map.mk2)
-      //   let destinationIcon = new BMap.Icon(require("../../assets/image/Destination.svg"), new BMap.Size(30,30),{
-      //     imageSize: new BMap.Size(30,30),
-      //   })
-      //   this.map.mk2 = new BMap.Marker(new BMap.Point(e.point.lng, e.point.lat),{icon: destinationIcon})
-      //   map.addOverlay(this.map.mk2)
-      //   // 地址浮现
-      //   this.map.driving.search(new BMap.Point(this.map.center.lng, this.map.center.lat), new BMap.Point(e.point.lng, e.point.lat));
-      //   // this.map.driving.setMarkersSetCallback(function (result) {
-      //   //   console.log(result)
-      //   //   map.removeOverlay(routes[0].marker);
-      //   //   map.removeOverlay(routes[routes.length-1].marker);
-      //   // })
-      // },
     },
     // 如果是从地址栏跳转过来则打开选择地址的组件
     beforeRouteEnter(to, from, next){
@@ -833,6 +737,13 @@
 </script>
 
 <style scoped>
+  .amap-wrapper{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    overflow: hidden;
+  }
   .user-info-head-img-contianer{
     position:relative;
     text-align:center;
@@ -1098,13 +1009,6 @@
     position: relative;
     width: 100%;
     height: 100vh;
-    overflow: hidden;
-  }
-  #map{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
     overflow: hidden;
   }
   .content{

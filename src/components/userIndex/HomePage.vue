@@ -61,7 +61,7 @@
         </div>
         <!--预约出发时间-->
         <!--如果两个地址都填写完毕-->
-           <div v-if="!judge.listShow" class="lift"  @click="judge.listShow = !judge.listShow">展开信息填写栏</div>
+        <div v-if="!judge.listShow" class="lift"  @click="judge.listShow = !judge.listShow">展开信息填写栏</div>
         <div v-if="judge.consignor.addressPick && judge.consignee.addressPick && judge.listShow">
           <div class="lift" @click="judge.listShow = !judge.listShow">收起信息填写栏</div>
           <div class="time-write">

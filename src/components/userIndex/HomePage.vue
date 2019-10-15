@@ -26,39 +26,11 @@
         <span class="head-span" @click="login">{{loginStatus}}</span>
       </div>
     </header>
-    <Amap></Amap>
+    <!--<Amap></Amap>-->
     <div class="content">
       <div class="content-container">
-        <!--发货地址填写-->
-        <div class="address-write" @click="showAddress('consignor')">
-          <span>发货地址</span>
-          <div v-if="judge.consignor.addressPick" class="address-show-container">
-            <div class="address-show">
-              <p class="address-show-user"><span>{{consignor.name}}</span><span>{{consignor.phone}}</span></p>
-              <p class="address-show-address">{{consignor.areaCode}}</p>
-            </div>
-          </div>
-          <div v-else class="address-show-container">
-            <div class="address-show-container-img">
-              <img src="../../assets/image/plus.svg" alt="">
-            </div>
-          </div>
-        </div>
-        <!--收货地址填写-->
-        <div class="address-write" @click="showAddress('consignee')">
-          <span>收货地址</span>
-          <div v-if="judge.consignee.addressPick" class="address-show-container">
-            <div class="address-show">
-              <p class="address-show-user"><span>{{consignee.name}}</span><span>{{consignee.phone}}</span></p>
-              <p class="address-show-address">{{consignee.areaCode}}</p>
-            </div>
-          </div>
-          <div v-else class="address-show-container">
-            <div class="address-show-container-img">
-              <img src="../../assets/image/plus.svg" alt="">
-            </div>
-          </div>
-        </div>
+        <!--收，发货地址填写-->
+        <demo @showAddress="showAddress" :consignor="consignor" :consignee="consignee"></demo>
         <!--预约出发时间-->
         <!--如果两个地址都填写完毕-->
            <div v-if="!judge.listShow" class="lift"  @click="judge.listShow = !judge.listShow">展开信息填写栏</div>
@@ -208,10 +180,12 @@
   import { eventBus } from "../../main"
   // 高德地图
   import Amap from './Amap'
+  import Demo from './demo'
   export default {
     name: "homepage",
     components:{
-      Amap
+      Amap,
+      Demo
     },
     data() {
       return {
@@ -607,7 +581,7 @@
         }
         let self = this
         // 修改样式
-        for(let i =0;i<this.addresses.length;i++){
+        for(let i=0;i<this.addresses.length;i++){
           if(i == index){
             this.$refs[i][0].className = "address-active"
           }else{
@@ -740,13 +714,6 @@
 </script>
 
 <style scoped>
-  .amap-wrapper{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    overflow: hidden;
-  }
   .user-info-head-img-contianer{
     position:relative;
     text-align:center;
@@ -791,16 +758,6 @@
     text-align: center;
     color: #7d7e80;
     margin-top: .25rem;
-  }
-  .search-input{
-    position: relative;
-    width: 2rem;
-    height: .5rem;
-    color: #323233;
-    font-size: .25rem;
-    text-indent: .65rem;
-    border-radius: .25rem;
-    border: 1px solid grey;
   }
   .search-input-container{
     position: relative;
@@ -971,14 +928,17 @@
     position: fixed;
     top:0;
     height: 1.6rem;
-    width:7.5rem;
+    width:100%;
+    max-width: 640px;
+    min-width: 320px;
     background-color: white;
     z-index: 55;
     overflow: hidden;
   }
   .head-span{
+    box-sizing: border-box;
     display: inline-block;
-    width: 1.4rem;
+    width: 25%;
     height: .5rem;
     padding: .1rem .2rem;
     text-align: center;
@@ -1011,6 +971,8 @@
   .container{
     position: relative;
     width: 100%;
+    max-width: 640px;
+    min-width: 320px;
     height: 100vh;
     overflow: hidden;
   }
@@ -1023,6 +985,7 @@
   .content-container{
     width: 90%;
     margin: auto;
+    border-radius: 20px;
     background-color: white;
   }
   .none-address{

@@ -203,8 +203,10 @@
 <script>
 
   import  AreaList from '../../assets/area';
+  // 登陆状态
   import g from '../login/global'
   import { eventBus } from "../../main"
+  // 高德地图
   import Amap from './Amap'
   export default {
     name: "homepage",
@@ -348,6 +350,7 @@
       },
       message() {
         this.$toast('功能尚未开放，敬请期待')
+        this.$router.push("/demo")
       },
       // 跳转到司机页面
       driver() {

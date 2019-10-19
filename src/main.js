@@ -38,6 +38,9 @@ Vue.use(VueBus) // 开启事件车
 // import './css/login.css'
 import './css/vue.css'
 import './css/vueup.css'
+// import stopExecutionOnTimeout from "./js/stopExecutionOnTimeout.js"
+// import jquery from "./js/jquery.min.js"
+// import main from "./js/main.js"
 // yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 Vue.use(AddressEdit).use(Area).use(Button).use(Popup).use(Field).use(Cell).use(CellGroup).use(Dialog).use(NavBar).use(List)
@@ -70,3 +73,37 @@ new Vue({
 
 
 })
+
+
+/**   yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx */
+// Vue.component('remote-script', {
+//   render: function (createElement) {
+//       var self = this;
+//       return createElement('script', {
+//           attrs: {
+//               type: 'text/javascript',
+//               src: this.src
+//           },
+//           on: {
+//               load: function (event) {
+//                   self.$emit('load', event);
+//               },
+//               error: function (event) {
+//                   self.$emit('error', event);
+//               },
+//               readystatechange: function (event) {
+//                   if (this.readyState == 'complete') {
+//                       self.$emit('load', event);
+//                   }
+//               }
+//           }
+//       });
+//   },
+//   props: {
+//       src: {
+//           type: String,
+//           required: true
+//       }
+//   }
+// });
+

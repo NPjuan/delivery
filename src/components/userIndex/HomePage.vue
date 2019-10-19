@@ -22,7 +22,8 @@
         <!--这里不可以换行显示否则或出现间隙需要用更多的 css 来兼容-->
         <span :class="{'head-span': true,'head-span-active':true}">我要友捎</span>
         <span class="head-span" @click="driver">我要接单</span>
-        <span class="head-span" @click="message">友捎消息</span>
+        <!-- <span class="head-span" @click="message">友捎消息</span> -->
+        <span class="head-span" @click="chat">聊天</span>
         <span class="head-span" @click="login">{{loginStatus}}</span>
       </div>
     </header>
@@ -352,8 +353,12 @@
       },
       // 跳转到登陆界面
       login() {
-        this.$router.push('/login')
+        this.$router.push('/login');
       },
+      chat(){
+        this.$router.push('/chat')
+      }
+      ,
       message() {
         this.$toast('功能尚未开放，敬请期待')
       },
@@ -814,7 +819,7 @@
         this.date.minDate.getUTCDate() + 20
       )
 
-      if (g.l_user.user.id !== undefined) {
+      if (g.l_user.user.id !== "default") {
         //  通过 id 得到 姓名
         this.deliveryMsg.uid = g.l_user.user.id // 发货对应的 id
         this.consignor.cid = g.l_user.user.id // 数据库对应的 id 设置地址的时候要用到

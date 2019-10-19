@@ -41,6 +41,13 @@ import myInfo from "../components/login/myInfo"
 import password from "../components/login/password"
 import resetpw from "../components/login/resetpw"
 
+import Chat from "../components/chat/chating"
+
+
+// const Chat = r => require.ensure([], () => r(require('../components/chat/chating')), 'chat')
+
+//聊天页面
+
 //yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 
@@ -97,6 +104,9 @@ export default new Router({
       {path:'/password', meta: {index: 1,index_:3},  component:password},
 
       {path:'/resetpw', meta: {index: 1,index_:4},  component:resetpw},
+
+      //聊天页面
+      {path:'/chat', meta: {index: 1,index_:2},  component:Chat},
     // 通用
     {path: "*", redirect: "/"}
   ]

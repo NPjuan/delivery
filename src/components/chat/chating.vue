@@ -58,6 +58,57 @@
         <span class="contact__name">蔡荣镔</span>
         <span class="contact__status"></span>
       </div>
+
+      <div class="contact">
+        <img src="../../assets/img/1.png" alt class="contact__photo" />
+        <span class="contact__name">蔡荣镔</span>
+        <span class="contact__status"></span>
+      </div>
+      <div class="contact">
+        <img src="../../assets/img/1.png" alt class="contact__photo" />
+        <span class="contact__name">蔡荣镔</span>
+        <span class="contact__status"></span>
+      </div>
+      <div class="contact">
+        <img src="../../assets/img/1.png" alt class="contact__photo" />
+        <span class="contact__name">蔡荣镔</span>
+        <span class="contact__status"></span>
+      </div>
+      <div class="contact">
+        <img src="../../assets/img/1.png" alt class="contact__photo" />
+        <span class="contact__name">蔡荣镔</span>
+        <span class="contact__status"></span>
+      </div>
+      <div class="contact">
+        <img src="../../assets/img/1.png" alt class="contact__photo" />
+        <span class="contact__name">蔡荣镔</span>
+        <span class="contact__status"></span>
+      </div>
+      <div class="contact">
+        <img src="../../assets/img/1.png" alt class="contact__photo" />
+        <span class="contact__name">蔡荣镔</span>
+        <span class="contact__status"></span>
+      </div>
+      <div class="contact">
+        <img src="../../assets/img/1.png" alt class="contact__photo" />
+        <span class="contact__name">蔡荣镔</span>
+        <span class="contact__status"></span>
+      </div>
+      <div class="contact">
+        <img src="../../assets/img/1.png" alt class="contact__photo" />
+        <span class="contact__name">蔡荣镔</span>
+        <span class="contact__status"></span>
+      </div>
+      <div class="contact">
+        <img src="../../assets/img/1.png" alt class="contact__photo" />
+        <span class="contact__name">蔡荣镔</span>
+        <span class="contact__status"></span>
+      </div>
+      <div class="contact">
+        <img src="../../assets/img/1.png" alt class="contact__photo" />
+        <span class="contact__name">蔡荣镔</span>
+        <span class="contact__status"></span>
+      </div>
       <div class="search">
         <img src="../../assets/img/t8TeL1S.png" alt class="search__img" />
         <input type="text" class="search__input" placeholder="搜索..." />
@@ -80,7 +131,9 @@
           <div class="chat__message notMine">广东工业大学阿达撒打算打算大声道按时11111111111111111学五号楼!!!</div>
         </div>
         <div class="chat__msgRow">
-          <div class="chat__message mine">战!!!!!11111111111111111111111111111111111111111111111111111111!!!!!!!~</div>
+          <div
+            class="chat__message mine"
+          >战!!!!!11111111111111111111111111111111111111111111111111111111!!!!!!!~</div>
         </div>
         <div class="chat__msgRow">
           <div class="chat__message notMine">战!!!!!!!!!!!!!!</div>
@@ -93,12 +146,28 @@
       <!-- 聊天输入框 -->
       <!-- <input type="text" class="chat__input" placeholder="输入消息..." /> -->
 
-      <div contenteditable="true" class="chat__input" ref="input"></div>
+      <!--
+          @keyup.enter
+          键盘监听，绑定Enter按键，使其发送文本 
 
-      <button class="sent" @click="sent">发送</button>
+          onkeydown:
+          屏蔽原生的Enter效果（屏蔽按下Enter时换行）
+      -->
+      <div
+        contenteditable="true"
+        class="chat__input"
+        ref="input"
+        @keyup.enter="sent('text')"
+        onkeydown="if(event.keyCode==13){event.keyCode=0;event.returnValue=false;}"
+      ></div>
 
+      <img src="../../assets/img/cM3yCT9.png" alt="发送图片/文件" class="imgBtn" @click.stop="sentImg" />
+
+      <button class="sent" @click="sent('text')">发送</button>
     </div>
 
+    <!-- //图片发送入口 -->
+    <input type="file" class="upimg" ref="upimg" accept="image/*" />
   </div>
 </template>
 
@@ -113,32 +182,147 @@ export default {
     return {
       _path: "",
       viewBox: "",
-      comm:`<div class="chat__msgRow">
+      comm: `<div class="chat__msgRow">
           <div class="chat__message notMine">${this.val}</div>
         </div>`,
-      val:"",
-      out:"",
+      val: "",
+      out: "",
 
+      //websocket
+      path: "ws://192.168.1.108:8080/deliver_war_exploded/ws.do",
+      socket: "",
 
+      //待发送的图片地址
+      imgSrc: ""
     };
   },
 
   methods: {
-    sent(){
-      this.val = this.$refs.input.innerHTML;
-      // console.log(val);
-      this.out = this.$refs.out.innerHTML;
-      console.log(this.out);
-      
-      this.comm = `<div class="chat__msgRow">
-          <div class="chat__message notMine">${this.val}</div>
-        </div>`;
-      console.log(this.comm);
-      
-      this.out = this.out + this.comm;
-      
+    //选中图片并发送
+    sentImg() {
+      let upimg = this.$refs.upimg;
+      upimg.click();
+      let _this = this;
+      // console.log(this);
 
+      upimg.onchange = function() {
+        var file = this.files[0];
+        var reader = new FileReader();
+        let __this = _this;
+        reader.readAsDataURL(file);
+        reader.onload = function(e) {
+          __this.sent("img", this.result);
+        };
+      };
+      // reads.readAsDataURL(f);
+      // //选中图片后的监听函数
+      // reads.onload = function(e) {
+      //   // this.result;
+      //   console.log(this.result);
+
+      // };
+    },
+    //聊天发送文本
+    sent(type, img) {
+      console.log(type);
+      console.log(img);
+
+      if ((this.$refs.input.innerHTML === "")&&(type==="text")) {
+        return;
+      }
+
+      // 获取聊天总文本
+      this.out = this.$refs.out.innerHTML;
+
+      //如果是图片
+      if (type === "img") {
+        this.comm = `<div class="chat__msgRow" data-v-429d673a>
+          <div class="chat__message notMine" data-v-429d673a><img src="${img}" width="200px"></div>
+        </div>`;
+      }
+
+      //如果是文本
+      if (type === "text") {
+        //获取输入框中的文本
+        this.val = this.$refs.input.innerHTML;
+        // console.log(this.val);
+
+        // console.log(this.out);
+
+        //模板文本
+        this.comm = `<div class="chat__msgRow" data-v-429d673a>
+            <div class="chat__message notMine" data-v-429d673a>${this.val}</div>
+          </div>`;
+
+        //清空文本
+        this.$refs.input.innerHTML = "";
+      }
+
+      this.$refs.out.innerHTML = this.out + this.comm;
+      // console.log(this.out);
+
+      //当内容超出聊天框时滚动条自动滚至聊天底部
+      this.$refs.out.scrollTop = this.$refs.out.scrollHeight;
+      // console.log(this.$refs.out.scrollTop);
+    },
+    //初始化WS
+    init() {
+      var data = {
+        id: "1"
+      };
+      var stringData = JSON.stringify(data);
+      var ajax = new XMLHttpRequest();
+      //请求行(发送方式/发送目标url)
+      ajax.open(
+        "post",
+        "http://192.168.1.108:8080/deliver_war_exploded/chat/login.do"
+      );
+      //请求头
+      ajax.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+      ajax.onreadystatechange = () => {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+          // 接受返回的json
+          // var json = JSON.parse(ajax.responseText);
+          // window[func](json);
+          // this[func](json);
+          console.log("success");
+        }
+      };
+      //请求主体(请求发送)
+      ajax.send(stringData);
+
+      if (typeof WebSocket === "undefined") {
+        alert("您的浏览器不支持socket");
+      } else {
+        // 实例化socket
+        this.socket = new WebSocket(this.path);
+        // 监听socket连接
+        this.socket.onopen = this.open;
+        // 监听socket错误信息
+        this.socket.onerror = this.error;
+        // 监听socket消息
+        this.socket.onmessage = this.getMessage;
+      }
+    },
+    open() {
+      console.log("socket连接成功");
+    },
+    error() {
+      console.log("连接错误");
+    },
+    getMessage(msg) {
+      console.log(msg.data);
+    },
+    send() {
+      this.socket.send(params);
+    },
+    close() {
+      console.log("socket已经关闭");
     }
+  },
+  destroyed() {
+    // 销毁监听
+    this.socket.onclose = this.close;
   },
   created() {
     //获取屏幕高度
@@ -165,7 +349,8 @@ export default {
     this.phone = g.pwphone;
     console.log(this.prop);
 
-    // this.getCase()
+    //初始化
+    this.init();
   }
   // beforeRouteEnter (to, from, next) {
   //   console.log(from);
@@ -592,7 +777,7 @@ body {
   -webkit-transition: opacity 200ms, z-index 0s 0s;
   transition: opacity 200ms, z-index 0s 0s;
   background-color: #e9eaf3;
-  overflow: hidden;
+  overflow-y: auto;
 }
 .sidebar-content.active {
   z-index: 2;
@@ -640,10 +825,10 @@ body {
 }
 
 .search {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
-  width: 100%;
+  width: 200px;
   height: 55px;
   padding-left: 15px;
   background: #fff;
@@ -790,10 +975,12 @@ svg {
 }
 .chat__messages {
   position: absolute;
-  top: 75px;
+  /* top: 75px; */
+  top: 10vh;
   left: 25px;
   width: 93vw;
-  height: 370px;
+  min-height: 10vh;
+  max-height: 80vh;
   padding-right: 25px;
   overflow-y: auto;
 }
@@ -807,7 +994,7 @@ svg {
 }
 .chat__message {
   word-break: break-all;
-  word-wrap:break-word;
+  word-wrap: break-word;
   display: inline-block;
   max-width: 70vw;
   padding: 10px;
@@ -817,6 +1004,7 @@ svg {
 .chat__message.mine {
   color: #2b2342;
   border: 1px solid #dfdfdf;
+  background: #ffffff;
 }
 .chat__message.notMine {
   float: right;
@@ -831,14 +1019,14 @@ svg {
   min-height: 55px;
   /* padding: 10px 70px 10px 40px; */
   padding: 20px 70px 15px 40px;
-  background-image: url("../../assets/img/cM3yCT9.png");
+  /* background-image: url("../../assets/img/cM3yCT9.png"); */
   background-repeat: no-repeat;
   background-position: 10px 15px;
   background-color: #e9eaf3;
   color: #2b2342;
   font-size: 14px;
   font-family: "Open Sans", Helvetica, Arial, sans-serif;
-  outline:none;
+  outline: none;
 }
 
 .ripple {
@@ -854,6 +1042,11 @@ svg {
   -webkit-animation: animRipple 0.3s;
   animation: animRipple 0.3s;
   border-radius: 50%;
+}
+
+.contact img {
+  width: 34px;
+  height: 34px;
 }
 
 @-webkit-keyframes animRipple {
@@ -895,5 +1088,11 @@ svg {
   padding: 10px 15px;
   background: #1cc6ae;
   border-radius: 5px;
+}
+
+.imgBtn {
+  position: absolute;
+  bottom: 15px;
+  left: 12px;
 }
 </style>

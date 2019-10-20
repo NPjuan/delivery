@@ -1,7 +1,5 @@
 $(document).ready(function () {
 
-  // console.log(1111111111);
-
 
 
     //获取节点/设置变量

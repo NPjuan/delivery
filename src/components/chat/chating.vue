@@ -176,6 +176,7 @@ import stopExecutionOnTimeout from "../../js/stopExecutionOnTimeout.js";
 import jquery from "../../js/jquery.min.js";
 import main from "../../js/main.js";
 import g from "../login/global";
+// import  from "module";
 
 export default {
   data() {
@@ -227,7 +228,7 @@ export default {
       console.log(type);
       console.log(img);
 
-      if ((this.$refs.input.innerHTML === "")&&(type==="text")) {
+      if (this.$refs.input.innerHTML === "" && type === "text") {
         return;
       }
 
@@ -280,50 +281,73 @@ export default {
       //请求头
       ajax.setRequestHeader("Content-type", "application/json;charset=UTF-8");
       ajax.onreadystatechange = () => {
-        if (ajax.readyState == 4 && ajax.status == 200) {
+        // if (ajax.readyState == 4) {
           // 接受返回的json
           // var json = JSON.parse(ajax.responseText);
           // window[func](json);
           // this[func](json);
-          console.log("success");
-        }
+          // 实例化socket;
+          // console.log(this);
+          console.log(11111);
+          
+          // this.socket = new WebSocket(this.path);
+          // 监听socket连接
+          // this.socket.onopen = this.open;
+          // // 监听socket错误信息
+          // this.socket.onerror = this.error;
+          // // 监听socket消息
+          // this.socket.onmessage = this.getMessage;
+        // }
       };
-      //请求主体(请求发送)
+      // 请求主体(请求发送)
       ajax.send(stringData);
 
-      if (typeof WebSocket === "undefined") {
-        alert("您的浏览器不支持socket");
-      } else {
-        // 实例化socket
-        this.socket = new WebSocket(this.path);
-        // 监听socket连接
-        this.socket.onopen = this.open;
-        // 监听socket错误信息
-        this.socket.onerror = this.error;
-        // 监听socket消息
-        this.socket.onmessage = this.getMessage;
-      }
+      // setTimeout(()=>{
+      //   this.socket = new WebSocket(this.path);
+      //     // 监听socket连接
+      //     this.socket.onopen = this.open;
+      //     // 监听socket错误信息
+      //     this.socket.onerror = this.error;
+      //     // 监听socket消息
+      //     this.socket.onmessage = this.getMessage;
+
+
+      // },5000);
+
+      // if (typeof WebSocket === "undefined") {
+      //   alert("您的浏览器不支持socket");
+      // } else {
+      //   // 实例化socket
+      //   this.socket = new WebSocket(this.path);
+      //   // 监听socket连接
+      //   this.socket.onopen = this.open;
+      //   // 监听socket错误信息
+      //   this.socket.onerror = this.error;
+      //   // 监听socket消息
+      //   this.socket.onmessage = this.getMessage;
+      // }
     },
-    open() {
-      console.log("socket连接成功");
-    },
-    error() {
-      console.log("连接错误");
-    },
-    getMessage(msg) {
-      console.log(msg.data);
-    },
-    send() {
-      this.socket.send(params);
-    },
-    close() {
-      console.log("socket已经关闭");
-    }
+    // open() {
+    //   console.log("socket连接成功");
+    // },
+    // error() {
+    //   console.log("连接错误");
+    // },
+    // getMessage(msg) {
+    //   console.log(msg.data);
+    // },
+    // send() {
+    //   this.socket.send(params);
+    // },
+    // close() {
+    //   console.log("socket已经关闭");
+    // }
   },
   destroyed() {
     // 销毁监听
     this.socket.onclose = this.close;
   },
+
   created() {
     //获取屏幕高度
     let _hei = document.documentElement.clientHeight;
@@ -352,14 +376,6 @@ export default {
     //初始化
     this.init();
   }
-  // beforeRouteEnter (to, from, next) {
-  //   console.log(from);
-
-  //   if(from.path=='/homepage'){
-  //     window.location.reload();
-  //     next()
-  //   }
-  // }
 };
 </script>
 

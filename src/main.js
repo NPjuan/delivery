@@ -63,7 +63,7 @@ export const eventBus = new Vue()
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
-new Vue({
+var vm = new Vue({
   el: '#app',
   router,
   components: {

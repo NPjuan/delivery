@@ -54,7 +54,7 @@ export default new Router({
     {path: "/", name: "indexLink", component: Index, redirect: "/homepage", children: [
         {path: "/demo", meta: { index: 0, keepAlive: true }, name: "demoLink", component: Demo},
         // 默认跳转
-        {path: "/homepage", meta: { index: 0, keepAlive: true }, name: "homepageLink", component: HomePage},
+        {path: "/homepage", meta: { index: 0}, name: "homepageLink", component: HomePage},
         // 填写收货人地址
         {path: "/consigneeAddress", meta: {index: 1}, name: "consigneeAddressLink", component: ConsigneeAddress},
         // 填写发货人地址

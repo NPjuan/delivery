@@ -5,12 +5,29 @@
       <span style="height: 100%;line-height: 1rem;font-size: .32rem;">附近司机</span>
     </header>
     <div class="driver-list" v-if="driver.length !== 0">
-        <div  class="driver-list-item"  v-for="(value, index ,key) in driver" :index="index">
-          <p class="driver-list-item-driver"><span>司机</span><span style="color: #7d7e80;padding-right: .2rem">{{value.name}}</span><span>{{value.license}}</span></p>
-          <p class="driver-list-item-date"><span>出发时间</span><span>{{value.startDate}}</span></p>
-          <p class="driver-list-item-address"><span>出发地</span><span style="display: inline-block;"><span>{{value.startAddress}}</span></span></p>
-          <button class="invite-button" @click="inviteDriver(index)">邀请他</button>
+        <!--<div  class="driver-list-item"  v-for="(value, index ,key) in driver" :index="index">-->
+          <!--<p class="driver-list-item-driver"><span>司机</span><span style="color: #7d7e80;padding-right: .2rem">{{value.name}}</span><span>{{value.license}}</span></p>-->
+          <!--<p class="driver-list-item-date"><span>出发时间</span><span>{{value.startDate}}</span></p>-->
+          <!--<p class="driver-list-item-address"><span>出发地</span><span style="display: inline-block;"><span>{{value.startAddress}}</span></span></p>-->
+          <!--<button class="invite-button" @click="inviteDriver(index)">邀请他</button>-->
+        <!--</div>-->
+      <div class="msg-item" v-for="(value, index ,key) in driver" :index="index">
+        <div class="img-container">
+          <img src="../../assets/image/user-send.svg" alt="">
+          <p class="msg-name">{{value.name}}</p>
         </div>
+        <div class="driver-info">
+          <p class="license">{{value.license == undefined?"粤S AE8686":value.license == undefined}}
+            <span style="display:inline-block;padding-left: .8rem;transform: translateY(.06rem)">
+              <rate v-model="rate"/>
+            </span>
+          </p>
+          <p class="phone">{{value.phone}}</p>
+          <p class="address">{{value.startAddress}}</p>
+          <p class="time">{{value.startDate}}</p>
+          <button class="invite-button">邀请司机</button>
+        </div>
+      </div>
     </div>
     <div v-else style="width: 100%;font-size: .3rem;padding-top: 3rem;text-align: center">
       {{ msg }}
@@ -19,8 +36,12 @@
 </template>
 
 <script>
+  import { Rate } from 'vant'
     export default {
         name: "FindDriver",
+      components:{
+        Rate
+      },
       data() {
           return {
             // http://118.25.85.198:8080/deliver
@@ -29,7 +50,8 @@
             driver: [],
             userOrderId: [] , // 订单 id
             testDriver:[],
-            msg: "暂时还没有顺路司机哦"
+            msg: "暂时还没有顺路司机哦",
+            rate: 4
           }
       },
       methods: {
@@ -122,15 +144,67 @@
     width: 100%;
     text-align: center;
   }
+  .msg-item{
+    box-sizing: border-box;
+    height: 2rem;
+    background-color:white;
+  }
+  .img-container{
+    float: left;
+    width: 2rem;
+    height: 100%;
+    text-align: center;
+  }
+  .img-container>img{
+    display: inline-block;
+    padding-top: .2rem;
+    width: 1.2rem;
+  }
+  .msg-name{
+    padding-top: .1rem;
+    font-size: .25rem;
+    color: #7d7e80;
+  }
+  .driver-info{
+    position: relative;
+    float: left;
+    height: 100%;
+    width: calc(100% - 2rem);
+  }
+  .license{
+    padding-top: .2rem;
+    font-size: .32rem;
+  }
+  .phone{
+    padding-top: .05rem;
+    padding-bottom: .1rem;
+    font-size: .3rem;
+  }
+  .time{
+    padding-top: .1rem;
+    font-size: .25rem;
+  }
+  .address{
+    width: 50%;
+    padding-top: .15rem;
+    font-size: .25rem;
+    display: -webkit-box;
+    letter-spacing: .02rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:1;
+  }
   .invite-button{
+    position: absolute;
     width:1.6rem;
     height:.6rem;
     background-color: skyblue;
     border: none;
-    position: absolute;
-    bottom: .1rem;
-    right: .25rem;
+    bottom: .2rem;
+    right: .5rem;
     color: white;
+    font-size: .28rem;
   }
   .container{
     overflow: auto;
@@ -140,23 +214,19 @@
     display: none;
   }
   .driver-list{
-    margin: 1.2rem .25rem;
+    margin: 1.5rem 0;
   }
   .driver-list-item{
+    box-sizing: border-box;
     position: relative;
-    width: 100%;
-    margin: auto;
     height: 1.6rem;
     padding-top: .2rem;
     background-color: white;
     border-bottom: 1px solid skyblue;
-    font-size: .3rem
+    font-size: .28rem
   }
   .driver-list-item span{
     display: inline-block;
-  }
-  .driver-list-item span{
-    font-size: .25rem;
   }
   .driver-list-item-driver span:first-child{
 

@@ -253,18 +253,22 @@
     mounted() {
       // 依次赋值给当前对象
       // this.$route.id = 用户的 id 可以拿来取用
-      this.consignor.id = this.$route.query.id
-      // this.checkId()
-      this.consignor.name = g.l_user.userInfo.name
-      this.consignor.phone = g.l_user.user.phone
       // 判断是否有 mes 属性，有则说明时带参数传递并且功能应该为修改默认地址
       if(this.$route.query.hasOwnProperty("mes")){
         let mes = this.$route.query.mes
+        console.log(mes)
+        this.consignor = mes
+        this.consignor.id = this.$route.query.id
+        this.consignor.name = g.l_user.userInfo.name
+        this.consignor.phone = g.l_user.user.phone
         this.consignor.areaCode = mes.province + mes.city + mes.district
-        this.consignor.province  = mes.province
-        this.consignor.city  = mes.city
-        this.consignor.district  = mes.district
+        // this.consignor.province  = mes.province
+        // this.consignor.city  = mes.city
+        // this.consignor.district  = mes.district
+        console.log(this.consignor.district)
         // 这一步放在下面覆盖掉上面的 id 赋值
+        this.judge.areaCode = true
+        this.judge.areaDetail = true
 
       }
     }

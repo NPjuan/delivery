@@ -1,22 +1,29 @@
 <template>
   <div class="container">
     <div class="user-from" @click="showAddress('consignor')">
-    <div class="left-show">
+      <div class="left-show">
       <div class="img-container">
         <img src="../../assets/image/user-send.svg" alt="send" style="width: 100%;height: 100%">
       </div>
       <p class="user-text">发货人信息</p>
     </div>
-    <div class="right-show">
-        <span class="span name">
-          <span>{{consignor.name}}</span>
-        </span>
-      <span class="span phone">
-          <span>{{consignor.phone}}</span>
-        </span>
-      <p class="address">{{consignor.areaCode}}</p>
-    </div>
+      <div class="right-show" v-if="orPick">
+          <span class="span name">
+            <span>{{consignor.name}}</span>
+          </span>
+        <span class="span phone">
+            <span>{{consignor.phone}}</span>
+          </span>
+        <p class="address">{{consignor.areaCode}}</p>
+      </div>
+      <div v-else class="right-show" style="position: relative">
+        <div style="position: absolute;width: 5px;height: 65%;background-color: darkseagreen;left:0;"></div>
+        <div style="width: 20%;margin: .2rem auto">
+          <img src="../../assets/image/plus.svg" alt="" style="width: 100%">
+        </div>
+      </div>
   </div>
+    <!--<div style="margin:auto;margin-top: -2px;height: 1px;width: 90%;background-color: #7d7e80;"></div>-->
     <div class="user-from" @click="showAddress('consignee')">
       <div class="left-show">
         <div class="img-container">
@@ -24,7 +31,7 @@
         </div>
         <p class="user-text">收货人信息</p>
       </div>
-      <div class="right-show">
+      <div class="right-show" v-if="eePick">
         <span class="span name">
           <span>{{consignee.name}}</span>
         </span>
@@ -32,6 +39,12 @@
           <span>{{consignee.phone}}</span>
         </span>
         <p class="address">{{consignee.areaCode}}</p>
+      </div>
+      <div v-else class="right-show" style="position: relative">
+        <div style="position: absolute;width: 5px;height: 65%;background-color: skyblue;left:0;"></div>
+        <div style="width: 20%;margin: .2rem auto">
+          <img src="../../assets/image/plus.svg" alt="" style="width: 100%">
+        </div>
       </div>
     </div>
   </div>
@@ -46,6 +59,12 @@
         },
         consignee: {
           type:Object
+        },
+        orPick:{
+          type:Boolean
+        },
+        eePick:{
+          type:Boolean
         }
       },
       methods:{
@@ -60,7 +79,7 @@
   .container{
     box-sizing: border-box;
     height: 3.8rem;
-    border-radius: 6px;
+    border-radius: 3px;
   }
   .user-from{
     box-sizing: border-box;
@@ -69,7 +88,6 @@
     min-width: 320px;
     margin: 0 auto;
     height: 1.9rem;
-    border-bottom: 1px grey solid;
   }
   .left-show{
     box-sizing: border-box;
@@ -102,13 +120,12 @@
     font-size: .35rem;
     color: gray;
   }
-  .name{
-  }
+
   .address{
+    display: -webkit-box;
     font-size: .3rem;
     padding-top: .3rem;
     padding-right: .5rem;
-    display: -webkit-box;
     color: gray;
     overflow: hidden;
     text-overflow: ellipsis;

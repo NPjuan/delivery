@@ -5,7 +5,7 @@
     <!-- 登录界面 -->
 
     <img src="..\..\assets\image\userInfo\login_bg.png" width="100vw" style="width:100vw" />
-    
+
     <!-- 返回键 -->
     <div class="van-nav-bar__left arrow">
       <i @click="$router.back(-1)" class="van-icon van-icon-arrow-left van-nav-bar__arrow"></i>
@@ -106,8 +106,8 @@ export default {
         this.$toast.success(i.msg);
         console.log(this.pass);
         this.pass = true;
-
-        this.$router.push({ path: "/myInfo" });
+        g.login_status = true
+        this.$router.push({ path: "/homepage" });
       }
     },
     ajax(data, url, func) {
@@ -155,8 +155,8 @@ export default {
 }
 
 .btn{
-  width: 95vw; 
-  
+  width: 95vw;
+
   margin: 0 auto;
 }
 

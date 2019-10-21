@@ -143,6 +143,7 @@
           },
           // 判断 id 是否填写正确
           checkId() {
+            console.log(this.consignee.areaCode)
             console.log("检查id")
             let self = this
             this.$axios.get(this.url + "/user/findConsigneeInfo.do",{
@@ -279,11 +280,13 @@
         // 判断是否有 mes 属性，有则说明时带参数传递并且功能应该为修改默认地址
         if(this.$route.query.hasOwnProperty("mes")){
           let mes = this.$route.query.mes
-          this.consignee.areaCode = mes.province + mes.city + mes.district
           this.consignee = mes
+          this.consignee.areaCode = mes.province + mes.city + mes.district
           // 这一步放在下面覆盖掉上面的 id 赋值
           this.consignee.id = this.$route.query.id
           this.judge.id = true
+          this.judge.areaCode = true
+          this.judge.areaDetail = true
         }
       }
     }

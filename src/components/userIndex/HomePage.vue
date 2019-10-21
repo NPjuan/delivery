@@ -26,16 +26,19 @@
         <span class="head-span" @click="login">{{loginStatus}}</span>
       </div>
     </header>
-    <!--<Amap></Amap>-->
+    <Amap></Amap>
     <div class="content">
       <div class="content-container">
         <!--收，发货地址填写-->
-        <demo @showAddress="showAddress" :consignor="consignor" :consignee="consignee"></demo>
-        <!--预约出发时间-->
-        <!--如果两个地址都填写完毕-->
-           <div v-if="!judge.listShow" class="lift"  @click="judge.listShow = !judge.listShow">展开信息填写栏</div>
+          <demo @showAddress="showAddress" :consignor="consignor" :consignee="consignee" :orPick="judge.consignor.addressPick" :eePick="judge.consignee.addressPick"></demo>
+          <!--如果两个地址都填写完毕-->
+        <div v-if="!judge.listShow" class="lift"  @click="judge.listShow = !judge.listShow">
+          <span class="rotate-span"><img src="../../assets/image/up.svg" alt=""></span>
+        </div>
         <div v-if="judge.consignor.addressPick && judge.consignee.addressPick && judge.listShow">
-          <div class="lift" @click="judge.listShow = !judge.listShow">收起信息填写栏</div>
+          <div class="lift" @click="judge.listShow = !judge.listShow">
+            <span class="rotate-span-down rotate-span"><img src="../../assets/image/up.svg" alt=""></span>
+          </div>
           <div class="time-write">
             <span class="time-span">起始时间</span>
             <input type="text" readonly @click="showTime(0)" placeholder="捎货起始时间" v-model="date.startTime" class="time-input">
@@ -56,7 +59,7 @@
               preview-size="1.2rem"
               @oversize="$toast('请限制照片大小在10m以下')"
             />
-            <p v-if="!fileList.length" style="font-size: .25rem;color: grey;margin-left: 1.62rem">请上传至少一张至多三张的照片</p>
+            <p v-if="!fileList.length" style="font-size: .25rem;color: dimgray;margin-left: 1.62rem">/*请上传至少一张至多三张的照片*/</p>
           </div>
           <div class="msg-write">
             <span class="msg-span">留言</span>
@@ -137,7 +140,7 @@
       :style="{ width: '65%', height: '100%' }"
     >
       <!--头像-->
-      <div class="user-info-head-img-contianer">
+      <div class="user-info-head-img-container">
         <span class="user-info-head-img">
           <img :src="consignor.headPicUrl" alt="" style="width: 1.5rem">
         </span>
@@ -151,7 +154,7 @@
         <span class="user-info-name">
           {{consignor.phone}}
         </span>
-        <span v-for="(value, index, key) in userlist" :key="key" class="user-info-item" :index="index" @touchstart="userList(index)" :ref="'user'+index" @touchend="offUserList(index)" @click="funCase(index)">
+        <span v-for="(value, index, key) in userLists" :key="key" class="user-info-item" :index="index" @touchstart="userList(index)" :ref="'user'+index" @touchend="offUserList(index)" @click="funCase(index)">
           <img :src="value.src" :alt="value.alt" class="user-info-item-img">
           {{value.text}}
         </span>
@@ -198,7 +201,7 @@
         order:{ // 订单信息
           userOrderId: []
         },
-        userlist:[ // 个人信息 span
+        userLists:[ // 个人信息 span
           {
             src: require("../../assets/image/order.svg"), // 图片路径
             text: "订单信息",
@@ -324,7 +327,7 @@
       },
       message() {
         this.$toast('功能尚未开放，敬请期待')
-        this.$router.push("/demo")
+        this.$router.push("/findDriver")
       },
       // 跳转到司机页面
       driver() {
@@ -337,6 +340,11 @@
       },
       // 上传订单
       sendOrder() {
+        console.log(this.deliveryMsg.deliveryStart)
+        if(!this.fileList.length || !this.deliveryMsg.deliveryStart || !this.deliveryMsg.deliveryEnd){
+          this.$toast('除留言外，请完整填写其他信息')
+          return
+        }
         let self = this
         const instance=this.$axios.create({
           withCredentials: true
@@ -383,13 +391,11 @@
       highAdapt() {
         this.$refs.textarea.style.height = 'auto'
         this.$refs.textarea.style.height =  this.$refs.textarea.scrollHeight + "px"
-        console.log(this.$refs.textarea.scrollHeight + "px")
       },
       // 图片上传
       afterRead(file) {
         let content = file.file;
         this.formData.append('goodsPictures', content)
-
       },
       // 时间过滤器，只能显示 10 为倍数的分钟
       dateFilter(type, options) {
@@ -714,7 +720,33 @@
 </script>
 
 <style scoped>
-  .user-info-head-img-contianer{
+  .rotate-span{
+    position: relative;
+    display: inline-block;
+    height: .5rem;
+    width: .6rem;
+    /*transition: .5s all ease;*/
+  }
+  .rotate-span-down{
+    transform: rotate(180deg);
+  }
+  @keyframes up {
+    from   {
+      top: -.1rem;
+    }
+    to     {
+      top: .1rem;
+    }
+  }
+  .rotate-span>img{
+    display: inline-block;
+    position: absolute;
+    width: .4rem;
+    top:-.1rem;
+    left: .1rem;
+    animation: up .7s infinite alternate;
+  }
+  .user-info-head-img-container{
     position:relative;
     text-align:center;
     height: 1.8rem;
@@ -724,6 +756,7 @@
     border-radius: 50%;
     display: inline-block;
     width: 1.5rem;
+    height: 1rem;
   }
   .user-info-name{
     text-align: center;
@@ -754,10 +787,11 @@
     left: .75rem
   }
   .lift{
+    height: .4rem;
     font-size: .25rem;
     text-align: center;
     color: #7d7e80;
-    margin-top: .25rem;
+    margin-top: -.1rem;
   }
   .search-input-container{
     position: relative;
@@ -773,123 +807,63 @@
     width: 100%;
     height: .8rem;
     line-height: .8rem;
-    margin-top: .4rem
-  }
-  .consignee-id-input{
-    width: 100%;
-    height: .5rem;
-    font-size: .25rem;
-    text-align: center;
-    padding: .15rem 0;
-    border-bottom: 2px solid #f8f8f8
+    margin-top: .1rem;
   }
   .msg-write textarea{
     overflow:hidden;
     resize:none;
     width: 4.2rem;
     font-size: .25rem;
-    text-indent: .05rem;
+    text-indent: .5rem;
     color: grey;
-    margin-top: .1rem;
+    padding-top: .15rem;
     border: none
   }
   .msg-write{
-    margin-top: .2rem;
+    margin-top: .3rem;
   }
   .msg-span{
     position: relative;
     display: inline-block;
     width: 1rem;
     height: .5rem;
-    padding: .1rem .25rem 0 .25rem;
-    font-size: .25rem;
+    padding: .1rem .25rem 0 .6rem;
+    font-size: .3rem;
     vertical-align:top;
-    color: #323233;
+    color: grey;
   }
   .picture-span{
     position: relative;
-    padding: .4rem .25rem 0 .25rem;
-    font-size: .25rem;
-    vertical-align:top;
-    color: #323233;
-  }
-  .picture-span::before{
-    position: absolute;
-    left:.1rem;
-    top: .35rem;
-    content: '*';
-    color: red;
+    width: 1.2rem;
+    font-size: .3rem;
+    padding: .4rem .45rem 0 .55rem;
+    color: grey;
   }
   /*改变原有样式*/
   /deep/ .van-uploader__preview-delete{
     font-size: .3rem !important;
   }
-  .time-span::before{
-    position: absolute;
-    left:.1rem;
-    top: .35rem;
-    content: '*';
-    color: red;
+  /deep/ .van-uploader__input{
+    padding-left: .2rem;
   }
   .time-span{
     position: relative;
     display: inline-block;
-    width: 1rem;
+    width: 1.2rem;
     height: .5rem;
-    padding: .38rem .25rem 0 .25rem;
-    font-size: .25rem;
+    padding: .38rem .25rem 0 .55rem;
+    font-size: .3rem;
     vertical-align:top;
-    color: #323233;
+    color: grey;
   }
   .time-input{
     width: 4.2rem;
     height: .5rem;
-    margin-top:.3rem;
+    margin-top:.25rem;
     border-bottom:2px solid #f8f8f8;
-    text-indent:.1rem;
-    font-size: .25rem;
+    text-indent:.45rem;
+    font-size: .32rem;
     color:gray;
-  }
-  .address-show-container-img{
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-  .address-show-container-img>img{
-    position: absolute;
-    top:.15rem;
-    left: 1.75rem;
-    width: .6rem;
-  }
-  .address-show-container{
-    display: inline-block;
-    height: .7rem;
-    width: 4rem;
-    padding: .2rem .1rem .3rem .1rem;
-    border-bottom: 2px solid #f8f8f8;
-  }
-  .address-show-address{
-    display: -webkit-box;
-    margin-top: 0.05rem;
-    padding-top: 0.05rem;
-    margin-bottom: .15rem;
-    font-size: .25rem;
-    color: gray;
-    letter-spacing: .02rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    -webkit-box-orient:vertical;
-    z-index: 100;
-    -webkit-line-clamp:2;
-  }
-  .address-show-user{
-    font-size: .27rem;
-  }
-  .address-show-user>span:first-child{
-    margin-right: .3rem;
-  }
-  .address-write{
-    height: 1.1rem;
   }
   .address-write>span{
     position: relative;
@@ -978,14 +952,16 @@
   }
   .content{
     position: absolute;
+    margin-left: .325rem;
     bottom: .2rem;
-    width: 100%;
+    width: 90%;
+    height: auto;
     z-index: 5;
+    transition: .5s all ease;
   }
   .content-container{
-    width: 90%;
-    margin: auto;
-    border-radius: 20px;
+    width: 100%;
+    border-radius: 10px;
     background-color: white;
   }
   .none-address{
@@ -1029,12 +1005,5 @@
   }
   .address-item-user>span:nth-child(1){
     margin-right: .3rem;
-  }
-  .list-enter-active, .list-leave-active {
-    transition: all .5s ease;
-  }
-  .list-enter, .list-leave-to {
-    opacity: 0;
-    transform: translateX(350px);
   }
 </style>

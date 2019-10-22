@@ -1,13 +1,12 @@
 <template>
      <div class="amap-page-container">
-       <el-amap vid="amap" :plugin="plugin" :center="center" :zoom="zoom"></el-amap>
-       <el-amap-marker
-         v-for="(marker, index) in markers"
-         :position="marker.position"
-         :draggable="marker.draggable"
-         :vid="index"
-         :key="index">
-       </el-amap-marker>
+       <el-amap vid="amap" :plugin="plugin" :center="center" :zoom="zoom">
+         <el-amap-marker
+           v-for="(marker, index, key) in markers"
+           :position="marker.position"
+           :vid="index"
+           :key="index"/>
+       </el-amap>
      </div>
 </template>
 
@@ -22,12 +21,13 @@
           lat: 0,
           loaded: false,
           zoom: 13,
+          markers: [],
           plugin: [{
             pName: 'Geolocation',
             events: {
               init(o) {
                 // o 是高德地图定位插件实例
-                var geolocation = new AMap.Geolocation({
+                let geolocation = new AMap.Geolocation({
                   // 是否使用高精度定位，默认：true
                   enableHighAccuracy: true,
                   // 设置定位超时时间，默认：无穷大
@@ -50,21 +50,17 @@
                 });
               }
             }
-          }],
-          markers: [
-
-          ]
+          }]
         }
       },
-      methods: {
-          addMarker() {
-            let marker = {
-              position: this.center,
-              draggable: false,
-              template: '<span>1</span>' // 这个模板是必须滴
-            };
-            this.markers.push(marker);
-          }
+      methods:{
+
+      },
+      mounted() {
+        let marker = {
+          position: this.center
+        }
+        this.markers.push(marker);
       }
     }
 </script>

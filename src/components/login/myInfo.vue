@@ -89,7 +89,14 @@ export default {
     //赋值id
     this.id = g.l_user.user.authId;
   },
+  beforeRouteEnter(to, from, next){
+    // if(from.path=='/login'&&g.login_status){
+    //   this.$router.push({ path: "/homepage" });
+    // }
+  },
   methods: {
+
+    
     ajax(data, url, func) {
       var ajax = new XMLHttpRequest();
       var stringData = JSON.stringify(data);

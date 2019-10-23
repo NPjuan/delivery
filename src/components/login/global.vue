@@ -60,7 +60,11 @@
         status: ""
     }
 
-    var l_user = {};
+    var l_user = {
+        user:{
+            id:"default"
+        }
+    };
 
     var pwphone = "";
 

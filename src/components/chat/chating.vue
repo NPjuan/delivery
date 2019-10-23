@@ -163,7 +163,8 @@
 
       <img src="../../assets/img/cM3yCT9.png" alt="发送图片/文件" class="imgBtn" @click.stop="sentImg" />
 
-      <button class="sent" @click="sent('text')">发送</button>
+      <button class="sent" @click="init">发送</button>
+      <button @click="ssss">111111111111111</button>
     </div>
 
     <!-- //图片发送入口 -->
@@ -188,9 +189,11 @@ export default {
         </div>`,
       val: "",
       out: "",
-
+  
       //websocket
       path: "ws://192.168.1.108:8080/deliver_war_exploded/ws.do",
+      // path: "ws://116.62.46.122:8080/deliver/ws.do",
+
       socket: "",
 
       //待发送的图片地址
@@ -266,53 +269,92 @@ export default {
       this.$refs.out.scrollTop = this.$refs.out.scrollHeight;
       // console.log(this.$refs.out.scrollTop);
     },
+    ssss(){
+      this.socket = new WebSocket(this.path);
+          // 监听socket连接
+          this.socket.onopen = this.open;
+          // 监听socket错误信息
+          this.socket.onerror = this.error;
+          // 监听socket消息
+          this.socket.onmessage = this.getMessage;
+
+    // var data = {
+    //     id: "3"
+    //   };
+    //   $.ajax({
+    //     crossDomain: true,
+    //     url: "http://192.168.1.108:8080/deliver_war_exploded/chat/loginpage.do",
+    //     type: "POST",
+    //     datType: "json",
+    //     data: JSON.stringify(data),
+    //     headers: { "Content-Type": "application/json" },
+    //     async: true,
+    //     success: result => {
+          
+    //     }
+    //   });
+
+
+
+
+
+
+
+
+    },
     //初始化WS
     init() {
       var data = {
         id: "1"
       };
-      var stringData = JSON.stringify(data);
-      var ajax = new XMLHttpRequest();
-      //请求行(发送方式/发送目标url)
-      ajax.open(
-        "post",
-        "http://192.168.1.108:8080/deliver_war_exploded/chat/login.do"
-      );
-      //请求头
-      ajax.setRequestHeader("Content-type", "application/json;charset=UTF-8");
-      ajax.onreadystatechange = () => {
-        // if (ajax.readyState == 4) {
-          // 接受返回的json
-          // var json = JSON.parse(ajax.responseText);
-          // window[func](json);
-          // this[func](json);
-          // 实例化socket;
-          // console.log(this);
-          console.log(11111);
+      $.ajax({
+        crossDomain: true,
+        url: "http://192.168.1.108:8080/deliver_war_exploded/chat/login.do",
+        type: "POST",
+        datType: "json",
+        data: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" },
+        async: true,
+        success: result => {
           
-          // this.socket = new WebSocket(this.path);
-          // 监听socket连接
-          // this.socket.onopen = this.open;
-          // // 监听socket错误信息
-          // this.socket.onerror = this.error;
-          // // 监听socket消息
-          // this.socket.onmessage = this.getMessage;
-        // }
-      };
+        }
+      });
+
+
+
+
+      // var data = {
+      //   id: "1"
+      // };
+      // var stringData = JSON.stringify(data);
+      // var ajax = new XMLHttpRequest();
+      // ajax.open(
+      //   "post",
+      //   "http://192.168.1.108:8080/deliver_war_exploded/chat/login.do"
+      //   // "http://116.62.46.122:8080/deliver/chat/login.do"
+      // );
+      // //请求头
+      // ajax.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+      // ajax.onreadystatechange = () => {
+      // if (ajax.readyState == 4) {
+      // 接受返回的json
+      // var json = JSON.parse(ajax.responseText);
+      // window[func](json);
+      // this[func](json);
+      // 实例化socket;
+      // console.log(this);
+
+      // this.socket = new WebSocket(this.path);
+      // // 监听socket连接
+      // this.socket.onopen = this.open;
+      // // 监听socket错误信息
+      // this.socket.onerror = this.error;
+      // // 监听socket消息
+      // this.socket.onmessage = this.getMessage;
+      // }
+      // };
       // 请求主体(请求发送)
-      ajax.send(stringData);
-
-      // setTimeout(()=>{
-      //   this.socket = new WebSocket(this.path);
-      //     // 监听socket连接
-      //     this.socket.onopen = this.open;
-      //     // 监听socket错误信息
-      //     this.socket.onerror = this.error;
-      //     // 监听socket消息
-      //     this.socket.onmessage = this.getMessage;
-
-
-      // },5000);
+      // ajax.send(stringData);
 
       // if (typeof WebSocket === "undefined") {
       //   alert("您的浏览器不支持socket");
@@ -327,21 +369,21 @@ export default {
       //   this.socket.onmessage = this.getMessage;
       // }
     },
-    // open() {
-    //   console.log("socket连接成功");
-    // },
-    // error() {
-    //   console.log("连接错误");
-    // },
-    // getMessage(msg) {
-    //   console.log(msg.data);
-    // },
-    // send() {
-    //   this.socket.send(params);
-    // },
-    // close() {
-    //   console.log("socket已经关闭");
-    // }
+    open() {
+      console.log("socket连接成功");
+    },
+    error() {
+      console.log("连接错误");
+    },
+    getMessage(msg) {
+      console.log(msg.data);
+    },
+    send() {
+      this.socket.send(params);
+    },
+    close() {
+      console.log("socket已经关闭");
+    }
   },
   destroyed() {
     // 销毁监听
@@ -371,10 +413,9 @@ export default {
 
   mounted() {
     this.phone = g.pwphone;
-    console.log(this.prop);
 
     //初始化
-    this.init();
+    // this.init();
   }
 };
 </script>

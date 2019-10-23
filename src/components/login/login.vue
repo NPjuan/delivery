@@ -1,16 +1,14 @@
 <!-- //登录界面 -->
 <template id="page7">
   <div class="hei100">
-
     <!-- 登录界面 -->
 
     <img src="..\..\assets\image\userInfo\login_bg.png" width="100vw" style="width:100vw" />
-    
+
     <!-- 返回键 -->
     <div class="van-nav-bar__left arrow">
       <i @click="$router.back(-1)" class="van-icon van-icon-arrow-left van-nav-bar__arrow"></i>
     </div>
-
 
     <!-- 密码和用户名输入框 -->
     <van-cell-group class="pos_1">
@@ -32,8 +30,6 @@
         left-icon="hotel-o"
       />
     </van-cell-group>
-
-
 
     <!-- 登录按钮 -->
     <div class="pos_1 btn">
@@ -70,11 +66,23 @@ export default {
       login: "登录"
     };
   },
+  mounted() {
+    console.log(this.$store.state.ip);
+    
+    // this.axios.post("http://api.komavideo.com/news/list").then(body => {
+    //   this.content = body.data;
+    // });
+    // console.log(this.axios);
+  },
 
   beforeRouteLeave(to, from, next) {
     console.log(to);
 
-    if (to.path == "/idselect"||to.path == "/homepage"||to.path == "/password") {
+    if (
+      to.path == "/idselect" ||
+      to.path == "/homepage" ||
+      to.path == "/password"
+    ) {
       next();
       return;
     }
@@ -100,6 +108,7 @@ export default {
         this.$toast.fail(i.msg);
         this.show1 = false;
         this.login = "登录";
+        // this.$router.push({ path: "/homepage" });
       } else {
         this.$toast.success(i.msg);
         console.log(this.pass);
@@ -152,14 +161,13 @@ export default {
   padding-top: 6vh;
 }
 
-.btn{
-  width: 95vw; 
-  
+.btn {
+  width: 95vw;
+
   margin: 0 auto;
 }
 
-
-.ib{
+.ib {
   display: inline-block;
   padding: 20px 10px;
   color: gray;

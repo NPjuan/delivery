@@ -791,7 +791,7 @@
     mounted() {
       /**         yxxxxxxxxxxxxxxxxx        */
 
-      if(g.login_status==true){
+      if(g.login_status === true){
         this.loginStatus = "我的";
       }else{
         this.loginStatus = "登录注册";
@@ -799,7 +799,6 @@
       /**         yxxxxxxxxxxxxxxxxx        */
 
       let i = new Date()
-      let self = this
       this.date.minDate = new Date()
       // 如果到了 50 分过后 直接跳过这个小时
       if (i.getMinutes() >= 50) {

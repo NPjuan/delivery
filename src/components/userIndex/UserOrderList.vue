@@ -1,13 +1,13 @@
 <template>
     <div id="container">
-      <normalHeader
-        left-text="返回"
-        title="订单消息"
-        right-text=""
-        left-arrow
-        @leftClick="headerLeftClick"
-      />
-      <div>
+        <normalHeader
+          left-text="返回"
+          title="订单消息"
+          right-text=""
+          left-arrow
+          @leftClick="headerLeftClick"
+        />
+        <div>
       </div>
     </div>
 </template>

@@ -128,6 +128,8 @@ export default {
 
 <style scoped>
 .text1 {
+  height: 20px;
+  font-size: 12px;
   margin: 10px 0px;
   color: gray;
   text-align: center;

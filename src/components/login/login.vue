@@ -68,7 +68,7 @@ export default {
   },
   mounted() {
     console.log(this.$store.state.ip);
-    
+
     // this.axios.post("http://api.komavideo.com/news/list").then(body => {
     //   this.content = body.data;
     // });

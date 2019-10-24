@@ -22,51 +22,23 @@
         <!--这里不可以换行显示否则或出现间隙需要用更多的 css 来兼容-->
         <span :class="{'head-span': true,'head-span-active':true}">我要友捎</span>
         <span class="head-span" @click="driver">我要接单</span>
-        <!-- <span class="head-span" @click="message">友捎消息</span> -->
-        <span class="head-span" @click="chat">聊天</span>
+        <span class="head-span" @click="message">友捎消息</span>
         <span class="head-span" @click="login">{{loginStatus}}</span>
       </div>
     </header>
-    <baidu-map id="map" :center="map.center" :zoom=map.zoom :scroll-wheel-zoom=map.scrollWheelZoom @ready="handler">
-      <bm-geolocation anchor="BMAP_ANCHOR_TOP_RIGHT" :showAddressBar="true" :autoLocation="map.annotation"></bm-geolocation>
-    </baidu-map>
+    <Amap></Amap>
     <div class="content">
       <div class="content-container">
-        <!--发货地址填写-->
-        <div class="address-write" @click="showAddress('consignor')">
-          <span>发货地址</span>
-          <div v-if="judge.consignor.addressPick" class="address-show-container">
-            <div class="address-show">
-              <p class="address-show-user"><span>{{consignor.name}}</span><span>{{consignor.phone}}</span></p>
-              <p class="address-show-address">{{consignor.areaCode}}</p>
-            </div>
-          </div>
-          <div v-else class="address-show-container">
-            <div class="address-show-container-img">
-              <img src="../../assets/image/plus.svg" alt="">
-            </div>
-          </div>
+        <!--收，发货地址填写-->
+          <demo @showAddress="showAddress" :consignor="consignor" :consignee="consignee" :orPick="judge.consignor.addressPick" :eePick="judge.consignee.addressPick"></demo>
+          <!--如果两个地址都填写完毕-->
+        <div v-if="!judge.listShow" class="lift"  @click="judge.listShow = !judge.listShow">
+          <span class="rotate-span"><img src="../../assets/image/up.svg" alt=""></span>
         </div>
-        <!--收货地址填写-->
-        <div class="address-write" @click="showAddress('consignee')">
-          <span>收货地址</span>
-          <div v-if="judge.consignee.addressPick" class="address-show-container">
-            <div class="address-show">
-              <p class="address-show-user"><span>{{consignee.name}}</span><span>{{consignee.phone}}</span></p>
-              <p class="address-show-address">{{consignee.areaCode}}</p>
-            </div>
-          </div>
-          <div v-else class="address-show-container">
-            <div class="address-show-container-img">
-              <img src="../../assets/image/plus.svg" alt="">
-            </div>
-          </div>
-        </div>
-        <!--预约出发时间-->
-        <!--如果两个地址都填写完毕-->
-           <div v-if="!judge.listShow" class="lift"  @click="judge.listShow = !judge.listShow">展开信息填写栏</div>
         <div v-if="judge.consignor.addressPick && judge.consignee.addressPick && judge.listShow">
-          <div class="lift" @click="judge.listShow = !judge.listShow">收起信息填写栏</div>
+          <div class="lift" @click="judge.listShow = !judge.listShow">
+            <span class="rotate-span-down rotate-span"><img src="../../assets/image/up.svg" alt=""></span>
+          </div>
           <div class="time-write">
             <span class="time-span">起始时间</span>
             <input type="text" readonly @click="showTime(0)" placeholder="捎货起始时间" v-model="date.startTime" class="time-input">
@@ -87,7 +59,7 @@
               preview-size="1.2rem"
               @oversize="$toast('请限制照片大小在10m以下')"
             />
-            <p v-if="!fileList.length" style="font-size: .25rem;color: grey;margin-left: 1.62rem">请上传至少一张至多三张的照片</p>
+            <p v-if="!fileList.length" style="font-size: .25rem;color: dimgray;margin-left: 1.62rem">/*请上传至少一张至多三张的照片*/</p>
           </div>
           <div class="msg-write">
             <span class="msg-span">留言</span>
@@ -168,7 +140,7 @@
       :style="{ width: '65%', height: '100%' }"
     >
       <!--头像-->
-      <div class="user-info-head-img-contianer">
+      <div class="user-info-head-img-container">
         <span class="user-info-head-img">
           <img :src="consignor.headPicUrl" alt="" style="width: 1.5rem">
         </span>
@@ -182,7 +154,7 @@
         <span class="user-info-name">
           {{consignor.phone}}
         </span>
-        <span v-for="(value, index, key) in userlist" :key="key" class="user-info-item" :index="index" @touchstart="userList(index)" :ref="'user'+index" @touchend="offUserList(index)" @click="funCase(index)">
+        <span v-for="(value, index, key) in userLists" :key="key" class="user-info-item" :index="index" @touchstart="userList(index)" :ref="'user'+index" @touchend="offUserList(index)" @click="funCase(index)">
           <img :src="value.src" :alt="value.alt" class="user-info-item-img">
           {{value.text}}
         </span>
@@ -206,22 +178,30 @@
 <script>
 
   import  AreaList from '../../assets/area';
+  // 登陆状态
   import g from '../login/global'
   import { eventBus } from "../../main"
+  // 高德地图
+  import Amap from './Amap'
+  import Demo from './demo'
   export default {
     name: "homepage",
+    components:{
+      Amap,
+      Demo
+    },
     data() {
       return {
         loginStatus:"注册信息",
         // 地图信息
-        // lt http://118.25.85.198:8080/CATStudio/
+        // lt http://118.25.85.198:8080/deliver
         // jb http://47.96.231.75:8080/deliver
         // 192.168.1.102:8080
         url: "http://47.96.231.75:8080/deliver",
         order:{ // 订单信息
           userOrderId: []
         },
-        userlist:[ // 个人信息 span
+        userLists:[ // 个人信息 span
           {
             src: require("../../assets/image/order.svg"), // 图片路径
             text: "订单信息",
@@ -239,16 +219,6 @@
           }
         ],
         fileList:[], // 图片文字数组
-        map: {
-          map:"", // 地图对象
-          mk2: "", // 收货人地址 marker
-          driving: "", // 驾车路线
-          center: {lng: 0, lat: 0}, // 经纬度
-          zoom: 15, // 放大等级
-          scrollWheelZoom: true, // 是否启用滚轮调节缩放， 手机端无用， PC 端有用
-          autoLocation: true ,// 是否启用自动定位
-          polyline: "" //行车路线
-        }, // 百度地图
         // 图片信息
         file: {
           maxSize: 10485760, // 最大尺寸
@@ -344,7 +314,7 @@
       }
     },
     methods: {
-      // 用户信息列表
+      // 用户信息列表触摸
       userList(index) {
         this.$refs['user'+index][0].style.backgroundColor = "#AFEEEE"
       },
@@ -353,22 +323,28 @@
       },
       // 跳转到登陆界面
       login() {
-        this.$router.push('/login');
+        this.$router.push('/login')
       },
-      chat(){
-        this.$router.push('/chat')
-      }
-      ,
       message() {
         this.$toast('功能尚未开放，敬请期待')
+        this.$router.push("/findDriver")
       },
       // 跳转到司机页面
       driver() {
-        this.$toast('只有注册成为司机才能使用该功能')
+        if(!g.l_user.login){
+          this.$toast('请先登陆后使用')
+          return
+        }
+        this.$toast('只有注册成为司机才能使用该功能，当前在测试阶段')
         this.$router.push('/index/driver')
       },
-      // 上传
+      // 上传订单
       sendOrder() {
+        console.log(this.deliveryMsg.deliveryStart)
+        if(!this.fileList.length || !this.deliveryMsg.deliveryStart || !this.deliveryMsg.deliveryEnd){
+          this.$toast('除留言外，请完整填写其他信息')
+          return
+        }
         let self = this
         const instance=this.$axios.create({
           withCredentials: true
@@ -403,13 +379,11 @@
       // 查看订单
       funCase(index) {
         let self = this
+        // index 值做区分 0 为订单
         if(index == 0){
-          self.$router.push(
+          this.$router.push(
             {
-              path: '/findDriver',// 跳转到查找司机页面
-              query:{
-                userOrderId:self.order.userOrderId
-              } // 传递 orderId 数组
+              path: '/userOrderList',// 跳转到查找司机页面
             })
         }
       },
@@ -417,13 +391,11 @@
       highAdapt() {
         this.$refs.textarea.style.height = 'auto'
         this.$refs.textarea.style.height =  this.$refs.textarea.scrollHeight + "px"
-        console.log(this.$refs.textarea.scrollHeight + "px")
       },
       // 图片上传
       afterRead(file) {
         let content = file.file;
         this.formData.append('goodsPictures', content)
-
       },
       // 时间过滤器，只能显示 10 为倍数的分钟
       dateFilter(type, options) {
@@ -516,8 +488,7 @@
       },
       // 通过 role 请求地址
       findAddress() { // 通过用户 id 来寻找地址
-
-        if(!g.l_user){
+        if(!g.l_user.login){
           this.$toast('请先登陆后使用')
           return
         }else{
@@ -616,7 +587,7 @@
         }
         let self = this
         // 修改样式
-        for(let i =0;i<this.addresses.length;i++){
+        for(let i=0;i<this.addresses.length;i++){
           if(i == index){
             this.$refs[i][0].className = "address-active"
           }else{
@@ -677,94 +648,6 @@
         // 选择地址
         this.choiceAddress(index)
       },
-      handler({BMap, map}) {
-        let self = this
-        this.map.map = map
-        // 默认地址为 教5
-        this.map.center.lng = 113.40104365165
-        this.map.center.lat = 23.044853444999
-        this.map.zoom = 13
-        // 必须用 require 来请求地址否则报错
-        // new BMap.Size 用来控制展现区域大小
-        // imageSize 用来控制图片大小
-        let originIcon = new BMap.Icon(require("../../assets/image/Origin.svg"), new BMap.Size(30,30),{
-          imageSize: new BMap.Size(30,30)
-        })
-        // map.addEventListener("click", this.showInfo) // 暂时取消点击功能
-        var geolocation = new BMap.Geolocation();
-        geolocation.getCurrentPosition(function(r){
-        	if(this.getStatus() == BMAP_STATUS_SUCCESS){
-            var mk = new BMap.Marker(r.point,{icon: originIcon});
-            map.addOverlay(mk);
-            map.panTo(r.point);
-            let x = r.point.lng
-            let y = r.point.lat
-            // 谷歌浏览器定位问题解决不了的代码
-            // let ggPoint = new BMap.Point(x, y) 谷歌坐标
-            // let translateCallback = function(data){
-            //   if(data.status === 0) {
-            //     var marker = new BMap.Marker(data.points[0],{icon: originIcon});
-            //     map.addOverlay(marker);
-            //     map.setCenter(data.points[0]);
-            //   }
-            // }
-            // setTimeout(function(){
-            //   console.log("1")
-            //   var convertor = new BMap.Convertor();
-            //   var pointArr = [];
-            //   pointArr.push(ggPoint);
-            //   convertor.translate(pointArr, 3, 5, translateCallback)
-            // }, 1000);
-            self.map.center.lng = r.point.lng
-            self.map.center.lat = r.point.lat
-        		console.log('您的位置：'+r.point.lng+','+r.point.lat);
-        	}
-        	else {
-        		alert('failed'+this.getStatus());
-        	}
-        },{enableHighAccuracy: true})
-        this.map.driving = new BMap.DrivingRoute(
-          map,
-          {renderOptions:{map: map, autoViewport: false},
-            onPolylinesSet:function(routes) {
-              let searchRoute = routes[0].getPolyline();//导航路线
-              // map.addOverlay(searchRoute);
-            },
-            onMarkersSet:function(routes) {
-              map.removeOverlay(routes[0].marker); //删除起点
-              map.removeOverlay(routes[1].marker);//删除终点
-            }
-          })
-        this.map.driving.setSearchCompleteCallback(function(){
-          let driving = self.map.driving
-          var plan = driving.getResults().getPlan(0);
-          for(var i=0;i<plan.getNumRoutes();i+=2){
-            var pts =plan.getRoute(i).getPath();
-            //重点在这   这个地方是关于修改颜色的
-            var polyline = new BMap.Polyline(pts,{ strokeColor: "deepskyblue", strokeWeight: 5, strokeOpacity: 1 });
-            map.addOverlay(polyline);
-          }
-        })
-      },
-      // showInfo(e) {
-      //   // this.map.center.lat = e.point.lat
-      //   // this.map.center.lng = e.point.lng
-      //   console.log('您的位置：'+this.map.center.lng+','+this.map.center.lat);
-      //   let map = this.map.map
-      //   map.removeOverlay(this.map.mk2)
-      //   let destinationIcon = new BMap.Icon(require("../../assets/image/Destination.svg"), new BMap.Size(30,30),{
-      //     imageSize: new BMap.Size(30,30),
-      //   })
-      //   this.map.mk2 = new BMap.Marker(new BMap.Point(e.point.lng, e.point.lat),{icon: destinationIcon})
-      //   map.addOverlay(this.map.mk2)
-      //   // 地址浮现
-      //   this.map.driving.search(new BMap.Point(this.map.center.lng, this.map.center.lat), new BMap.Point(e.point.lng, e.point.lat));
-      //   // this.map.driving.setMarkersSetCallback(function (result) {
-      //   //   console.log(result)
-      //   //   map.removeOverlay(routes[0].marker);
-      //   //   map.removeOverlay(routes[routes.length-1].marker);
-      //   // })
-      // },
     },
     // 如果是从地址栏跳转过来则打开选择地址的组件
     beforeRouteEnter(to, from, next){
@@ -796,7 +679,7 @@
     mounted() {
       /**         yxxxxxxxxxxxxxxxxx        */
 
-      if(g.login_status === true){
+      if(g.login_status==true){
         this.loginStatus = "我的";
       }else{
         this.loginStatus = "登录注册";
@@ -804,6 +687,7 @@
       /**         yxxxxxxxxxxxxxxxxx        */
 
       let i = new Date()
+      let self = this
       this.date.minDate = new Date()
       // 如果到了 50 分过后 直接跳过这个小时
       if (i.getMinutes() >= 50) {
@@ -818,7 +702,7 @@
         this.date.minDate.getUTCDate() + 20
       )
 
-      if (g.l_user.user.id !== "default") {
+      if (g.l_user.login) {
         //  通过 id 得到 姓名
         this.deliveryMsg.uid = g.l_user.user.id // 发货对应的 id
         this.consignor.cid = g.l_user.user.id // 数据库对应的 id 设置地址的时候要用到
@@ -836,7 +720,33 @@
 </script>
 
 <style scoped>
-  .user-info-head-img-contianer{
+  .rotate-span{
+    position: relative;
+    display: inline-block;
+    height: .5rem;
+    width: .6rem;
+    /*transition: .5s all ease;*/
+  }
+  .rotate-span-down{
+    transform: rotate(180deg);
+  }
+  @keyframes up {
+    from   {
+      top: -.1rem;
+    }
+    to     {
+      top: .1rem;
+    }
+  }
+  .rotate-span>img{
+    display: inline-block;
+    position: absolute;
+    width: .4rem;
+    top:-.1rem;
+    left: .1rem;
+    animation: up .7s infinite alternate;
+  }
+  .user-info-head-img-container{
     position:relative;
     text-align:center;
     height: 1.8rem;
@@ -846,6 +756,7 @@
     border-radius: 50%;
     display: inline-block;
     width: 1.5rem;
+    height: 1rem;
   }
   .user-info-name{
     text-align: center;
@@ -876,20 +787,11 @@
     left: .75rem
   }
   .lift{
+    height: .4rem;
     font-size: .25rem;
     text-align: center;
     color: #7d7e80;
-    margin-top: .25rem;
-  }
-  .search-input{
-    position: relative;
-    width: 2rem;
-    height: .5rem;
-    color: #323233;
-    font-size: .25rem;
-    text-indent: .65rem;
-    border-radius: .25rem;
-    border: 1px solid grey;
+    margin-top: -.1rem;
   }
   .search-input-container{
     position: relative;
@@ -905,123 +807,63 @@
     width: 100%;
     height: .8rem;
     line-height: .8rem;
-    margin-top: .4rem
-  }
-  .consignee-id-input{
-    width: 100%;
-    height: .5rem;
-    font-size: .25rem;
-    text-align: center;
-    padding: .15rem 0;
-    border-bottom: 2px solid #f8f8f8
+    margin-top: .1rem;
   }
   .msg-write textarea{
     overflow:hidden;
     resize:none;
     width: 4.2rem;
     font-size: .25rem;
-    text-indent: .05rem;
+    text-indent: .5rem;
     color: grey;
-    margin-top: .1rem;
+    padding-top: .15rem;
     border: none
   }
   .msg-write{
-    margin-top: .2rem;
+    margin-top: .3rem;
   }
   .msg-span{
     position: relative;
     display: inline-block;
     width: 1rem;
     height: .5rem;
-    padding: .1rem .25rem 0 .25rem;
-    font-size: .25rem;
+    padding: .1rem .25rem 0 .6rem;
+    font-size: .3rem;
     vertical-align:top;
-    color: #323233;
+    color: grey;
   }
   .picture-span{
     position: relative;
-    padding: .4rem .25rem 0 .25rem;
-    font-size: .25rem;
-    vertical-align:top;
-    color: #323233;
-  }
-  .picture-span::before{
-    position: absolute;
-    left:.1rem;
-    top: .35rem;
-    content: '*';
-    color: red;
+    width: 1.2rem;
+    font-size: .3rem;
+    padding: .4rem .45rem 0 .55rem;
+    color: grey;
   }
   /*改变原有样式*/
   /deep/ .van-uploader__preview-delete{
     font-size: .3rem !important;
   }
-  .time-span::before{
-    position: absolute;
-    left:.1rem;
-    top: .35rem;
-    content: '*';
-    color: red;
+  /deep/ .van-uploader__input{
+    padding-left: .2rem;
   }
   .time-span{
     position: relative;
     display: inline-block;
-    width: 1rem;
+    width: 1.2rem;
     height: .5rem;
-    padding: .38rem .25rem 0 .25rem;
-    font-size: .25rem;
+    padding: .38rem .25rem 0 .55rem;
+    font-size: .3rem;
     vertical-align:top;
-    color: #323233;
+    color: grey;
   }
   .time-input{
     width: 4.2rem;
     height: .5rem;
-    margin-top:.3rem;
+    margin-top:.25rem;
     border-bottom:2px solid #f8f8f8;
-    text-indent:.1rem;
-    font-size: .25rem;
+    text-indent:.45rem;
+    font-size: .32rem;
     color:gray;
-  }
-  .address-show-container-img{
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-  .address-show-container-img>img{
-    position: absolute;
-    top:.15rem;
-    left: 1.75rem;
-    width: .6rem;
-  }
-  .address-show-container{
-    display: inline-block;
-    height: .7rem;
-    width: 4rem;
-    padding: .2rem .1rem .3rem .1rem;
-    border-bottom: 2px solid #f8f8f8;
-  }
-  .address-show-address{
-    display: -webkit-box;
-    margin-top: 0.05rem;
-    padding-top: 0.05rem;
-    margin-bottom: .15rem;
-    font-size: .25rem;
-    color: gray;
-    letter-spacing: .02rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    -webkit-box-orient:vertical;
-    z-index: 100;
-    -webkit-line-clamp:2;
-  }
-  .address-show-user{
-    font-size: .27rem;
-  }
-  .address-show-user>span:first-child{
-    margin-right: .3rem;
-  }
-  .address-write{
-    height: 1.1rem;
   }
   .address-write>span{
     position: relative;
@@ -1060,14 +902,17 @@
     position: fixed;
     top:0;
     height: 1.6rem;
-    width:7.5rem;
+    width:100%;
+    max-width: 640px;
+    min-width: 320px;
     background-color: white;
     z-index: 55;
     overflow: hidden;
   }
   .head-span{
+    box-sizing: border-box;
     display: inline-block;
-    width: 1.4rem;
+    width: 25%;
     height: .5rem;
     padding: .1rem .2rem;
     text-align: center;
@@ -1100,25 +945,23 @@
   .container{
     position: relative;
     width: 100%;
+    max-width: 640px;
+    min-width: 320px;
     height: 100vh;
-    overflow: hidden;
-  }
-  #map{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
     overflow: hidden;
   }
   .content{
     position: absolute;
+    margin-left: .325rem;
     bottom: .2rem;
-    width: 100%;
+    width: 90%;
+    height: auto;
     z-index: 5;
+    transition: .5s all ease;
   }
   .content-container{
-    width: 90%;
-    margin: auto;
+    width: 100%;
+    border-radius: 10px;
     background-color: white;
   }
   .none-address{
@@ -1162,12 +1005,5 @@
   }
   .address-item-user>span:nth-child(1){
     margin-right: .3rem;
-  }
-  .list-enter-active, .list-leave-active {
-    transition: all .5s ease;
-  }
-  .list-enter, .list-leave-to {
-    opacity: 0;
-    transform: translateX(350px);
   }
 </style>

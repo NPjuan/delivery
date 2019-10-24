@@ -177,7 +177,7 @@ export default {
 
 .order{
   width:100%;
-  height:100rem;/*为了附近订单没有数据时不要显示背景图，挡住*/
+  height:90%;/*为了附近订单没有数据时不要显示背景图，挡住*/
   background-color: white;
 }
 .remind{/*页面中的"请先输入您的具体位置*/

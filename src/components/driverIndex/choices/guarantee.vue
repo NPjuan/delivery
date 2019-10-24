@@ -42,7 +42,7 @@ export default {
         })                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 .go(-1)
     },
     confirm2(){
-      axios.defaults.baseURL = 'http://118.25.85.198:8080/deliver'
+      axios.defaults.baseURL = 'http://47.96.231.75:8080/deliver'
       axios.post('/order/receive.do',{
         userOrderId:58,
         driverUid:1,
@@ -88,7 +88,7 @@ export default {
   background-color:#f6f8f7;
   z-index:2;
 }
-.infomation{/*省市区选择*/ 
+.infomation{/*省市区选择*/
   margin:0 auto;
   width:80%;
   font-size:14px;

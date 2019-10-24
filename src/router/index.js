@@ -28,6 +28,7 @@ import HomePage from '../components/userIndex/HomePage'
 import ConsigneeAddress from '../components/userIndex/ConsigneeAddress'
 import ConsignorAddress from '../components/userIndex/ConsignorAddress'
 import FindDriver from '../components/userIndex/FindDriver'
+import UserOrderList from '../components/userIndex/UserOrderList'
 
 //yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 import loginselect from '../components/login/loginselect'
@@ -53,19 +54,22 @@ import Chat from "../components/chat/chating"
 
 
 Vue.use(Router)
-
+import Demo from "../components/userIndex/demo"
 export default new Router({
   routes: [
     // 主页
     {path: "/", name: "indexLink", component: Index, redirect: "/homepage", children: [
+        {path: "/demo", meta: { index: 0, keepAlive: true }, name: "demoLink", component: Demo},
         // 默认跳转
-        {path: "/homepage", meta: { index: 0 }, name: "homepageLink", component: HomePage},
+        {path: "/homepage", meta: { index: 0}, name: "homepageLink", component: HomePage},
         // 填写收货人地址
         {path: "/consigneeAddress", meta: {index: 1}, name: "consigneeAddressLink", component: ConsigneeAddress},
         // 填写发货人地址
         {path: "/consignorAddress", meta: {index: 1}, name: "consignorAddressLink", component: ConsignorAddress},
         // 寻找附件司机
         {path: "/findDriver", meta: {index: 1}, name: "findDriverLink", component: FindDriver},
+        // 订单详情
+        {path: "/userOrderList", meta: {index: 1}, name: "userOrderListLink", component: UserOrderList},
         // 司机 bz
         {path:"/index/driver", meta: {index: 1}, name:"driverLink",component:driver,   children:[
             // 发布行程

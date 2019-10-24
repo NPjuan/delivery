@@ -327,7 +327,6 @@
       },
       message() {
         this.$toast('功能尚未开放，敬请期待')
-        this.$router.push("/findDriver")
       },
       // 跳转到司机页面
       driver() {

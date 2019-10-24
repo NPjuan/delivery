@@ -84,7 +84,7 @@ export default {
       to.path == "/password"
     ) {
       next();
-      return;
+      return
     }
 
     if (this.pass == true) {
@@ -113,7 +113,6 @@ export default {
         this.$toast.success(i.msg);
         console.log(this.pass);
         this.pass = true;
-
         this.$router.push({ path: "/myInfo" });
       }
     },

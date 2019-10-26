@@ -1,6 +1,6 @@
 <template>
     <div id="container">
-        <normalHeader
+      <normalHeader
           left-text="返回"
           title="订单消息"
           right-text=""
@@ -26,20 +26,27 @@
           <p style="font-size: .28rem;margin: .1rem auto">货物描述:</p>
           <div class="bottom-container">
             <div class="text">{{value.description?value.description:'无货物描述'}}</div>
-            <div class="detail-button" @click="detail">
+            <div class="detail-button" @click="detailShow = !detailShow">
               详细信息
             </div>
           </div>
         </div>
       </div>
+      <background :show="detailShow" @changeShow="detailShow = !detailShow"/>
+      <detail :show="detailShow" @changeShow="detailShow = !detailShow"></detail>
     </div>
 </template>
 <script>
 
   import g from '../login/global'
-
+  import detail from './orderListDetail'
+  import background from './shadow'
     export default {
-        name: "UserOrderList",
+      name: "UserOrderList",
+      components:{
+        detail,
+        background
+      },
       data() {
           return {
             // 订单信息
@@ -48,7 +55,7 @@
             orderList: [
               {
                 "id":6,                             //用户订单id
-                "description":"货物描述",
+                "description":"",
                 "status":"1",                       //status为"0"时等待担保人确认/拒绝，status为"1"时等待被司机接单，status为"2"时担保人拒绝担保，单，status为"3"时已被司机接单，status为"4"时收货人确认收货
                 "pay":100,                          //费用
                 "goodsPicture1":"/uploads/goodsPictures/货物图片1.jpg",
@@ -56,6 +63,7 @@
                 "goodsPicture3":null
               }
             ],
+            detailShow:false
           }
       },
       methods:{
@@ -69,9 +77,6 @@
             .catch(function (error) {
               console.log(error)
             })
-        },
-        detail() {
-          this.$router.push("/orderListDetail")
         }
       },
       filters: {
@@ -162,7 +167,7 @@
     float: left;
     display: -webkit-box;
     text-indent: .46rem;
-    width: 4rem;
+    width: 4.2rem;
     height: 100%;
     font-size: .28rem;
     color: gray;

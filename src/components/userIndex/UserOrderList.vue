@@ -8,25 +8,25 @@
           @leftClick="headerLeftClick"
         />
       <div class="list-container">
-        <div class="list">
+        <div class="list" v-for="(value, index, key) in orderList">
           <p class="list-head">
             <span class="user-get">东莞市万江区潘俊渊 收</span>
-            <span class="status">已完成订单</span>
+            <span class="status">{{value.status | statusFilter}}</span>
           </p>
           <div class="center-container">
             <div class="img-container">
-              <img src="../../assets/image/user-send.svg" alt="" class="img">
-              <img src="../../assets/image/user-send.svg" alt="" class="img">
-              <img src="../../assets/image/user-send.svg" alt="" class="img">
+              <img v-if="value.goodsPicture1" :src="url+'goodsPicture1'" alt="goodsPicture1" class="img">
+              <img v-if="value.goodsPicture2" :src="url+'goodsPicture2'" alt="goodsPicture2" class="img">
+              <img v-if="value.goodsPicture3" :src="url+'goodsPicture3'" alt="goodsPicture3" class="img">
             </div>
             <div class="pay">
-              <span style="font-size: .45rem">￥ 50</span>.00
+              <span style="font-size: .45rem">￥ {{value.pay.toString().split(".")[0]}}</span>{{value.pay.toString().split(".")[1]}}
             </div>
           </div>
           <p style="font-size: .28rem;margin: .1rem auto">货物描述:</p>
           <div class="bottom-container">
-            <div class="text">潘俊渊啊手动阀手动阀发电上网发射点发顺丰的发生的发射点发</div>
-            <div class="detail-button">
+            <div class="text">{{value.description?value.description:'无货物描述'}}</div>
+            <div class="detail-button" @click="detail">
               详细信息
             </div>
           </div>
@@ -45,7 +45,17 @@
             // 订单信息
             localHost:"http://192.168.1.106:8080",
             url:"http://47.96.231.75:8080/deliver",
-            orderList: [],
+            orderList: [
+              {
+                "id":6,                             //用户订单id
+                "description":"货物描述",
+                "status":"1",                       //status为"0"时等待担保人确认/拒绝，status为"1"时等待被司机接单，status为"2"时担保人拒绝担保，单，status为"3"时已被司机接单，status为"4"时收货人确认收货
+                "pay":100,                          //费用
+                "goodsPicture1":"/uploads/goodsPictures/货物图片1.jpg",
+                "goodsPicture2":"/uploads/goodsPictures/货物图片2.jpg",
+                "goodsPicture3":null
+              }
+            ],
           }
       },
       methods:{
@@ -60,9 +70,25 @@
               console.log(error)
             })
         },
-        headerRightClick() {
-
+        detail() {
+          this.$router.push("/orderListDetail")
         }
+      },
+      filters: {
+          statusFilter(value) {
+            if(value == 0){
+              return "等待担保人回应"
+            }else if(value == 1){
+              return "等待被司机接单"
+            }else if(value == 2){
+              return "担保人拒绝担保"
+            }else if(value == 3){
+              return "已被司机接单"
+            }else if(value == 4){
+              return "收货人确认收货"
+            }
+
+          }
       },
       mounted() {
           this.$store.state

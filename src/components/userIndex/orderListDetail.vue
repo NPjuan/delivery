@@ -3,11 +3,11 @@
     <img src="../../assets/image/goBack.svg" class="close" @click="close"/>
     <div class="box">
       <div class="head">
-        <p class="head-p"><span style="color: rgb(250,128,10)">订单编号</span> &nbsp&nbsp&nbsp&nbsp 346632180207849472</p>
-        <p class="head-p"><span style="color: rgb(250,128,58)">发起时间</span> &nbsp&nbsp&nbsp&nbsp {{startTime}}</p>
+        <p class="head-p"><span style="color: rgb(250,128,10)">订单编号</span> &nbsp&nbsp {{detail.userOrderNumber}}</p>
+        <p class="head-p"><span style="color: rgb(250,128,58)">发起时间</span> &nbsp&nbsp {{startTime}}</p>
         <div class="msg-container" style="padding-top: .1rem">
           <p class="name">发货地址</p>
-          <p class="text">广东省东莞市万江区盛世华南西二330</p>
+          <p class="text">{{sendAddress}}</p>
         </div>
         <div class="address-container">
           <div class="svg-container">
@@ -16,16 +16,16 @@
           </div>
           <div class="address-text">
             <p>潘俊渊 &nbsp&nbsp 13642943515</p>
-            <p>广东省东莞市万江区盛世华南西二330</p>
+            <p>{{getAddress}}</p>
           </div>
         </div>
         <div class="msg-container" style="padding-top: .15rem">
           <p class="name">司机</p>
-          <p class="text">严师傅 &nbsp&nbsp 13642943515</p>
+          <p class="text">{{detail.driverRelate.name}} &nbsp&nbsp {{detail.driverRelate.phone}}</p>
         </div>
         <div class="msg-container" style="padding-top: .15rem">
             <p class="name">担保人</p>
-            <p class="text">买买提 &nbsp&nbsp 13642943515</p>
+            <p class="text">{{detail.suretyRelate.name}} &nbsp&nbsp {{detail.suretyRelate.phone}}</p>
         </div>
       </div>
     </div>
@@ -36,9 +36,56 @@
     export default {
       name: "orderListDetail",
       props:{
-          show:{
-            type: Boolean
+        show:{
+          type: Boolean
+        },
+        detail:{
+          type: Object,
+          default: {
+            //司机相关信息
+            "driverRelate":{
+              "id":1,
+              "name":"司机姓名",
+              "phone":"司机电话"
+            },
+            //担保人相关信息
+            "suretyRelate":{
+              "id":2,
+              "name":"担保人姓名",
+              "phone":"担保人电话"
+            },
+            //收货人相关信息
+            "contactRelate":{
+              "id":3,
+              "name":"收货人姓名",
+              "phone":"收货人电话"
+            },
+            //用户订单创建时间
+            "createTime":1571755162000,
+            //收货地址
+            "consigneeArea":{
+              "id":1,
+              "province":"省",
+              "city":"市",
+              "district":"区",
+              "town":"镇",
+              "village":"村",
+              "detail":"详细地址"
+            },
+            //订单编号
+            "userOrderNumber":"346632180207849472",
+            //发货地址
+            "deliverArea":{
+              "id":2,
+              "province":"省2",
+              "city":"市2",
+              "district":"区2",
+              "town":"镇2",
+              "village":"村2",
+              "detail":"详细地址2"
+            }
           }
+        }
       },
       methods:{
         close() {
@@ -55,8 +102,20 @@
         },
         startTime() {
           // 根据毫秒数构建 Date 对象
-          let date = new Date(1571755141000);
+          let date = new Date(this.detail.createTime);
           return  date.toLocaleString()
+        },
+        sendAddress() {
+          return (this.detail.deliverArea.city ? this.detail.deliverArea.city:"")
+            + (this.detail.deliverArea.district ? this.detail.deliverArea.district:"")
+            + (this.detail.deliverArea.down ? this.detail.deliverArea.down :"")
+            + (this.detail.deliverArea.detail ? this.detail.deliverArea.detail:"")
+        },
+        getAddress(){
+          return (this.detail.consigneeArea.city ? this.detail.consigneeArea.city:"")
+            + (this.detail.consigneeArea.district ? this.detail.consigneeArea.district:"")
+            + (this.detail.consigneeArea.down ? this.detail.consigneeArea.down :"")
+            + (this.detail.consigneeArea.detail ? this.detail.consigneeArea.detail:"")
         }
       }
     }
@@ -115,7 +174,10 @@
     width: .8rem;
   }
   .address-text{
+    box-sizing: border-box;
+    padding-left: .1rem;
     float: right;
+    width: 75%;
   }
   .name{
     box-sizing: border-box;

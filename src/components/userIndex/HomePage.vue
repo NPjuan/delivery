@@ -339,7 +339,6 @@
       },
       // 上传订单
       sendOrder() {
-        console.log(this.deliveryMsg.deliveryStart)
         if(!this.fileList.length || !this.deliveryMsg.deliveryStart || !this.deliveryMsg.deliveryEnd){
           this.$toast('除留言外，请完整填写其他信息')
           return

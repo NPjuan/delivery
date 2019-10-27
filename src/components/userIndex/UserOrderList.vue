@@ -7,20 +7,20 @@
           left-arrow
           @leftClick="headerLeftClick"
         />
-      <div class="list-container">
-        <div class="list" v-for="(value, index, key) in orderList" @click="showDetails(index)">
+      <div class="list-container" v-for="(value, index, key) in orderList">
+        <div class="list"  @click="showDetails(index)">
           <p class="list-head">
             <span class="user-get">东莞市万江区潘俊渊 收</span>
             <span class="status">{{value.status | statusFilter}}</span>
           </p>
           <div class="center-container">
             <div class="img-container">
-              <img v-if="value.goodsPicture1" :src="url+'goodsPicture1'" alt="goodsPicture1" class="img">
-              <img v-if="value.goodsPicture2" :src="url+'goodsPicture2'" alt="goodsPicture2" class="img">
-              <img v-if="value.goodsPicture3" :src="url+'goodsPicture3'" alt="goodsPicture3" class="img">
+              <img v-if="value.goodsPicture1" :src="iurl+value.goodsPicture1" alt="goodsPicture1" class="img">
+              <img v-if="value.goodsPicture2" :src="iurl+value.goodsPicture2" alt="goodsPicture2" class="img">
+              <img v-if="value.goodsPicture3" :src="iurl+value.goodsPicture3" alt="goodsPicture3" class="img">
             </div>
             <div class="pay">
-              <span style="font-size: .45rem">￥ {{value.pay.toFixed(2).split(".")[0]}}.</span>{{value.pay.toFixed(2).split(".")[1]}}
+              <span style="font-size: .4rem">￥ {{value.pay.toFixed(2).split(".")[0]}}.</span><span style="font-size: .3rem">{{value.pay.toFixed(2).split(".")[1]}}</span>
             </div>
           </div>
           <p style="font-size: .28rem;margin: .1rem auto"></p>
@@ -33,7 +33,7 @@
         </div>
       </div>
       <background :show="detailShow" @changeShow="detailShow = !detailShow"/>
-      <detail :show="detailShow" @changeShow="detailShow = !detailShow"></detail>
+      <detail :show="detailShow" :detail="detail" @changeShow="detailShow = !detailShow"></detail>
     </div>
 </template>
 <script>
@@ -51,35 +51,75 @@
           return {
             // 订单信息
             localHost:"http://192.168.1.106:8080",
-            url:"http://47.96.231.75:8080/deliver",
+            url:"http://118.25.85.198:8080/deliver",
+            iurl:"http://118.25.85.198:8080",
             orderList: [
-              {
-                "id":6,                             //用户订单id
-                "description":"",
-                "status":"1",                       //status为"0"时等待担保人确认/拒绝，status为"1"时等待被司机接单，status为"2"时担保人拒绝担保，单，status为"3"时已被司机接单，status为"4"时收货人确认收货
-                "pay":100.00,                          //费用
-                "goodsPicture1":"/uploads/goodsPictures/货物图片1.jpg",
-                "goodsPicture2":"/uploads/goodsPictures/货物图片2.jpg",
-                "goodsPicture3":null
-              }
             ],
-            detailShow:false
+            detailShow:false,
+            detail:{
+              //司机相关信息
+              "driverRelate":{
+                "id":1,
+                "name":"司机姓名",
+                "phone":"司机电话"
+              },
+              //担保人相关信息
+              "suretyRelate":{
+                "id":2,
+                "name":"担保人姓名",
+                "phone":"担保人电话"
+              },
+              //收货人相关信息
+              "contactRelate":{
+                "id":3,
+                "name":"收货人姓名",
+                "phone":"收货人电话"
+              },
+              //用户订单创建时间
+              "createTime":1571755162000,
+              //收货地址
+              "consigneeArea":{
+                "id":1,
+                "province":"省",
+                "city":"市",
+                "district":"区",
+                "town":"镇",
+                "village":"村",
+                "detail":"详细地址"
+              },
+              //订单编号
+              "userOrderNumber":"346632180207849472",
+              //发货地址
+              "deliverArea":{
+                "id":2,
+                "province":"省2",
+                "city":"市2",
+                "district":"区2",
+                "town":"镇2",
+                "village":"村2",
+                "detail":"详细地址2"
+              }
+            }
           }
       },
       methods:{
         headerLeftClick() {
-          this.$axios.post(this.localHost+"/userOrder/findAll.do",{
-            userId: 1
+          this.$router.go(-1)
+        },
+        showDetails(index) {
+          let self = this
+          let userOrderId = self.orderList[index]["id"]
+          this.$axios.post(this.url + '/userOrder/findDetail.do',{
+            userOrderId            //用户订单id
           })
             .then(function (response) {
               console.log(response)
+              self.detail = response.data.data
+              self.detailShow = !self.detailShow
             })
-            .catch(function (error) {
-              console.log(error)
+            .catch(function (err) {
+              console.log(err)
             })
-        },
-        showDetails(index) {
-          this.detailShow = !this.detailShow
         },
       },
       filters: {
@@ -99,14 +139,24 @@
           }
       },
       mounted() {
-          this.$store.state
-          console.log(this.$store.state)
+        let self = this
+        this.$axios.post(this.url+"/userOrder/findAll.do",{
+          userId: 1
+        })
+          .then(function (response) {
+            console.log(response.data.data)
+            self.orderList = response.data.data
+          })
+          .catch(function (error) {
+            console.log(error)
+          })
       }
     }
 </script>
 
 <style scoped>
   #container{
+    overflow: auto;
     max-width: 640px;
     min-width: 320px;
   }
@@ -147,13 +197,14 @@
   }
   .img-container{
     margin-right: -.1rem;
-    width: 4.6rem;
-    height: 1.4rem;
+    width: 4rem;
+    height: 1.3rem;
   }
   .img{
     display: inline-block;
+    float: left;
     height: 100%;
-    width: 1.4rem;
+    width: 1.3rem;
     margin-right: .1rem;
   }
   .pay{
@@ -161,13 +212,13 @@
     right: 0;
     bottom: 0;
     width: 2rem;
-    font-size: .35rem;
   }
   .bottom-container{
     height: 1rem;
   }
   .text{
     float: left;
+    padding-top: .15rem;
     display: -webkit-box;
     width: 4.2rem;
     height: 100%;

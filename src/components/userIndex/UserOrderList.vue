@@ -8,7 +8,7 @@
           @leftClick="headerLeftClick"
         />
       <div class="list-container">
-        <div class="list" v-for="(value, index, key) in orderList">
+        <div class="list" v-for="(value, index, key) in orderList" @click="showDetails(index)">
           <p class="list-head">
             <span class="user-get">东莞市万江区潘俊渊 收</span>
             <span class="status">{{value.status | statusFilter}}</span>
@@ -20,14 +20,14 @@
               <img v-if="value.goodsPicture3" :src="url+'goodsPicture3'" alt="goodsPicture3" class="img">
             </div>
             <div class="pay">
-              <span style="font-size: .45rem">￥ {{value.pay.toString().split(".")[0]}}</span>{{value.pay.toString().split(".")[1]}}
+              <span style="font-size: .45rem">￥ {{value.pay.toFixed(2).split(".")[0]}}.</span>{{value.pay.toFixed(2).split(".")[1]}}
             </div>
           </div>
-          <p style="font-size: .28rem;margin: .1rem auto">货物描述:</p>
+          <p style="font-size: .28rem;margin: .1rem auto"></p>
           <div class="bottom-container">
             <div class="text">{{value.description?value.description:'无货物描述'}}</div>
-            <div class="detail-button" @click="detailShow = !detailShow">
-              详细信息
+            <div class="detail-button">
+              提出申诉
             </div>
           </div>
         </div>
@@ -57,7 +57,7 @@
                 "id":6,                             //用户订单id
                 "description":"",
                 "status":"1",                       //status为"0"时等待担保人确认/拒绝，status为"1"时等待被司机接单，status为"2"时担保人拒绝担保，单，status为"3"时已被司机接单，status为"4"时收货人确认收货
-                "pay":100,                          //费用
+                "pay":100.00,                          //费用
                 "goodsPicture1":"/uploads/goodsPictures/货物图片1.jpg",
                 "goodsPicture2":"/uploads/goodsPictures/货物图片2.jpg",
                 "goodsPicture3":null
@@ -77,7 +77,10 @@
             .catch(function (error) {
               console.log(error)
             })
-        }
+        },
+        showDetails(index) {
+          this.detailShow = !this.detailShow
+        },
       },
       filters: {
           statusFilter(value) {
@@ -109,7 +112,7 @@
   }
   .list-container{
     box-sizing: border-box;
-    height: 3.5rem;
+    height: 3rem;
     width: 95%;
     margin: .2rem auto;
     border: 1px solid transparent;
@@ -144,13 +147,13 @@
   }
   .img-container{
     margin-right: -.1rem;
-    width: 4.1rem;
-    height: 1.2rem;
+    width: 4.6rem;
+    height: 1.4rem;
   }
   .img{
     display: inline-block;
     height: 100%;
-    width: 1.2rem;
+    width: 1.4rem;
     margin-right: .1rem;
   }
   .pay{
@@ -166,7 +169,6 @@
   .text{
     float: left;
     display: -webkit-box;
-    text-indent: .46rem;
     width: 4.2rem;
     height: 100%;
     font-size: .28rem;
@@ -178,15 +180,16 @@
     -webkit-line-clamp:3;
   }
   .detail-button{
-    line-height: .8rem;
-    text-align: center;
     float: right;
-    width: 2rem;
-    height: .8rem;
-    border-radius: 5px;
-    margin-right: .25rem;
-    color: white;
-    font-size: .3rem;
-    background-color: #57c8ac;
+    width: 1.5rem;
+    height: .6rem;
+    line-height: .6rem;
+    text-align: center;
+    border-radius: 15px;
+    margin-top: .15rem;
+    margin-right: .1rem;
+    color: #57c8ac;
+    font-size: .25rem;
+    border: 1px solid #57c8ac;
   }
 </style>

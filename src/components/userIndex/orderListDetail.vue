@@ -15,13 +15,14 @@
             <p class="svg-text">收货人</p>
           </div>
           <div class="address-text">
-            <p>潘俊渊 &nbsp&nbsp 13642943515</p>
+            <p>{{detail.contactRelate.name}} &nbsp&nbsp {{detail.contactRelate.phone}}</p>
             <p>{{getAddress}}</p>
           </div>
         </div>
         <div class="msg-container" style="padding-top: .15rem">
           <p class="name">司机</p>
-          <p class="text">{{detail.driverRelate.name}} &nbsp&nbsp {{detail.driverRelate.phone}}</p>
+          <p class="text" v-if="detail.driverRelate">{{detail.driverRelate.name}} &nbsp&nbsp {{detail.driverRelate.phone}}</p>
+          <p class="text" v-else>尚未有司机接单</p>
         </div>
         <div class="msg-container" style="padding-top: .15rem">
             <p class="name">担保人</p>

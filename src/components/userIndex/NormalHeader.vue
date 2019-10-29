@@ -37,7 +37,7 @@
           }
       },
       computed: {
-       
+
       },
       methods: {
         // 事件监听
@@ -53,10 +53,16 @@
 
 <style scoped>
   header{
-    position: relative;
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    max-width:640px;
+    min-width:320px;
     height: 1rem;
     text-align: center;
     background-color: white;
+    z-index:100;
   }
   .header-span{
     position: absolute;

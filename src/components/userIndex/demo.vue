@@ -19,7 +19,7 @@
       <div v-else class="right-show" style="position: relative">
         <div style="position: absolute;width: 5px;height: 65%;background-color: #57c8ac;left:0;"></div>
         <div style="width: 20%;margin: .2rem auto">
-          <img src="../../assets/image/plus.svg" alt="" style="width: 100%">
+          <img src="../../assets/image/plus.svg" alt="" style="width: 100%;max-width: 2rem">
         </div>
       </div>
   </div>
@@ -43,7 +43,7 @@
       <div v-else class="right-show" style="position: relative">
         <div style="position: absolute;width: 5px;height: 65%;background-color: skyblue;left:0;"></div>
         <div style="width: 20%;margin: .2rem auto">
-          <img src="../../assets/image/plus.svg" alt="" style="width: 100%">
+          <img src="../../assets/image/plus.svg" alt="" style="width: 100%;max-width: 2rem">
         </div>
       </div>
     </div>
@@ -78,7 +78,7 @@
 <style scoped>
   .container{
     box-sizing: border-box;
-    height: 3.8rem;
+    height: 3.2rem;
     border-radius: 3px;
   }
   .user-from{
@@ -87,7 +87,7 @@
     max-width: 750px;
     min-width: 320px;
     margin: 0 auto;
-    height: 1.9rem;
+    height: 1.6rem;
   }
   .left-show{
     box-sizing: border-box;

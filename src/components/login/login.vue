@@ -1,7 +1,6 @@
 <!-- //登录界面 -->
 <template id="page7">
   <div class="hei100">
-
     <!-- 登录界面 -->
 
     <img src="..\..\assets\image\userInfo\login_bg.png" width="100vw" style="width:100vw" />
@@ -10,7 +9,6 @@
     <div class="van-nav-bar__left arrow">
       <i @click="$router.back(-1)" class="van-icon van-icon-arrow-left van-nav-bar__arrow"></i>
     </div>
-
 
     <!-- 密码和用户名输入框 -->
     <van-cell-group class="pos_1">
@@ -32,8 +30,6 @@
         left-icon="hotel-o"
       />
     </van-cell-group>
-
-
 
     <!-- 登录按钮 -->
     <div class="pos_1 btn">
@@ -70,13 +66,25 @@ export default {
       login: "登录"
     };
   },
+  mounted() {
+    console.log(this.$store.state.ip);
+
+    // this.axios.post("http://api.komavideo.com/news/list").then(body => {
+    //   this.content = body.data;
+    // });
+    // console.log(this.axios);
+  },
 
   beforeRouteLeave(to, from, next) {
     console.log(to);
 
-    if (to.path == "/idselect"||to.path == "/homepage"||to.path == "/password") {
+    if (
+      to.path == "/idselect" ||
+      to.path == "/homepage" ||
+      to.path == "/password"
+    ) {
       next();
-      return;
+      return
     }
 
     if (this.pass == true) {
@@ -95,19 +103,17 @@ export default {
   methods: {
     loginss(i) {
       g.l_user = i.data;
-      // pjy 加入 login 判断是否为登陆成功状态
-      g.l_user.login = true
       console.log(g.l_user);
       if (i.code == 1) {
         this.$toast.fail(i.msg);
         this.show1 = false;
         this.login = "登录";
+        // this.$router.push({ path: "/homepage" });
       } else {
         this.$toast.success(i.msg);
         console.log(this.pass);
         this.pass = true;
-        g.login_status = true
-        this.$router.push({ path: "/homepage" });
+        this.$router.push({ path: "/myInfo" });
       }
     },
     ajax(data, url, func) {
@@ -154,14 +160,13 @@ export default {
   padding-top: 6vh;
 }
 
-.btn{
+.btn {
   width: 95vw;
 
   margin: 0 auto;
 }
 
-
-.ib{
+.ib {
   display: inline-block;
   padding: 20px 10px;
   color: gray;

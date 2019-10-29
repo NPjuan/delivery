@@ -4,8 +4,9 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 /*********************************/
-import BaiduMap from 'vue-baidu-map'
 import axios from 'axios'
+import VueAxios from 'vue-axios'
+import store from './store'
 import 'vant/lib/index.css';
 import {
   AddressEdit,
@@ -26,6 +27,7 @@ import {
   Circle,
   Loading,
   Image,
+  ActionSheet,
 } from 'vant'
 
 // pjy 的个人组件
@@ -35,15 +37,14 @@ Vue.component("normalHeader",normalHeader)
 
 import VueBus from './vue-bus'
 
+Vue.use(VueAxios, axios)
 Vue.use(VueBus) // 开启事件车
-// yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-// import './css/login.css'
+
 import './css/vue.css'
 import './css/vueup.css'
-// yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 Vue.use(AddressEdit).use(Area).use(Button).use(Popup).use(Field).use(Cell).use(CellGroup).use(Dialog).use(NavBar).use(List)
-Vue.use(DatetimePicker).use(Uploader).use(Switch).use(Picker).use(Circle).use(Loading).use(Image)
+Vue.use(DatetimePicker).use(Uploader).use(Switch).use(Picker).use(Circle).use(Loading).use(Image).use(ActionSheet)
 
 // Vue.use(BaiduMap, {
 //   ak: "ANlGUWwHxTnBFsMnbRaTsRfQ6f37SOTo"
@@ -71,8 +72,9 @@ export const eventBus = new Vue()
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
-new Vue({
+var vm = new Vue({
   el: '#app',
+  store,
   router,
   components: {
     App
@@ -81,3 +83,38 @@ new Vue({
 
 
 })
+
+router.beforeEach((to, from, next) => {
+
+  //获取用户登录成功后储存的登录标志
+  let getFlag = localStorage.getItem("Flag");
+  let getData = JSON.parse(localStorage.getItem('userData'));
+
+  //如果登录标志存在且为isLogin，即用户已登录
+  if (getFlag === "isLogin") {
+    //设置vuex登录状态为已登录
+    store.state.isLogin = true;
+    store.state.userData = getData;
+    next();
+    //如果登录标志不存在，即未登录
+  } else {
+    //用户想进入需要登录的页面，则定向回登录界面
+    if (to.meta.isLogin) {
+      next({
+        path: '/login',
+      })
+      //提示
+      this.$toast.message("请先登录");
+      //用户进入无需登录的界面，则跳转继续
+    } else {
+      next()
+    }
+  }
+});
+
+router.afterEach(route => {
+  window.scroll(0, 0);
+});
+
+
+

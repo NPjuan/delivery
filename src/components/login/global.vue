@@ -60,7 +60,11 @@
         status: ""
     }
 
-    var l_user = {};
+    var l_user = {
+        user:{
+            id:"default"
+        }
+    };
 
     var pwphone = "";
 
@@ -74,8 +78,7 @@
         user_r_msg, //用户身份选择
         login_status, //用户登录状态
         l_user,        //用户登录后的个人信息获取
-        pwphone,        //手机信息保存  
-
+        pwphone,        //手机信息保存
     }
 
 

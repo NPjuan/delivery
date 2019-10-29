@@ -19,7 +19,7 @@
       <div v-else class="right-show" style="position: relative">
         <div style="position: absolute;width: 5px;height: 65%;background-color: #57c8ac;left:0;"></div>
         <div style="width: 20%;margin: .2rem auto">
-          <img src="../../assets/image/plus.svg" alt="" style="width: 100%">
+          <img src="../../assets/image/plus.svg" alt="" style="width: 100%;max-width: 2rem">
         </div>
       </div>
   </div>
@@ -43,7 +43,7 @@
       <div v-else class="right-show" style="position: relative">
         <div style="position: absolute;width: 5px;height: 65%;background-color: skyblue;left:0;"></div>
         <div style="width: 20%;margin: .2rem auto">
-          <img src="../../assets/image/plus.svg" alt="" style="width: 100%">
+          <img src="../../assets/image/plus.svg" alt="" style="width: 100%;max-width: 2rem">
         </div>
       </div>
     </div>

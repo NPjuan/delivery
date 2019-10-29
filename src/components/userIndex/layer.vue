@@ -4,10 +4,11 @@
 
 <script>
     export default {
-      name: "shadow",
+      name: "layer",
       props:{
         show:{
-          type: Boolean
+          type: Boolean,
+          default: false
         }
       },
       methods:{
@@ -32,13 +33,13 @@
     position: fixed;
     top: 0;
     left: 0;
-    transition: .5s all ease;
     height: 100vh;
     width: 100vw;
+    transition: .5s all ease;
   }
   .enter{
     background-color: rgba(0,0,0,.7);
-    z-index: 50;
+    z-index: 100;
   }
   .leave{
     background-color: transparent;

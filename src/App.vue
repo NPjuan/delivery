@@ -16,9 +16,9 @@ export default {
     };
   },
   mounted() {
-    var fontSizeAuto = function(oriWidth){
+    let fontSizeAuto = function(oriWidth){
       return function(){
-        var viewportWidth = document.documentElement.clientWidth;
+        let viewportWidth = document.documentElement.clientWidth;
         if(viewportWidth > 640){ viewportWidth = 640; }
         if(viewportWidth < 320){ viewportWidth = 320; }
         document.documentElement.style.fontSize = viewportWidth/(oriWidth/100) +'px';
@@ -28,11 +28,8 @@ export default {
   },
   watch: {
     $route(to, from) {
-      let toName = to.name;
-
       const toIndex = to.meta.index_;
       const fromIndex = from.meta.index_;
-
       this.transitionName = toIndex < fromIndex ? 'right' : 'left';
     }
   }

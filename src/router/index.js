@@ -29,7 +29,7 @@ import ConsigneeAddress from '../components/userIndex/ConsigneeAddress'
 import ConsignorAddress from '../components/userIndex/ConsignorAddress'
 import FindDriver from '../components/userIndex/FindDriver'
 import UserOrderList from '../components/userIndex/UserOrderList'
-import Promise from '../components/userIndex/promise'
+import Promise from '../components/userIndex/Guarantee'
 
 //yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 import loginselect from '../components/login/loginselect'

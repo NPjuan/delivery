@@ -172,6 +172,8 @@
       :style="{ width: '65%', height: '100%' }"
     >
     </van-popup>
+    <layer :show="judge.Shadow" @changeShow="judge.Shadow = !judge.Shadow"/>
+    <Guarantee :show="judge.Shadow" @changeShow="judge.Shadow = !judge.Shadow"></Guarantee>
   </div>
 </template>
 
@@ -180,15 +182,18 @@
   import  AreaList from '../../assets/area';
   // 登陆状态
   import g from '../login/global'
-  import { eventBus } from "../../main"
   // 高德地图
   import Amap from './Amap'
   import Demo from './demo'
+  import layer from './layer'
+  import Guarantee from './Guarantee'
   export default {
     name: "homepage",
     components:{
       Amap,
-      Demo
+      Demo,
+      layer,
+      Guarantee
     },
     data() {
       return {
@@ -303,7 +308,8 @@
           consignee: {
             addressPick: false // 是否选择了 收货人 的地址
           },
-          listShow : true // 是否收起下拉列表
+          listShow : true, // 是否收起下拉列表
+          Shadow: false
         },
         // 错误信息
         errorMessage: {
@@ -383,6 +389,8 @@
             {
               path: '/userOrderList',// 跳转到查找司机页面
             })
+        }else if(index == 2){
+          this.judge.Shadow = true
         }
       },
       // 留言框高度自适应

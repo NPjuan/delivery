@@ -7,32 +7,34 @@
           left-arrow
           @leftClick="headerLeftClick"
         />
-      <div class="list-container" v-for="(value, index, key) in orderList">
-        <div class="list"  @click="showDetails(index)">
-          <p class="list-head">
-            <span class="user-get">东莞市万江区潘俊渊 收</span>
-            <span class="status">{{value.status | statusFilter}}</span>
-          </p>
-          <div class="center-container">
-            <div class="img-container">
-              <img v-if="value.goodsPicture1" :src="iurl+value.goodsPicture1" alt="goodsPicture1" class="img">
-              <img v-if="value.goodsPicture2" :src="iurl+value.goodsPicture2" alt="goodsPicture2" class="img">
-              <img v-if="value.goodsPicture3" :src="iurl+value.goodsPicture3" alt="goodsPicture3" class="img">
+      <div style="padding-top:1rem">
+        <div class="list-container" v-for="(value, index, key) in orderList">
+          <div class="list"  @click="showDetails(index)">
+            <p class="list-head">
+              <span class="user-get">东莞市万江区潘俊渊 收</span>
+              <span class="status">{{value.status | statusFilter}}</span>
+            </p>
+            <div class="center-container">
+              <div class="img-container">
+                <img v-if="value.goodsPicture1" :src="iurl+value.goodsPicture1" alt="goodsPicture1" class="img">
+                <img v-if="value.goodsPicture2" :src="iurl+value.goodsPicture2" alt="goodsPicture2" class="img">
+                <img v-if="value.goodsPicture3" :src="iurl+value.goodsPicture3" alt="goodsPicture3" class="img">
+              </div>
+              <div class="pay">
+                <span style="font-size: .4rem">￥ {{value.pay.toFixed(2).split(".")[0]}}.</span><span style="font-size: .3rem">{{value.pay.toFixed(2).split(".")[1]}}</span>
+              </div>
             </div>
-            <div class="pay">
-              <span style="font-size: .4rem">￥ {{value.pay.toFixed(2).split(".")[0]}}.</span><span style="font-size: .3rem">{{value.pay.toFixed(2).split(".")[1]}}</span>
-            </div>
-          </div>
-          <p style="font-size: .28rem;margin: .1rem auto"></p>
-          <div class="bottom-container">
-            <div class="text">{{value.description?value.description:'无货物描述'}}</div>
-            <div class="detail-button">
-              提出申诉
+            <p style="font-size: .28rem;margin: .1rem auto"></p>
+            <div class="bottom-container">
+              <div class="text">{{value.description?value.description:'无货物描述'}}</div>
+              <div class="detail-button">
+                提出申诉
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <background :show="detailShow" @changeShow="detailShow = !detailShow"/>
+      <layer :show="detailShow" @changeShow="detailShow = !detailShow"/>
       <detail :show="detailShow" :detail="detail" @changeShow="detailShow = !detailShow"></detail>
     </div>
 </template>
@@ -40,12 +42,12 @@
 
   import g from '../login/global'
   import detail from './orderListDetail'
-  import background from './shadow'
+  import layer from './layer'
     export default {
       name: "UserOrderList",
       components:{
         detail,
-        background
+        layer
       },
       data() {
           return {
@@ -159,6 +161,7 @@
     overflow: auto;
     max-width: 640px;
     min-width: 320px;
+    height: 100vh;
   }
   .list-container{
     box-sizing: border-box;

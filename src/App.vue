@@ -15,15 +15,40 @@ export default {
       transitionName: "left"
     };
   },
-  mounted() {
-    var fontSizeAuto = function(oriWidth){
-      return function(){
-        var viewportWidth = document.documentElement.clientWidth;
-        if(viewportWidth > 640){ viewportWidth = 640; }
-        if(viewportWidth < 320){ viewportWidth = 320; }
-        document.documentElement.style.fontSize = viewportWidth/(oriWidth/100) +'px';
-      }
+  created(){
+
+    
+    // /yxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    //获取用户登录成功后储存的登录标志
+    let getFlag = localStorage.getItem("Flag");
+    let getData = JSON.parse(localStorage.getItem("userData"));
+    //如果登录标志存在且为isLogin，即用户已登录
+    if (getFlag === "isLogin") {
+      
+      //设置vuex登录状态为已登录
+      this.$store.state.isLogin = true;
+      this.$store.state.userData = getData;
+      //如果登录标志不存在，即未登录
     }
+    // /yxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+  },
+  mounted() {
+
+
+    var fontSizeAuto = function(oriWidth) {
+      return function() {
+        var viewportWidth = document.documentElement.clientWidth;
+        if (viewportWidth > 640) {
+          viewportWidth = 640;
+        }
+        if (viewportWidth < 320) {
+          viewportWidth = 320;
+        }
+        document.documentElement.style.fontSize =
+          viewportWidth / (oriWidth / 100) + "px";
+      };
+    };
     window.onresize = fontSizeAuto(750)();
   },
   watch: {
@@ -33,7 +58,7 @@ export default {
       const toIndex = to.meta.index_;
       const fromIndex = from.meta.index_;
 
-      this.transitionName = toIndex < fromIndex ? 'right' : 'left';
+      this.transitionName = toIndex < fromIndex ? "right" : "left";
     }
   }
 };

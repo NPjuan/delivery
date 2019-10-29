@@ -785,18 +785,23 @@
         next()
       }
     },
+
+    //yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
     beforeRouteLeave (to, from, next) {
-      if(to.path=="/login"&&g.login_status){
+      if(to.path=="/login"&&this.$store.state.isLogin){
         this.$router.push({
           path: `/myInfo`
         })
+        return;
       }
       next();
     },
+
+    //yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
     mounted() {
       /**         yxxxxxxxxxxxxxxxxx        */
-
-      if(g.login_status==true){
+      // alert(22222)
+      if(this.$store.state.isLogin){
         this.loginStatus = "我的";
       }else{
         this.loginStatus = "登录注册";

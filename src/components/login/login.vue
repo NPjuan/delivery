@@ -7,7 +7,8 @@
 
     <!-- 返回键 -->
     <div class="van-nav-bar__left arrow">
-      <i @click="$router.back(-1)" class="van-icon van-icon-arrow-left van-nav-bar__arrow"></i>
+      <!-- <i @click="$router.back(-1)" class="van-icon van-icon-arrow-left van-nav-bar__arrow"></i> -->
+      <i @click="$router.push('/homepage')" class="van-icon van-icon-arrow-left van-nav-bar__arrow"></i>
     </div>
 
     <!-- 密码和用户名输入框 -->
@@ -33,9 +34,9 @@
 
     <!-- 登录按钮 -->
     <div class="pos_1 btn">
-      <van-button type="primary" size="large" to="/myInfo">
+      <van-button type="primary" size="large" @click="login">
         <van-loading size="24px" type="spinner" color="white" v-show="show1" />
-        {{login}}
+        {{login_msg}}
       </van-button>
     </div>
 
@@ -48,95 +49,81 @@
 </template>
 
 
-
-
-
-
-
-
 <script>
 import g from "./global";
+import { timeout } from "q";
 export default {
   data() {
     return {
       pass: false,
+
+      //账号密码
       username: "",
       password: "",
+
+      //登录加载圈圈切换
       show1: false,
-      login: "登录"
+      login_msg: "登录",
+
+      //登录地址
+      loginip: "/user/login.do"
     };
   },
   mounted() {
-    console.log(this.$store.state.ip);
-    
-    // this.axios.post("http://api.komavideo.com/news/list").then(body => {
-    //   this.content = body.data;
-    // });
-    // console.log(this.axios);
+
   },
 
+  beforeRouteEnter(to, from, next) {
+    next();
+  },
   beforeRouteLeave(to, from, next) {
-    console.log(to);
-
-    if (
-      to.path == "/idselect" ||
-      to.path == "/homepage" ||
-      to.path == "/password"
-    ) {
-      next();
-      return;
-    }
-
-    if (this.pass == true) {
-      g.login_status = true;
-      next();
-    }
-    // ...
-    var data = {
-      id: this.username,
-      password: this.password
-    };
-    this.show1 = true;
-    this.login = "";
-    this.ajax(data, "/user/login.do", "loginss");
+    next();
   },
   methods: {
-    loginss(i) {
-      g.l_user = i.data;
-      console.log(g.l_user);
-      if (i.code == 1) {
-        this.$toast.fail(i.msg);
-        this.show1 = false;
-        this.login = "登录";
-        // this.$router.push({ path: "/homepage" });
-      } else {
-        this.$toast.success(i.msg);
-        console.log(this.pass);
-        this.pass = true;
+    //登录按钮
+    login() {
+      //加载圈出现，登录文字隐藏
+      this.show1 = true;
+      this.login_msg = "";
 
-        this.$router.push({ path: "/myInfo" });
-      }
-    },
-    ajax(data, url, func) {
-      //创建ajax
-      var ajax = new XMLHttpRequest();
-      var stringData = JSON.stringify(data);
-      //请求行(发送方式/发送目标url)
-      ajax.open("post", "http://47.96.231.75:8080/deliver" + url);
-      //   ajax.open("post", "http://192.168.1.102:8080" + url);
-      //请求头
-      ajax.setRequestHeader("Content-type", "application/json;charset=UTF-8");
-      //回调函数
-      ajax.onreadystatechange = () => {
-        if (ajax.readyState == 4 && ajax.status == 200) {
-          //接受返回的json
-          var json = JSON.parse(ajax.responseText);
-          // window[func](json);
-          this[func](json);
-        }
-      };
-      //请求主体(请求发送)
-      ajax.send(stringData);
+      this.axios
+        .post(this.$store.state.ip + this.loginip, {
+          id: this.username,
+          password: this.password
+        })
+        .then(i => {
+          this.show1 = false;
+          this.login_msg = "登录";
+
+          //保存用户信息
+          g.l_user = i.data.data;
+          //登录失败
+          if (i.data.code == 1) {
+            this.$toast.fail(i.data.msg);
+          } else {
+
+
+            //登陆成功
+            this.$toast.success(i.data.msg);
+            this.pass = true;
+
+            //登录成功状态保存-->已成功
+            this.$store.dispatch("userLogin", true);
+            this.$store.dispatch("userData", i.data.data);
+    
+            //localStorage本地存储
+            localStorage.setItem("Flag", "isLogin");
+            localStorage.setItem('userData', JSON.stringify(i.data.data));
+
+            
+            
+            //跳转至个人信息页面
+            this.$router.push({ path: "/myInfo" });
+          }
+        })
+        .catch(e => {
+          console.info(e);
+        });
     }
   }
 };

@@ -11,49 +11,33 @@
         <div class="van-nav-bar__title van-ellipsis">我的</div>
         <div class="van-nav-bar__right"></div>
       </div>
-      <div class="context">
-        <!-- //头像 -->
-        <div class="headpc dis_bl">
-          <img :src="headPic" alt="头像" width="64px" />
-        </div>
-        <div class="userInfo dis_bl">
-          <div class="f_s_big username">{{username}}</div>
-          <div class="otherInfo">
-            <div class="dis_bl f_s_te">{{role}}</div>
-            <div class="dis_bl f_s_te">id: {{id}}</div>
-            <div class="dis_bl" id="userset"></div>
+
+      <van-skeleton title avatar :row="3" avatar-size="65px" :loading="loading">
+        <div class="context">
+          <div class="headpc dis_bl">
+            <img :src="headPic" alt="头像" width="64px" />
+          </div>
+          <div class="userInfo dis_bl">
+            <div class="f_s_big username">{{username}}</div>
+            <div class="otherInfo">
+              <div class="dis_bl f_s_te">{{role}}</div>
+              <div class="dis_bl f_s_te">id: {{id}}</div>
+              <div class="dis_bl" id="userset"></div>
+            </div>
           </div>
         </div>
-      </div>
+      </van-skeleton>
 
-      <!-- <div class="context_C">
-        <div class="purse dis_bl"></div>
-        <div class="dis_bl f_s_big">钱包</div>
-        <div class="arrow dis_bl"></div>
-      </div>
-
-      <div class="context_C mt_0">
-        <div class="order dis_bl"></div>
-        <div class="dis_bl f_s_big">订单</div>
-        <div class="arrow dis_bl"></div>
-      </div>
-
-      <div class="context_C mt_0">
-        <div class="setting dis_bl"></div>
-        <div class="dis_bl f_s_big">设置</div>
-        <div class="arrow dis_bl"></div>
-      </div> -->
       <van-cell-group>
-        <van-cell title="钱包" icon="gold-coin-o" is-link to="/setting"/>
-        <van-cell title="订单" icon="notes-o" is-link to="/setting"/>
-        <van-cell title="积分" icon="points" is-link to="/setting"/>
-        <van-cell title="消息" icon="comment-circle-o" is-link to="/setting"/>
+        <van-cell title="钱包" icon="gold-coin-o" is-link to="/setting" />
+        <van-cell title="订单" icon="notes-o" is-link to="/setting" />
+        <van-cell title="积分" icon="points" is-link to="/setting" />
+        <van-cell title="消息" icon="comment-circle-o" is-link to="/setting" />
       </van-cell-group>
 
       <van-cell-group>
-        <van-cell title="设置" icon="setting-o" is-link to="/setting"/>
+        <van-cell title="设置" icon="setting-o" is-link to="/setting" />
       </van-cell-group>
-
     </div>
   </div>
 </template>
@@ -70,7 +54,10 @@ export default {
       headPic: "http://47.96.231.75:8080/uploads/headPortraits/default.jpg",
       role: "身份",
       id: "id",
-      userData: ""
+      userData: "",
+
+      //正在加载
+      loading: true
     };
   },
   mounted() {
@@ -99,6 +86,9 @@ export default {
 
     //赋值id
     this.id = this.userData.user.authId;
+
+    //加载完毕
+    this.loading = false;
   },
   beforeRouteEnter(to, from, next) {
     // if(from.path=='/login'&&g.login_status){
@@ -119,8 +109,7 @@ export default {
         }
       };
       ajax.send(stringData);
-    },
-
+    }
   }
 };
 </script>
@@ -201,50 +190,20 @@ export default {
   padding: 5px 10px;
 }
 
-.purse {
-  width: 40px;
-  height: 40px;
-  background-image: url("../../assets/image/userInfo/money.png");
-  background-position: 50% 50%;
-  background-size: 25px;
-  background-repeat: no-repeat;
-}
-
-.setting {
-  width: 40px;
-  height: 40px;
-  background-image: url("../../assets/image/userInfo/setting.png");
-  background-position: 50% 50%;
-  background-size: 25px;
-  background-repeat: no-repeat;
-}
-
-.order {
-  width: 40px;
-  height: 40px;
-  background-image: url("../../assets/image/userInfo/订单.png");
-  background-position: 50% 50%;
-  background-size: 35px;
-  background-repeat: no-repeat;
-}
-
-.arrow {
-  width: 15px;
-  height: 15px;
-  background-image: url("../../assets/image/userInfo/右箭头.svg");
-  background-position: 50% 50%;
-  background-size: 20px;
-}
-
 .context_C > div {
   /* height: 100%; */
   line-height: 40px;
   vertical-align: middle;
 }
 
-
 .van-cell-group {
   margin: 2vh auto;
+}
+
+.van-skeleton {
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  background-color: white;
 }
 
 /* we */

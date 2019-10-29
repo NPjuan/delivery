@@ -102,6 +102,7 @@ export default {
     description:"",
     photo:[],
     confirmShow:false,
+      confirmShow2: false,
     idStr:"",
     };
   },//data结束
@@ -169,7 +170,7 @@ export default {
     },
     confirm(){
       let self = this
-      axios.defaults.baseURL = 'http://118.25.85.198:8080/deliver'
+      axios.defaults.baseURL = 'http://47.96.231.75:8080/deliver'
       axios.post('/order/validateNeedSafety.do',{
         userOrderId: 58,//从orderlist传过来的点击某个订单的时候此订单的id
         driverUid:1
@@ -184,10 +185,10 @@ export default {
       })
     },
     checkId(){
-      axios.defaults.baseURL = 'http://118.25.85.198:8080/deliver'
+      axios.defaults.baseURL = 'http://47.96.231.75:8080/deliver'
       axios.post('/order/validateSafety.do',{
         userOrderId: 58,
-        suretyAuthId:"4"
+        suretyAuthId: "2222222222"
       })
       .then((response)=>{
           if(response.data.msg == "该担保人符合要求"){
@@ -208,7 +209,7 @@ export default {
 
     },
     confirm1(){
-      axios.defaults.baseURL = 'http://118.25.85.198:8080/deliver'
+      axios.defaults.baseURL = 'http://47.96.231.75:8080/deliver'
       axios.post('/order/receive.do',{
         userOrderId:25,
         driverUid:1,
@@ -234,8 +235,9 @@ export default {
     display:none;
 }
 .orderinfo{
+  /*overflow: auto;*/
   font-size: .2rem;
-  height:1280px;
+  height: 50vh;
   background-color:#f6f8f7;
 }
 .cell-group{
@@ -316,6 +318,11 @@ export default {
   top:0px;
   width:.5rem;
   height:.5rem;
+}
+.confirm{
+  display: inline-block;
+  width: 90%;
+  margin: auto;
 }
 .goods{/*页面中的货物框*/
   margin:0 auto;

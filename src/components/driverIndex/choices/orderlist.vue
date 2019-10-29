@@ -56,7 +56,7 @@ export default {
   /* 本来这里没有设sbsolute时组件有穿透效果 */
   /* position:relative; */
   width:100%;
-  height:18rem;/*为了附近订单没有数据时不要显示背景图，挡住*/
+  height:90%;/*为了附近订单没有数据时不要显示背景图，挡住*/
   background-color: #f6f8f7;
   font-size: .2rem;
 }
@@ -64,7 +64,6 @@ export default {
   position:relative;
   top:-.8rem;
   color:#07c160;
-  height:10000px;
   /* font-weight:bold; */
   font-size: .3rem;
   text-align: center;
@@ -87,7 +86,8 @@ export default {
   /* 这个top解决问题 */
   top:10px;
   /*width:90%;*/
-  line-height:25px;
+  /*height:2.5rem;*/
+  line-height: 16px;
   margin:.38rem .38rem;
   padding:.2rem .2rem;
   border: 2px solid #f6f8f7;

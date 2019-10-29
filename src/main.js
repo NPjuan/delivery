@@ -32,7 +32,9 @@ import {
   Skeleton,
 } from 'vant'
 
-
+// pjy 的个人组件
+import normalHeader from './components/userIndex/NormalHeader'
+Vue.component("normalHeader",normalHeader)
 
 
 import VueBus from './vue-bus'
@@ -46,9 +48,18 @@ import './css/vueup.css'
 Vue.use(AddressEdit).use(Area).use(Button).use(Popup).use(Field).use(Cell).use(CellGroup).use(Dialog).use(NavBar).use(List)
 Vue.use(DatetimePicker).use(Uploader).use(Switch).use(Picker).use(Circle).use(Loading).use(Image).use(ActionSheet).use(Skeleton)
 
-Vue.use(BaiduMap, {
-  ak: "ANlGUWwHxTnBFsMnbRaTsRfQ6f37SOTo"
-})
+// Vue.use(BaiduMap, {
+//   ak: "ANlGUWwHxTnBFsMnbRaTsRfQ6f37SOTo"
+// })
+// 高德地图
+import VueAMap from 'vue-amap';
+Vue.use(VueAMap);
+VueAMap.initAMapApiLoader({
+  key: '8f6a4a30720fcafa2780d7ac218e21d9',
+  plugin: ['Autocomplete', 'PlaceSearch', 'Scale', 'OverView', 'ToolBar', 'MapType', 'PolyEditor', 'AMap.CircleEditor'],
+  // 默认高德 sdk 版本为 1.4.4
+  v: '1.4.4'
+});
 
 Vue.prototype.$axios = axios
 Vue.prototype.$toast = Toast

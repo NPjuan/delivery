@@ -174,7 +174,7 @@
       },
       data (){
           return{
-            url: "http://118.25.85.198:8080/deliver",
+            url: "http://47.96.231.75:8080/deliver",
             isConsigneeField:true,// 背景样式
             isConsignorField:true,
             areaList:AreaList,// 引入地区列表为组件服务

@@ -99,7 +99,7 @@
         data() {
           return {
             //  http://118.25.85.198:8080/deliver
-            url: "http://118.25.85.198:8080/deliver",
+            url: "http://47.96.231.75:8080/deliver",
             AreaList, // 地址信息
             AreaValue:110101, // 默认为北京市 北京市 东城区 也可以后期导入选择
             mapShow: false, // 地址控件展示
@@ -143,6 +143,7 @@
           },
           // 判断 id 是否填写正确
           checkId() {
+            console.log(this.consignee.areaCode)
             console.log("检查id")
             let self = this
             this.$axios.get(this.url + "/user/findConsigneeInfo.do",{
@@ -274,18 +275,18 @@
       mounted() {
           // 依次赋值给当前对象
         // this.$route.id = 用户的 id 可以拿来取用
-        console.log(this.$route.query.id)
-        console.log("-------query--------------")
         /*******************************/
         /************************************/
         // 判断是否有 mes 属性，有则说明时带参数传递并且功能应该为修改默认地址
         if(this.$route.query.hasOwnProperty("mes")){
           let mes = this.$route.query.mes
-          this.consignee.areaCode = mes.province + mes.city + mes.district
           this.consignee = mes
+          this.consignee.areaCode = mes.province + mes.city + mes.district
           // 这一步放在下面覆盖掉上面的 id 赋值
           this.consignee.id = this.$route.query.id
           this.judge.id = true
+          this.judge.areaCode = true
+          this.judge.areaDetail = true
         }
       }
     }
@@ -293,7 +294,8 @@
 
 <style scoped>
   .default{
-    margin: 10px 0
+    margin: 10px 0;
+    background-color: white;
   }
   .default::after{
     content: ".";
@@ -314,6 +316,7 @@
   }
   .container{
     background-color: #f8f8f8;
+    overflow: auto;
   }
   .message{
     margin: .4rem auto;

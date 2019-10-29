@@ -3,7 +3,10 @@
     <div class="out">
       <div class="van-doc-nav-bar van-nav-bar van-hairline--bottom" style="z-index: 1;">
         <div class="van-nav-bar__left">
-          <i @click="$router.push('/homepage')" class="van-icon van-icon-arrow-left van-nav-bar__arrow"></i>
+          <i
+            @click="$router.push('/homepage')"
+            class="van-icon van-icon-arrow-left van-nav-bar__arrow"
+          ></i>
         </div>
         <div class="van-nav-bar__title van-ellipsis">我的</div>
         <div class="van-nav-bar__right"></div>
@@ -23,7 +26,7 @@
         </div>
       </div>
 
-      <div class="context_C">
+      <!-- <div class="context_C">
         <div class="purse dis_bl"></div>
         <div class="dis_bl f_s_big">钱包</div>
         <div class="arrow dis_bl"></div>
@@ -39,12 +42,18 @@
         <div class="setting dis_bl"></div>
         <div class="dis_bl f_s_big">设置</div>
         <div class="arrow dis_bl"></div>
-      </div>
+      </div> -->
+      <van-cell-group>
+        <van-cell title="钱包" icon="gold-coin-o" is-link to="/setting"/>
+        <van-cell title="订单" icon="notes-o" is-link to="/setting"/>
+        <van-cell title="积分" icon="points" is-link to="/setting"/>
+        <van-cell title="消息" icon="comment-circle-o" is-link to="/setting"/>
+      </van-cell-group>
 
+      <van-cell-group>
+        <van-cell title="设置" icon="setting-o" is-link to="/setting"/>
+      </van-cell-group>
 
-
-
-      <van-button  hairline type="danger" block @click="cancel" class="btn1">注销</van-button>
     </div>
   </div>
 </template>
@@ -60,43 +69,44 @@ export default {
       username: "用户名",
       headPic: "http://47.96.231.75:8080/uploads/headPortraits/default.jpg",
       role: "身份",
-      id: "id"
+      id: "id",
+      userData: ""
     };
   },
   mounted() {
-    console.log(g.l_user);
+    //从store中获取信息
+    this.userData = this.$store.state.userData;
 
     //赋值用户名
-    this.username = g.l_user.userInfo.name;
+    this.username = this.userData.userInfo.name;
 
     //赋值头像
-    if (g.l_user.userInfo.avatar !== "") {
+    if (this.userData.userInfo.avatar !== "") {
       let url = "http://47.96.231.75:8080";
-      this.headPic = url + g.l_user.userInfo.avatar;
+      this.headPic = url + this.userData.userInfo.avatar;
     }
-      
+
     //赋值身份
-    if (g.l_user.user.role == 0) {
+    if (this.userData.user.role == 0) {
       this.role = "游客";
-    } else if (g.l_user.user.role == 1) { 
+    } else if (this.userData.user.role == 1) {
       this.role = "用户";
-    } else if (g.l_user.user.role == 2) {
+    } else if (this.userData.user.role == 2) {
       this.role = "司机";
-    } else if (g.l_user.user.role == 3) {
+    } else if (this.userData.user.role == 3) {
       this.role = "管理员";
     }
 
     //赋值id
-    this.id = g.l_user.user.authId;
+    this.id = this.userData.user.authId;
   },
-  beforeRouteEnter(to, from, next){
+  beforeRouteEnter(to, from, next) {
     // if(from.path=='/login'&&g.login_status){
     //   this.$router.push({ path: "/homepage" });
     // }
+    next();
   },
   methods: {
-
-    
     ajax(data, url, func) {
       var ajax = new XMLHttpRequest();
       var stringData = JSON.stringify(data);
@@ -111,17 +121,6 @@ export default {
       ajax.send(stringData);
     },
 
-    //注销
-    cancel(){
-
-      //清空用户信息
-      g.l_user = '';
-
-      //登录
-      g.login_status = false;
-      this.$toast.success("注销成功!");
-      this.$router.push('/homepage');
-    }
   }
 };
 </script>
@@ -243,9 +242,9 @@ export default {
   vertical-align: middle;
 }
 
-.btn1{
-  position: fixed;
-  bottom: 0;
+
+.van-cell-group {
+  margin: 2vh auto;
 }
 
 /* we */

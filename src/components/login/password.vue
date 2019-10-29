@@ -169,4 +169,8 @@ export default {
 
 
 <style scoped>
+
+/* .van-cell-group{
+  margin-top: 10vh;
+} */
 </style>

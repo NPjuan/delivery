@@ -336,7 +336,7 @@
       },
       // 跳转到司机页面
       driver() {
-        if(!g.l_user.login){
+        if(!this.$store.state.isLogin){
           this.$toast('请先登陆后使用')
           return
         }
@@ -494,7 +494,7 @@
       },
       // 通过 role 请求地址
       findAddress() { // 通过用户 id 来寻找地址
-        if(!g.l_user.login){
+        if(!this.$store.state.isLogin){
           this.$toast('请先登陆后使用')
           return
         }else{
@@ -508,7 +508,7 @@
           }
           this.$axios.post(url,
             {
-              uid: Number(g.l_user.user.id)
+              uid: Number(self.consignor.cid)
             }
           ).then(function (response) {
             // 重新设置地址数组
@@ -674,18 +674,22 @@
         next()
       }
     },
+
+    //yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
     beforeRouteLeave (to, from, next) {
-      if(to.path=="/login"&&g.login_status){
+      if(to.path=="/login"&&this.$store.state.isLogin){
         this.$router.push({
           path: `/myInfo`
         })
+        return;
       }
       next();
     },
+
+    //yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
     mounted() {
       /**         yxxxxxxxxxxxxxxxxx        */
-
-      if(g.login_status==true){
+      if(this.$store.state.isLogin){
         this.loginStatus = "我的";
       }else{
         this.loginStatus = "登录注册";
@@ -708,14 +712,15 @@
         this.date.minDate.getUTCDate() + 20
       )
 
-      if (g.l_user.login) {
+      if (this.$store.state.isLogin) {
         //  通过 id 得到 姓名
-        this.deliveryMsg.uid = g.l_user.user.id // 发货对应的 id
-        this.consignor.cid = g.l_user.user.id // 数据库对应的 id 设置地址的时候要用到
-        this.consignor.id = g.l_user.user.authId
-        this.consignor.name = g.l_user.userInfo.name
-        this.consignor.phone = g.l_user.user.phone
-        this.consignor.headPicUrl = "http://47.96.231.75:8080" + g.l_user.userInfo.avatar
+        let data = this.$store.state.userData
+        this.deliveryMsg.uid = data.user.id // 发货对应的 id
+        this.consignor.cid = data.user.id // 数据库对应的 id 设置地址的时候要用到
+        this.consignor.id = data.user.authId
+        this.consignor.name = data.userInfo.name
+        this.consignor.phone = data.user.phone
+        this.consignor.headPicUrl = "http://47.96.231.75:8080" + data.userInfo.avatar
         this.judge.loginState = true
       }
     },

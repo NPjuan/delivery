@@ -11,7 +11,7 @@
           <!--<p class="driver-list-item-address"><span>出发地</span><span style="display: inline-block;"><span>{{value.startAddress}}</span></span></p>-->
           <!--<button class="invite-button" @click="inviteDriver(index)">邀请他</button>-->
         <!--</div>-->
-      <div class="msg-item" v-for="(value, index ,key) in driver" :index="index">
+      <div class="msg-item" v-for="(value, index ,key) in driver" :index="index" :key="index">
         <div class="img-container">
           <img src="../../assets/image/user-send.svg" alt="">
           <p class="msg-name">{{value.name}}</p>

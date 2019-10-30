@@ -5,7 +5,9 @@
            v-for="(marker, index, key) in markers"
            :position="marker.position"
            :vid="index"
-           :key="index"/>
+           :key="key"
+           />
+           <!-- :key="index" -->
        </el-amap>
      </div>
 </template>

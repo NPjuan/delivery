@@ -108,7 +108,7 @@
         <div v-if="addresses.length"  class="" @touchstart="pressAddress(index)" :ref="index" @touchend="releaseAddress(index)" v-for="(value, index, key) in addresses" :key="key" :index="index">
           <div class="address-item">
             <p class="address-item-user"><span>{{value.name}}</span><span>{{value.phone}}</span></p>
-            <!--通过索引来选择显示的地址-->
+            <!-- 通过索引来选择显示的地址 -->
             <p class="address-item-address">{{ value.province + value.city + value.district + (value.town?value.town:"") + (value.village?value.village:"") + value.detail }}</p>
             <img src="../../assets/image/modify.svg" alt="" class="address-item-svg" style="z-index: 50"  @touchstart="modifyAddress(index)">
           </div>
@@ -712,11 +712,7 @@
         this.date.minDate.getUTCDate() + 20
       )
 
-<<<<<<< HEAD
-      if (g.l_user.user.id !== "default") {
-=======
       if (g.l_user.login) {
->>>>>>> 1a542d3ebb9162daad382167c8f06a200d12d146
         //  通过 id 得到 姓名
         this.deliveryMsg.uid = g.l_user.user.id // 发货对应的 id
         this.consignor.cid = g.l_user.user.id // 数据库对应的 id 设置地址的时候要用到

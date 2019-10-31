@@ -46,9 +46,6 @@ import './css/vueup.css'
 Vue.use(AddressEdit).use(Area).use(Button).use(Popup).use(Field).use(Cell).use(CellGroup).use(Dialog).use(NavBar).use(List)
 Vue.use(DatetimePicker).use(Uploader).use(Switch).use(Picker).use(Circle).use(Loading).use(Image).use(ActionSheet)
 
-// Vue.use(BaiduMap, {
-//   ak: "ANlGUWwHxTnBFsMnbRaTsRfQ6f37SOTo"
-// })
 // 高德地图
 import VueAMap from 'vue-amap';
 Vue.use(VueAMap);

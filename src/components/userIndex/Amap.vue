@@ -2,7 +2,7 @@
      <div class="amap-page-container">
        <el-amap vid="amap" :plugin="plugin" :center="center" :zoom="zoom">
          <el-amap-marker
-           v-for="(marker, index, key) in markers"
+           v-for="(marker, index) in markers"
            :position="marker.position"
            :vid="index"
            :key="index"/>

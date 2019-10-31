@@ -48,6 +48,10 @@
             <span class="time-span">截止时间</span>
             <input type="text"  readonly @click="showTime(1)" placeholder="捎货截止时间" v-model="date.endTime" class="time-input">
           </div>
+          <div class="pay-write">
+            <span class="time-span">金钱</span>
+            <input type="number"   placeholder="支付金额"  class="time-input" v-model="deliveryMsg.pay">
+          </div>
           <div class="picture-write" style="display: inline-block;">
             <span class="picture-span">货物照片</span>
             <van-uploader
@@ -173,7 +177,7 @@
     >
     </van-popup>
     <layer :show="judge.Shadow" @changeShow="judge.Shadow = !judge.Shadow"/>
-    <Guarantee :show="judge.Shadow" @changeShow="judge.Shadow = !judge.Shadow"></Guarantee>
+    <Guarantee :show="judge.Shadow" @changeShow="deliver"></Guarantee>
   </div>
 </template>
 
@@ -248,7 +252,8 @@
           deliverAreaId: "", // 发货地址
           consigneeAreaId: "", // 收货地址
           description: "", // 留言
-          pay:1000 // 发布积分, 先默认为 1000
+          pay:"", // 发布积分
+          pid:""  // 担保人 id
         },
         areaList: AreaList,
         // 地址数组，通过对应的 id 来 push 内容
@@ -309,7 +314,8 @@
             addressPick: false // 是否选择了 收货人 的地址
           },
           listShow : true, // 是否收起下拉列表
-          Shadow: false
+          Shadow: false,
+          promise: false,
         },
         // 错误信息
         errorMessage: {
@@ -332,7 +338,7 @@
         this.$router.push('/login')
       },
       message() {
-        this.$toast('功能尚未开放，敬请期待')
+        this.$router.push('/chat')
       },
       // 跳转到司机页面
       driver() {
@@ -345,11 +351,19 @@
       },
       // 上传订单
       sendOrder() {
-        if(!this.fileList.length || !this.deliveryMsg.deliveryStart || !this.deliveryMsg.deliveryEnd){
+        if(!this.fileList.length || !this.deliveryMsg.deliveryStart || !this.deliveryMsg.deliveryEnd || !this.deliveryMsg.pay){
           this.$toast('除留言外，请完整填写其他信息')
           return
         }
+        // 调用担保人
+          this.judge.Shadow = true
+      },
+      deliver(pId){
+        console.log(pId+"aaaaaaaaaaaaa")
+        this.judge.Shadow = false
         let self = this
+        // 担保人 id
+        this.deliveryMsg.pid = pId
         const instance=this.$axios.create({
           withCredentials: true
         })
@@ -357,6 +371,7 @@
           .then((res) => {
             let goodsPictures = res.data.data // 获取回复中的 图片 数组
             let deliveryMsg = self.deliveryMsg // 得到 发布的 信息
+            console.log(deliveryMsg)
             instance.post(self.url + "/userOrder/addUserOrder.do",
               {
                 deliveryMsg,
@@ -367,13 +382,13 @@
                 // 订单
                 self.order.userOrderId.push(response.data.data)
                 // 跳转到查找附件司机的页面
-                 self.$router.push(
-                   {
-                     path: '/findDriver',// 跳转到查找司机页面
-                     query:{
-                       userOrderId:self.order.userOrderId
-                     } // 传递 orderId 数组
-                 })
+                self.$router.push(
+                  {
+                    path: '/findDriver',// 跳转到查找司机页面
+                    query:{
+                      userOrderId:self.order.userOrderId
+                    } // 传递 orderId 数组
+                  })
               })
           })
           .catch(err=>{
@@ -382,7 +397,6 @@
       },
       // 查看订单
       funCase(index) {
-        let self = this
         // index 值做区分 0 为订单
         if(index == 0){
           this.$router.push(
@@ -390,7 +404,10 @@
               path: '/userOrderList',// 跳转到查找司机页面
             })
         }else if(index == 2){
-          this.judge.Shadow = true
+          this.$router.push(
+            {
+              path: '/Surety',// 跳转到查找司机页面
+            })
         }
       },
       // 留言框高度自适应
@@ -654,6 +671,37 @@
         // 选择地址
         this.choiceAddress(index)
       },
+      // 初始化函数
+      dateInit(){
+      let i = new Date()
+      let self = this
+      this.date.minDate = new Date()
+      // 如果到了 50 分过后 直接跳过这个小时
+      if (i.getMinutes() >= 50) {
+      this.date.minDate.setTime(i.getTime() + 1000 * 60 * 10)
+    } else {
+      this.date.currentDate = this.date.minDate
+    }
+    // 设置未来最大持续时间为 20 天
+    this.date.maxDate = new Date(
+    this.date.minDate.getFullYear(),
+    this.date.minDate.getMonth(),
+    this.date.minDate.getUTCDate() + 20
+  )
+    },
+      loginInit(){
+        if (this.$store.state.isLogin) {
+          //  通过 id 得到 姓名
+          let data = this.$store.state.userData
+          this.deliveryMsg.uid = data.user.id // 发货对应的 id
+          this.consignor.cid = data.user.id // 数据库对应的 id 设置地址的时候要用到
+          this.consignor.id = data.user.authId
+          this.consignor.name = data.userInfo.name
+          this.consignor.phone = data.user.phone
+          this.consignor.headPicUrl = "http://47.96.231.75:8080" + data.userInfo.avatar
+          this.judge.loginState = true
+        }
+      }
     },
     // 如果是从地址栏跳转过来则打开选择地址的组件
     beforeRouteEnter(to, from, next){
@@ -695,38 +743,11 @@
         this.loginStatus = "登录注册";
       }
       /**         yxxxxxxxxxxxxxxxxx        */
-
-      let i = new Date()
-      let self = this
-      this.date.minDate = new Date()
-      // 如果到了 50 分过后 直接跳过这个小时
-      if (i.getMinutes() >= 50) {
-        this.date.minDate.setTime(i.getTime() + 1000 * 60 * 10)
-      } else {
-        this.date.currentDate = this.date.minDate
-      }
-      // 设置未来最大持续时间为 20 天
-      this.date.maxDate = new Date(
-        this.date.minDate.getFullYear(),
-        this.date.minDate.getMonth(),
-        this.date.minDate.getUTCDate() + 20
-      )
-
-      if (this.$store.state.isLogin) {
-        //  通过 id 得到 姓名
-        let data = this.$store.state.userData
-        this.deliveryMsg.uid = data.user.id // 发货对应的 id
-        this.consignor.cid = data.user.id // 数据库对应的 id 设置地址的时候要用到
-        this.consignor.id = data.user.authId
-        this.consignor.name = data.userInfo.name
-        this.consignor.phone = data.user.phone
-        this.consignor.headPicUrl = "http://47.96.231.75:8080" + data.userInfo.avatar
-        this.judge.loginState = true
-      }
-    },
-    created() {
-      // 如果已经登陆过一次
-    },
+      // 初始化时间
+      this.dateInit()
+      // 初始化登陆状态
+      this.loginInit()
+    }
   }
 </script>
 
@@ -827,27 +848,27 @@
     font-size: .25rem;
     text-indent: .5rem;
     color: grey;
-    padding-top: .15rem;
+    padding-top: .10rem;
     border: none
   }
   .msg-write{
-    margin-top: .3rem;
+    margin-top: .28rem;
   }
   .msg-span{
     position: relative;
     display: inline-block;
     width: 1rem;
     height: .5rem;
-    padding: .1rem .25rem 0 .6rem;
-    font-size: .3rem;
+    padding: .1rem .25rem 0 .7rem;
+    font-size: .25rem;
     vertical-align:top;
     color: grey;
   }
   .picture-span{
     position: relative;
     width: 1.2rem;
-    font-size: .3rem;
-    padding: .4rem .45rem 0 .55rem;
+    font-size: .25rem;
+    padding: .4rem .45rem 0 .65rem;
     color: grey;
   }
   /*改变原有样式*/
@@ -862,18 +883,18 @@
     display: inline-block;
     width: 1.2rem;
     height: .5rem;
-    padding: .38rem .25rem 0 .55rem;
-    font-size: .3rem;
+    padding: .28rem .1rem 0 .65rem;
+    font-size: .25rem;
     vertical-align:top;
     color: grey;
   }
   .time-input{
     width: 4.2rem;
     height: .5rem;
-    margin-top:.25rem;
+    margin-top:.15rem;
     border-bottom:2px solid #f8f8f8;
     text-indent:.45rem;
-    font-size: .32rem;
+    font-size: .25rem;
     color:gray;
   }
   .address-write>span{
@@ -912,6 +933,7 @@
   header{
     position: fixed;
     top:0;
+    left: 0;
     height: 1.6rem;
     width:100%;
     max-width: 640px;

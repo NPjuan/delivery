@@ -38,13 +38,14 @@
         return {
           guarantees:[
             {
-              id:1111111111,
+              id:"3",
               name: "潘俊渊",
               phone: "13642943515",
               type: false
+              // type 用于判断是否为新增加的担保人
             },
             {
-              id:2,
+              id:"1111111111",
               name: "某个南",
               phone: "1805201314",
               type: false
@@ -91,6 +92,28 @@
         // 选中确认担保人
         choice(index) {
           this.$refs[index][0].style.backgroundColor = "white"
+          let self = this
+          // let suretyId = Number(this.guarantees[index].id)
+          // let shipperId = Number(this.$store.state.userData.user.id)
+          // console.log("aaaaaaaaaaaaaaaaaaaaaaa")
+          // console.log(this.$store.state.userData.user.id)
+          // console.log(suretyId)
+          this.$axios.post(this.$store.state.url+"/userOrder/validateSurety.do",{
+            shipperId: 3,              //发货人id
+            suretyId: 1                //担保人id
+          })
+            .then(function (response) {
+              console.log(response)
+              if(!response.data.data.code){
+                // 发布订单
+                console.log("b")
+                self.$emit("changeShow", self.guarantees[index].id)
+              }
+            })
+            .catch(function (error) {
+              console.log(error)
+            })
+          // this.$emit("changeShow", this.guarantees[index].id)
         }
       },
       computed:{
@@ -121,11 +144,12 @@
   .enter{
     left: 1.25rem;
     background-color: white;
+    opacity: 1;
     z-index: 200;
   }
   .leave{
     left: -3rem;
-    background-color: rgba(0,0,0,0);
+    opacity: 0;
     z-index: -5;
   }
   .head{

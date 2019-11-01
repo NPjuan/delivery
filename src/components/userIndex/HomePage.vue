@@ -21,7 +21,7 @@
         <!--点击 span 跳转页面-->
         <!--这里不可以换行显示否则或出现间隙需要用更多的 css 来兼容-->
         <span :class="{'head-span': true,'head-span-active':true}">我要友捎</span>
-        <span class="head-span" @click="driver">我要接单</span>
+        <span v-if="!role" class="head-span" @click="driver">我要接单</span>
         <span class="head-span" @click="message">友捎消息</span>
         <span class="head-span" @click="login">{{loginStatus}}</span>
       </div>
@@ -201,6 +201,7 @@
     },
     data() {
       return {
+        role:"",
         loginStatus:"注册信息",
         // 地图信息
         // lt http://118.25.85.198:8080/deliver
@@ -333,6 +334,10 @@
         this.$router.push('/login')
       },
       message() {
+        if(!this.$store.state.isLogin){
+          this.$toast('请先登陆后使用')
+          return
+        }
         this.$router.push('/chat')
       },
       // 跳转到司机页面
@@ -693,8 +698,10 @@
           this.consignor.id = data.user.authId
           this.consignor.name = data.userInfo.name
           this.consignor.phone = data.user.phone
-          this.consignor.headPicUrl = "http://47.96.231.75:8080" + data.userInfo.avatar
-          this.judge.loginState = true
+          this.consignor.headPicUrl = "http://47.96.231.75:8080" + data.userInfo.avatar,
+          this.judge.loginState = true,
+            // role 1 为用户
+            this.role = data.user.role
         }
       }
     },
@@ -742,6 +749,9 @@
       this.dateInit()
       // 初始化登陆状态
       this.loginInit()
+      this.role = this.$store.state.userData.user.role
+      console.log(this.$store.state.userData.user.role)
+      // 1 用户
     }
   }
 </script>

@@ -31,7 +31,7 @@ import FindDriver from '../components/userIndex/FindDriver'
 import UserOrderList from '../components/userIndex/UserOrderList'
 import Guarantee from '../components/userIndex/Guarantee'
 import Surety from '../components/userIndex/Surety'
-
+import Receiving from '../components/userIndex/Receiving'
 //yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 import loginselect from '../components/login/loginselect'
 import idselect from "../components/login/idselect"
@@ -76,6 +76,8 @@ export default new Router({
         {path: "/Guarantee", meta: {index: 1}, name: "GuaranteeLink", component: Guarantee},
         // 我是担保人
         {path: "/Surety", meta: {index: 1}, name: "SuretyLink", component: Surety},
+        // 待收货订单
+        {path: "/Receiving", meta: {index: 1}, name: "ReceivingLink", component: Receiving},
         // 司机 bz
         {path:"/index/driver", meta: {index: 1}, name:"driverLink",component:driver,   children:[
             // 发布行程

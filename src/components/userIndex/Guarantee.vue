@@ -95,9 +95,6 @@
           let self = this
           // let suretyId = Number(this.guarantees[index].id)
           // let shipperId = Number(this.$store.state.userData.user.id)
-          // console.log("aaaaaaaaaaaaaaaaaaaaaaa")
-          // console.log(this.$store.state.userData.user.id)
-          // console.log(suretyId)
           this.$axios.post(this.$store.state.url+"/userOrder/validateSurety.do",{
             shipperId: 3,              //发货人id
             suretyId: 1                //担保人id

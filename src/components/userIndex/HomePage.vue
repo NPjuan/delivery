@@ -217,14 +217,9 @@
             alt: "订单信息"
           },
           {
-            src: require("../../assets/image/wallet.svg"), // 图片路径
-            text: "积分钱包",
-            alt: "积分钱包"
-          },
-          {
             src: require("../../assets/image/promise.svg"), // 图片路径
-            text: "担保人信息",
-            alt: "担保人信息"
+            text: "我的担保",
+            alt: "我的担保"
           }
         ],
         fileList:[], // 图片文字数组
@@ -401,12 +396,12 @@
         if(index == 0){
           this.$router.push(
             {
-              path: '/userOrderList',// 跳转到查找司机页面
+              path: '/userOrderList'  // 跳转到查找司机页面
             })
-        }else if(index == 2){
+        }else if(index == 1){
           this.$router.push(
             {
-              path: '/Surety',// 跳转到查找司机页面
+              path: '/Surety'       // 跳转到查找司机页面
             })
         }
       },

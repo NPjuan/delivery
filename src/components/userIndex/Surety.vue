@@ -21,10 +21,10 @@
           <p style="font-size: .28rem;margin: .1rem auto"></p>
           <div class="bottom-container">
             <div class="text">{{value.description?value.description:'无货物描述'}}</div>
-            <div class="button confirm-button" @click="confirm">
+            <div class="button confirm-button" @click.stop="confirm(index)">
               确认担保
             </div>
-            <div class="button reject-button" @click="reject">
+            <div class="button reject-button" @click.stop="refuse(index)">
               拒绝担保
             </div>
           </div>
@@ -34,7 +34,7 @@
         暂无需要担保的订单
       </p>
     </div>
-    <layer :show="show"></layer>
+    <layer :show="show" @changeShow="show = false"></layer>
   </div>
 </template>
 
@@ -42,10 +42,14 @@
   import layer from './layer'
     export default {
       name: "Surety",
+      components: {
+        layer
+      },
       data(){
         return {
+          suretyId:"", // 担保人 id 也就是自己的 id
           url:"http://118.25.85.198:8080",
-          title: "需担保订单",
+          title: "待担保订单",
           orderList: [
 
           ],
@@ -61,33 +65,52 @@
             userOrderId            //用户订单id
           })
             .then(function (response) {
-              console.log(response)
               self.detail = response.data.data
-              self.show = !self.show
+              self.show = true
             })
             .catch(function (err) {
               console.log(err)
             })
+        },
+        confirm(index) {
+          let self = this
+          // 订单 id
+          let userOrderId = this.orderList[index].id
+          this.$axios.post(this.$store.state.url+"/userOrder/suretyConfirm.do",{
+            suretyId: 2,              //担保人id
+            userOrderId               //想要确认的用户订单id
+          })
+            .then(function (response) {
+              console.log(response)
+              self.$toast(response.data.msg)
+            })
+            .catch(function (error) {
+              console.log(error)
+            })
+        },
+        refuse(index) {
+          let self = this
+          let userOrderId = this.orderList[index].id
+          this.$axios.post(this.$store.state.url+"/userOrder/suretyRefuse.do",{
+            suretyId: 2,              //担保人id
+            userOrderId               //想要确认的用户订单id
+          })
+            .then(function (response) {
+              self.$toast(response.data.msg)
+              console.log(response)
+            })
+            .catch(function (error) {
+              console.log(error)
+            })
         }
-      },
-      confirm() {
-        this.$axios.post(this.$store.state.url+"/userOrder/suretyConfirm.do",{
-          "suretyId": 2,              //担保人id
-          "userOrderId": 6            //想要确认的用户订单id
-        })
-      },
-      reject() {
-        this.$axios.post(this.$store.state.url+"/userOrder/suretyRefuse.do",{
-          "suretyId": 2,              //担保人id
-          "userOrderId": 6            //想要确认的用户订单id
-        })
       },
       // 查找订单
       mounted() {
         let self = this
         let suretyId = this.$store.state.userData.user.id
+        this.suretyId = suretyId
         this.$axios.post(this.$store.state.url+"/userOrder/needSurety.do",{
-          suretyId: 3
+          suretyId: 3 // 目前先用 3 为测试 id
         })
           .then(function (response) {
             self.orderList = response.data.data
@@ -103,7 +126,7 @@
 <style scoped>
   .msg-list{
     height: calc(100vh - 1.2rem);
-    margin: 1.2rem auto .5rem auto;
+    margin: 1rem auto .5rem auto;
     overflow: auto;
   }
   .list-container{

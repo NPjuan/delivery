@@ -739,49 +739,12 @@
     //yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
     mounted() {
       /**         yxxxxxxxxxxxxxxxxx        */
-<<<<<<< HEAD
-      // alert(22222)
-=======
->>>>>>> f4334eb64f0e6ce089dfec7c92a3869b5692db66
       if(this.$store.state.isLogin){
         this.loginStatus = "我的";
       }else{
         this.loginStatus = "登录注册";
       }
       /**         yxxxxxxxxxxxxxxxxx        */
-<<<<<<< HEAD
-
-      let i = new Date()
-      let self = this
-      this.date.minDate = new Date()
-      // 如果到了 50 分过后 直接跳过这个小时
-      if (i.getMinutes() >= 50) {
-        this.date.minDate.setTime(i.getTime() + 1000 * 60 * 10)
-      } else {
-        this.date.currentDate = this.date.minDate
-      }
-      // 设置未来最大持续时间为 20 天
-      this.date.maxDate = new Date(
-        this.date.minDate.getFullYear(),
-        this.date.minDate.getMonth(),
-        this.date.minDate.getUTCDate() + 20
-      )
-
-      if (g.l_user.login) {
-        //  通过 id 得到 姓名
-        this.deliveryMsg.uid = g.l_user.user.id // 发货对应的 id
-        this.consignor.cid = g.l_user.user.id // 数据库对应的 id 设置地址的时候要用到
-        this.consignor.id = g.l_user.user.authId
-        this.consignor.name = g.l_user.userInfo.name
-        this.consignor.phone = g.l_user.user.phone
-        this.consignor.headPicUrl = "http://47.96.231.75:8080" + g.l_user.userInfo.avatar
-        this.judge.loginState = true
-      }
-    },
-    created() {
-      // 如果已经登陆过一次
-    },
-=======
       // 初始化时间
       this.dateInit()
       // 初始化登陆状态
@@ -790,7 +753,6 @@
       console.log(this.$store.state.userData.user.role)
       // 1 用户
     }
->>>>>>> f4334eb64f0e6ce089dfec7c92a3869b5692db66
   }
 </script>
 

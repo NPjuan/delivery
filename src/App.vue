@@ -49,12 +49,7 @@ export default {
     $route(to, from) {
       const toIndex = to.meta.index_;
       const fromIndex = from.meta.index_;
-<<<<<<< HEAD
-
-      this.transitionName = toIndex < fromIndex ? "right" : "left";
-=======
       this.transitionName = toIndex < fromIndex ? 'right' : 'left';
->>>>>>> f4334eb64f0e6ce089dfec7c92a3869b5692db66
     }
   }
 };

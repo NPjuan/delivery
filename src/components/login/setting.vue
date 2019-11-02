@@ -84,7 +84,6 @@
 
 <script>
 export default {
-<<<<<<< HEAD
     data() {
         return {
             userData: "", // 用户信息存储
@@ -237,102 +236,12 @@ export default {
             this.$router.push("/homepage");
         }
     }
-=======
-  data() {
-    return {
-      userData: "", // 用户信息存储
-
-      //头像地址
-      imgSrc: "",
-      imgSrcC: [{ name: "拍照" }, { name: "从相册中选择" }],
-      show1: false,
-
-      //id
-      id: "",
-
-      //昵称
-      username: "",
-      show2: false,
-
-      //性别
-      gender: "",
-      genderC: [{ name: "男" }, { name: "女" }],
-      show3: false,
-
-      //手机号
-      phone: "",
-      phoneC: [{ name: "更换手机号" }],
-      show4: false,
-
-      //出生日期
-      birthday: "",
-      birthdayC: [{ name: "拍照" }, { name: "从相册中选择" }, { name: "取消" }],
-      show5: false
-    };
-  },
-  mounted() {
-    //从store中获取信息
-    this.userData = this.$store.state.userData;
-    {
-      //赋值头像
-      if (this.userData.userInfo.avatar !== "") {
-        let url = "http://47.96.231.75:8080";
-        this.imgSrc = url + this.userData.userInfo.avatar;
-      }
-      //赋值id
-      this.id = this.userData.user.authId;
-
-      //赋值用户名
-      this.username = this.userData.userInfo.name;
-
-      //赋值性别
-      this.gender = this.userData.userInfo.gender;
-
-      //赋值手机
-      this.phone = this.userData.user.phone;
-
-      //赋值出生日期
-      this.birthday = this.userData.userInfo.birthday;
-    }
-  },
-  beforeRouteEnter(to, from, next) {
-    next();
-  },
-  methods: {
-    //   选择头像设置
-    onSelect1(item) {
-      this.$toast(item.name);
-    },
-    //确定---->提交更新的用户名
-    onSelect2() {},
-    //选择性别设置
-    onSelect3() {},
-    //手机号设置
-    onSelect4() {},
-    //注销
-    //清空用户信息
-    cancel() {
-      //清除localStorage
-      localStorage.removeItem("Flag");
-      localStorage.removeItem("userData");
-
-      //清除store
-      this.$store.dispatch("userLogin", false);
-      this.$store.dispatch("userData", this.userData);
-
-      //登录
-      this.$toast.success("注销成功!");
-      this.$router.push("/homepage");
-    }
-  }
->>>>>>> f4334eb64f0e6ce089dfec7c92a3869b5692db66
 };
 </script>
 
 
 <style scoped>
 .bg {
-<<<<<<< HEAD
     background-color: #f5f5f5;
 }
 .van-cell-group {
@@ -371,44 +280,5 @@ export default {
     padding-bottom: 1vh;
     border-bottom: 2px solid #009788;
     width: 75vw;
-=======
-  background-color: #f5f5f5;
-}
-.van-cell-group {
-  margin: 2vh auto;
-}
-.nav {
-  background-color: #07c160;
-  height: 56px;
-  line-height: 56px;
-}
-
-.nav div {
-  height: 56px;
-}
-
-.nav .van-nav-bar__title {
-  color: white;
-  font-size: 17px;
-}
-
-.nav .van-icon-arrow-left {
-  color: white;
-  font-size: 24px;
-}
-
-.cl:active {
-  background-color: #f2f3f5;
-}
-
-.Rusername {
-  text-align: center;
-}
-
-.inputUsername {
-  padding-top: 3vh;
-  padding-bottom: 1vh;
-  border-bottom: 2px solid #07c160;
->>>>>>> f4334eb64f0e6ce089dfec7c92a3869b5692db66
 }
 </style>

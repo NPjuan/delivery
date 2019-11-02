@@ -70,7 +70,6 @@ export default {
     };
   },
   mounted() {
-
   },
 
   beforeRouteEnter(to, from, next) {

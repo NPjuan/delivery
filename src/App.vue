@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <transition :name="transitionName">
-      <router-view></router-view>
+      <router-view ></router-view>
     </transition>
   </div>
 </template>
@@ -34,32 +34,27 @@ export default {
 
   },
   mounted() {
-
-
-    var fontSizeAuto = function(oriWidth) {
-      return function() {
-        var viewportWidth = document.documentElement.clientWidth;
-        if (viewportWidth > 640) {
-          viewportWidth = 640;
-        }
-        if (viewportWidth < 320) {
-          viewportWidth = 320;
-        }
-        document.documentElement.style.fontSize =
-          viewportWidth / (oriWidth / 100) + "px";
-      };
-    };
+    let fontSizeAuto = function(oriWidth){
+      return function(){
+        let viewportWidth = document.documentElement.clientWidth;
+        if(viewportWidth > 640){ viewportWidth = 640; }
+        if(viewportWidth < 320){ viewportWidth = 320; }
+        document.documentElement.style.fontSize = viewportWidth/(oriWidth/100) +'px';
+      }
+    }
     window.onresize = fontSizeAuto(750)();
   },
   watch: {
     //页面切换动画
     $route(to, from) {
-      let toName = to.name;
-
       const toIndex = to.meta.index_;
       const fromIndex = from.meta.index_;
+<<<<<<< HEAD
 
       this.transitionName = toIndex < fromIndex ? "right" : "left";
+=======
+      this.transitionName = toIndex < fromIndex ? 'right' : 'left';
+>>>>>>> f4334eb64f0e6ce089dfec7c92a3869b5692db66
     }
   }
 };

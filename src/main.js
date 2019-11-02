@@ -4,7 +4,6 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 /*********************************/
-import BaiduMap from 'vue-baidu-map'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import store from './store'
@@ -48,9 +47,6 @@ import './css/vueup.css'
 Vue.use(AddressEdit).use(Area).use(Button).use(Popup).use(Field).use(Cell).use(CellGroup).use(Dialog).use(NavBar).use(List)
 Vue.use(DatetimePicker).use(Uploader).use(Switch).use(Picker).use(Circle).use(Loading).use(Image).use(ActionSheet).use(Skeleton)
 
-// Vue.use(BaiduMap, {
-//   ak: "ANlGUWwHxTnBFsMnbRaTsRfQ6f37SOTo"
-// })
 // 高德地图
 import VueAMap from 'vue-amap';
 Vue.use(VueAMap);

@@ -157,8 +157,8 @@
   }
   .img-container>img{
     display: inline-block;
-    padding-top: .2rem;
-    width: 1.2rem;
+    padding-top: .3rem;
+    width: 1rem;
   }
   .msg-name{
     padding-top: .1rem;
@@ -178,7 +178,7 @@
   .phone{
     padding-top: .05rem;
     padding-bottom: .1rem;
-    font-size: .3rem;
+    font-size: .28rem;
   }
   .time{
     padding-top: .1rem;
@@ -199,7 +199,7 @@
     position: absolute;
     width:1.6rem;
     height:.6rem;
-    background-color: skyblue;
+    background-color: #57c8ac;
     border: none;
     bottom: .2rem;
     right: .5rem;

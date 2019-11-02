@@ -1,9 +1,10 @@
     <!-- //身份选择 -->
 <template id="page2">
   <div class="hei100">
-    <van-nav-bar title="注册选择" left-text left-arrow @click-left="back" />
+    <!-- 导航栏 -->
+    <van-nav-bar title="注册选择" left-arrow @click-left="$router.back(-1)" border class="nav" />
 
-    <div class="bg_t text">你好!请选择您注册的身份</div>
+    <div class="bg_t text" >你好!请选择您注册的身份</div>
 
     <div class="out">
       <router-link  to="/register?status=1" tag="div" class="nids">
@@ -83,7 +84,7 @@ export default {
   text-align: center;
   font-size: 20px;
   line-height: 18vh;
-  color: rgb(104, 104, 104);
+  color:#009788;
 }
 .nids {
   display: flex;
@@ -116,5 +117,26 @@ export default {
     text-align: center;
     font-size: 25px;
   }
+
+
+  .nav {
+  background-color: #009788;
+  height: 56px;
+  line-height: 56px;
+}
+
+.nav div {
+  height: 56px;
+}
+
+.nav .van-nav-bar__title {
+  color: white;
+  font-size: 17px;
+}
+
+.nav .van-icon-arrow-left {
+  color: white;
+  font-size: 24px;
+}
 
 </style>

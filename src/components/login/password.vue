@@ -25,7 +25,7 @@
         >{{codemsg}}</van-button>
       </van-field>
 
-      <van-button type="primary" @click="next" size="large" :disabled="disabled2">下一步</van-button>
+      <van-button type="primary" @click="next" size="small" class="MyBGColor btncss" :disabled="disabled2">下一步</van-button>
     </van-cell-group>
   </div>
 </template>
@@ -173,4 +173,22 @@ export default {
 /* .van-cell-group{
   margin-top: 10vh;
 } */
+
+.MyBGColor {
+  background-color: #009788;
+  border: #009788;
+  width: 95vw;
+  height: 6vh;
+}
+
+.btncss {
+  width: 100vw;
+  margin-top: 3vh;
+}
+
+.sent{
+  background-color: #009788;
+  border: #009788;
+}
+
 </style>

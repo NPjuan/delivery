@@ -903,10 +903,14 @@
   .head-span-container{
     position: relative;
     height: .85rem; /* 为了让滚动条消失不见，高度加大并在父元素上 hidden*/
+    padding-top: .5vh;
     white-space: nowrap;
   }
   .head-span-container::-webkit-scrollbar {
     display: none;
+  }
+  .head-span-container span:active{
+    background-color: #d5d5d5;
   }
   header{
     position: fixed;
@@ -922,12 +926,12 @@
   .head-span{
     box-sizing: border-box;
     display: inline-block;
+    font-size: .3rem;
     width: 25%;
     height: .5rem;
     padding: .1rem .2rem;
     text-align: center;
-    line-height: .5rem;
-    font-size: .3rem;
+    line-height: .3rem;
     color: #7d7e80;
     background-color: white;
   }

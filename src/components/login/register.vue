@@ -1,16 +1,12 @@
 <!-- 手机号注册 -->
 <template id="page3">
   <div class="hei100">
-    <div class="van-doc-nav-bar van-nav-bar van-hairline--bottom" style="z-index: 1;">
-      <div class="van-nav-bar__left">
-        <i @click="$router.back(-1)" class="van-icon van-icon-arrow-left van-nav-bar__arrow"></i>
-      </div>
-      <div class="van-nav-bar__title van-ellipsis">注册</div>
-      <div class="van-nav-bar__right"></div>
-    </div>
+    <!-- 导航栏 -->
+    <van-nav-bar title="注册" left-arrow @click-left="$router.back(-1)" border class="nav" />
+
     <section class="van-doc-demo-section demo-field test111">
       <section class="van-doc-demo-block">
-        <h2 class="van-doc-demo-block__title">手机注册</h2>
+        <h2 class="van-doc-demo-block__title" style="color:#009788">手机注册</h2>
         <div class="van-cell-group van-hairline--top-bottom">
           <div class="van-cell van-field">
             <div class="van-cell__value van-cell__value--alone">
@@ -21,6 +17,7 @@
                   placeholder="请输入手机号"
                   class="van-field__control phone"
                   name="phone"
+                  v-model="userphone"
                 />
               </div>
               <div class="van-field__error-message tip"></div>
@@ -51,9 +48,13 @@
                   onkeyup="this.value=this.value.replace(/\D/g,'')"
                   onafterpaste="this.value=this.value.replace(/\D/g,'')"
                   maxlength="6"
+                  v-model="code"
                 />
                 <div class="van-field__button">
-                  <button class="van-button van-button--primary van-button--small sent">
+                  <button
+                    class="van-button van-button--primary van-button--small sent"
+                    @click="sentCode"
+                  >
                     <span class="van-button__text">发送验证码</span>
                   </button>
                 </div>
@@ -64,7 +65,7 @@
         </div>
       </section>
       <section class="van-doc-demo-block showoff">
-        <h2 class="van-doc-demo-block__title">密码</h2>
+        <h2 class="van-doc-demo-block__title" style="color:#009788">密码</h2>
         <div class="van-cell-group van-hairline--top-bottom">
           <div class="van-cell van-field">
             <div class="van-cell__value van-cell__value--alone">
@@ -74,6 +75,9 @@
                   placeholder="请输入密码"
                   class="van-field__control"
                   name="password"
+                  v-model="password"
+                  @keyup="passwordCheck1"
+                  @focus="passwordMsg"
                 />
               </div>
               <div class="van-field__error-message tipp"></div>
@@ -91,6 +95,8 @@
                   placeholder="请再次确认密码"
                   name="password"
                   class="van-field__control"
+                  v-model="password2"
+                  @keyup="passwordCheck2"
                 />
               </div>
               <div class="van-field__error-message tipp"></div>
@@ -111,15 +117,8 @@
           />
         </van-cell-group>
       </section>
-      <section style="text-align:center">
-        <router-link
-          to="/registersuccess"
-          style="width: 100%;"
-          class="van-button van-button--primary van-button--normal btn_pos btn_sent"
-        >
-          <span class="van-button__text">注册</span>
-        </router-link>
-      </section>
+
+      <van-button type="primary" size="small" @click="register" class="MyBGColor btncss btn_sent">注册</van-button>
     </section>
   </div>
 </template>
@@ -131,70 +130,136 @@ import g from "./global";
 export default {
   data() {
     return {
+      registerip: "/user/register.do",
+      phoneCheckip: "/user/checkPhone.do",
+      sentCodeip: "/user/getPhoneCode.do",
+      codeCheckip: "/user/checkPhoneCode.do",
       evidence: "",
       count: 60,
-      errorTip1:false,
+      errorTip1: false,
+      //手机号填写值
+      userphone: "",
+      //密码填写值
+      password: "",
+      password2: "",
+      //验证码填写值
+      code: "",
+
+      //验证填写值
+      phoneC: false,
+      password1C: false,
+      password2C: false,
+      codeC: false
     };
   },
   methods: {
-    ajax(data, url, func) {
-      //创建ajax
-      var ajax = new XMLHttpRequest();
-      var stringData = JSON.stringify(data);
-      //请求行(发送方式/发送目标url)
-      // ajax.open("post", "http://192.168.1.104:8080" + url);
-      ajax.open("post", "http://47.96.231.75:8080/deliver" + url);
-      //请求头
-      // ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-      ajax.setRequestHeader("Content-type", "application/json;charset=UTF-8");
-      //回调函数
-      ajax.onreadystatechange = () => {
-        if (ajax.readyState == 4 && ajax.status == 200) {
-          //接受返回的json
-          var json = JSON.parse(ajax.responseText);
-          // window[func](json);
-          this[func](json);
+    // 提交注册
+    register() {
+      //获取目标元素
+      let up = document.getElementsByClassName("btn_sent")[0];
+      let phone = document.getElementsByName("phone")[0];
+      let pw = document.getElementsByName("password")[0];
+      //判断是否填写
+      let ju = this.phoneC && this.password1C && this.password2C && this.codeC;
+      console.log("ju" == ju);
+      console.log(this.password1C);
+      console.log(this.password2C);
+
+      if (ju) {
+        console.log(1111111111111111);
+
+        //开启管理员入口
+        if (g.user_msg.userInfo.role == "3") {
+          if (this.evidence == "") {
+            this.errorTip1 = true;
+            return;
+          }
+          data.evidence = this.evidence;
         }
-      };
-      //请求主体(请求发送)
-      ajax.send(stringData);
+
+        //发送注册请求
+        this.axios
+          .post(this.$store.state.ip + this.registerip, {
+            //用户注册手机号
+            phone: this.userphone,
+            //用户密码
+            password: this.password,
+            //用户身份
+            registerRole: g.user_msg.userInfo.role
+          })
+          .then(i => {
+            //注册成功
+            if (i.data.code == 0) {
+              this.$toast.success(i.data.msg);
+              g.user_id = i.data.data.userAuthId;
+              g.user_msg.userInfo.uid = i.data.data.userId;
+              g.user_msg.area.uid = i.data.data.userId;
+              this.$router.push("/registersuccess");
+            } else {
+              this.$toast.fail(i.data.msg);
+              return;
+            }
+          })
+          .catch(e => {
+            console.info(e);
+          });
+      } else {
+        //若有信息未填写则提示
+        if (!this.phoneC) {
+          let tip = document.getElementsByClassName("tip")[0];
+          tip.innerHTML = "请输入注册手机号";
+          tip.style.color = "red";
+        }
+        if (!this.codeC) {
+          let tip = document.getElementsByClassName("tip")[1];
+          tip.innerHTML = "请输入正确验证码";
+          tip.style.color = "red";
+        }
+        if (!this.password1C) {
+          let tip = document.getElementsByClassName("tipp")[0];
+          tip.innerHTML = "请输入密码";
+          tip.style.color = "red";
+        }
+        if (!this.password2C) {
+          let tip = document.getElementsByClassName("tipp")[1];
+          tip.innerHTML = "密码请填写一致";
+          tip.style.color = "red";
+        }
+      }
     },
     //离开焦点时验证手机格式输入
     phoneGCheck() {
-      //手机输入验证
-      //获取目标元素
-      console.log("发送手机检查是否被使用");
-      let phone = document.getElementsByClassName("phone")[0];
-      //获取提示数组
       let tip = document.getElementsByClassName("tip")[0];
       //离开焦点时验证手机格式输入
       //手机正则验证
       let re = /^[1](([3][0-9])|([4][5-9])|([5][0-3,5-9])|([6][5,6])|([7][0-8])|([8][0-9])|([9][1,8,9]))[0-9]{8}$/;
-      let tel_value = phone.value;
       //若手机符合格式则验证是否已经注册
-      if (re.test(tel_value)) {
-        var data = {
-          phone: tel_value
-        };
-        //发送手机号至后台并返回查询结果
-        this.ajax(data, "/user/checkPhone.do", "phoneCheck");
+      if (re.test(this.userphone)) {
+        this.axios
+          .post(this.$store.state.ip + this.phoneCheckip, {
+            //用户注册手机号
+            phone: this.userphone
+          })
+          .then(i => {
+            //注册成功
+            if (i.data.code == 0) {
+              tip.innerHTML = i.data.msg;
+              tip.style.color = "green";
+              console.log("手机号成功");
+              this.phoneC = true;
+            } else {
+              tip.innerHTML = i.data.msg;
+              tip.style.color = "red";
+              this.phoneC = false;
+            }
+          })
+          .catch(e => {
+            console.info(e);
+          });
       } else {
         //若填写格式错误则提示
         tip.innerHTML = "请输入正确的手机格式";
         tip.style.color = "red";
-      }
-    },
-    //对手机验证返回值进行操作
-    phoneCheck(i) {
-      let tip = document.getElementsByClassName("tip")[0];
-      if (i.code == 0) {
-        tip.innerHTML = i.msg;
-        tip.style.color = "green";
-        g.register_judge.phone = true;
-      } else {
-        tip.innerHTML = i.msg;
-        tip.style.color = "red";
-        g.register_judge.phone = false;
       }
     },
     //手机注册滑动验证
@@ -239,8 +304,8 @@ export default {
             //滑动成功后的样式
             text.style.color = "white";
             btn.innerHTML = "✔";
-            btn.style.color = "green";
-            bg.style.backgroundColor = "#07c160";
+            btn.style.color = "#009788";
+            bg.style.backgroundColor = "#009788";
             text.innerHTML = "验证通过";
             //清除手指按下事件和移动事件
             // btn.onmousedown = null;
@@ -267,128 +332,106 @@ export default {
       };
     },
     //验证码
-    YZtime() {
-      //验证码发送和倒计时
-      //获取目标元素
-      let phone = document.getElementsByClassName("phone")[0];
+    sentCode() {
       let btn = document.getElementsByClassName("sent")[0];
-      //点击按钮发送验证码
-      btn.onclick = () => {
-        console.log("点击发送验证码");
-        if (btn.style.backgroundColor == "gray") {
-          return;
-        }
-        //存为json格式
-        var data = {
-          phone: phone.value
-        };
-        //手机号传至后台，并发送验证码
-        this.ajax(data, "/user/getPhoneCode.do", "codeSent");
-      };
-    },
-    //收到后台响应并执行返回数据
-    codeSent(i) {
-      //获取目标元素
-      let btn = document.getElementsByClassName("sent")[0];
-      //若成功发送验证码
-      if (i.code == 0) {
-        g.user_code.data = i.data;
-        let time = setInterval(() => {
-          btn.style.backgroundColor = "gray";
-          btn.style.border = "gray";
-          btn.innerHTML = this.count + "s重新发送";
-          //若倒计时结束,则重置
-          if (this.count == 0) {
-            this.count = 60;
-            btn.style.backgroundColor = "#07c160";
-            btn.style.border = "#07c160";
-            btn.innerHTML = "发送验证码";
-            clearInterval(time);
-          }
-          this.count--;
-        }, 1000);
+      if (btn.style.backgroundColor == "gray") {
+        return;
       } else {
-        //验证码发送失败
-        this.$toast.fail('验证码发送失败,请稍后再试!');
+        this.axios
+          .post(this.$store.state.ip + this.sentCodeip, {
+            //发送验证码至手机
+            phone: this.userphone
+          })
+          .then(i => {
+            //验证码成功
+            if (i.data.code == 0) {
+              g.user_code.data = i.data.data;
+              let time = setInterval(() => {
+                btn.style.backgroundColor = "gray";
+                btn.style.border = "gray";
+                btn.innerHTML = this.count + "s重新发送";
+                //若倒计时结束,则重置
+                if (this.count == 0) {
+                  this.count = 60;
+                  btn.style.backgroundColor = "#009788";
+                  btn.style.border = "#009788";
+                  btn.innerHTML = "发送验证码";
+                  clearInterval(time);
+                }
+                this.count--;
+              }, 1000);
+            } else {
+              //验证码发送失败
+              this.$toast.fail("验证码发送失败,请稍后再试!");
+            }
+          })
+          .catch(e => {
+            console.info(e);
+          });
       }
     },
     //验证码验证
     YZcheck() {
-      let code = document.getElementsByName("code")[0];
-        if(code.value ==''){
-          return;
-        }
-      var codetime = undefined;
-      codetime = new Date().getTime();
-      var data = {
-        code: code.value,
-        time: codetime,
-        codeData: g.user_code.data
-      };
-      this.ajax(data, "/user/checkPhoneCode.do", "codeCheck");
-    },
-    //核对验证码验证的回调函数
-    codeCheck(i) {
-      if (i.code == 0) {
-        g.register_judge.code = true;
-      } else {
-        let tip = document.getElementsByClassName("tip")[1];
-        tip.innerHTML = i.msg;
-        tip.style.color = "red";
-        g.register_judge.code = false;
+      if (this.code == "") {
+        return;
       }
-    },
-    //密码验证
-    passwordCheck() {
-      //密码格式验证
-      {
-        let re = /(?!.*[\u4E00-\u9FA5\s])(?!^[a-zA-Z]+$)(?!^[\d]+$)(?!^[^a-zA-Z\d]+$)^.{6,16}$/;
-        let tipp = document.getElementsByClassName("tipp");
-        let pw = document.getElementsByName("password");
-        //聚焦时显示密码格式
-        pw[0].onfocus = function() {
-          tipp[0].innerHTML = "字母、数字、特殊字符最少2种组合,长度为6-16字符";
-          tipp[0].style.color = "gray";
-        };
-        pw[0].onkeyup = function() {
-          if (re.test(pw[0].value)) {
-            tipp[0].innerHTML = "密码符合规范";
-            tipp[0].style.color = "green";
-            g.register_judge.password1 = true;
+      var codetime = new Date().getTime();
+
+      this.axios
+        .post(this.$store.state.ip + this.codeCheckip, {
+          code: this.code,
+          time: codetime,
+          codeData: g.user_code.data
+        })
+        .then(i => {
+          //验证码成功
+          if (i.data.code == 0) {
+            console.log("验证码成功");
+            this.codeC = true;
           } else {
-            tipp[0].innerHTML = "密码不符合规范";
-            tipp[0].style.color = "red";
-            g.register_judge.password1 = false;
+            let tip = document.getElementsByClassName("tip")[1];
+            tip.innerHTML = i.msg;
+            tip.style.color = "red";
+            this.codeC = false;
           }
-        };
-        pw[1].onblur = function() {
-          if (pw[0].value == pw[1].value && pw[1].value != "") {
-            tipp[1].innerHTML = "密码输入一致";
-            tipp[1].style.color = "green";
-            g.register_judge.password2 = true;
-          } else {
-            tipp[1].innerHTML = "密码输入不一致";
-            tipp[1].style.color = "red";
-            g.register_judge.password2 = false;
-          }
-        };
+        })
+        .catch(e => {
+          console.info(e);
+        });
+    },
+    passwordCheck1() {
+      //密码验证正则
+      let re = /(?!.*[\u4E00-\u9FA5\s])(?!^[a-zA-Z]+$)(?!^[\d]+$)(?!^[^a-zA-Z\d]+$)^.{6,16}$/;
+      let tipp = document.getElementsByClassName("tipp");
+      if (re.test(this.password)) {
+        tipp[0].innerHTML = "密码符合规范";
+        tipp[0].style.color = "green";
+        this.password1C = true;
+      } else {
+        tipp[0].innerHTML = "密码不符合规范";
+        tipp[0].style.color = "red";
+        this.password1C = false;
       }
     },
-    //提交注册
-    //提交注册后的回调函数
-    registerAfter(i) {
-      if (i.code == 0) {
-        g.user_id = i.data.userAuthId;
-        g.user_msg.userInfo.uid = i.data.userId;
-        g.user_msg.area.uid = i.data.userId;
-        // pjy
-        // g.l_user.user.id = i.data.userAuthId;
-        let idd = document.getElementsByClassName("user_id")[0];
-        idd.innerHTML = g.user_id;
-        // alert("注册成功!");
+    passwordCheck2() {
+      let tipp = document.getElementsByClassName("tipp");
+      if (this.password == this.password2 && this.password2 != "") {
+        tipp[1].innerHTML = "密码输入一致";
+        tipp[1].style.color = "green";
+        this.password2C = true;
+        console.log("密码2成功");
       } else {
-        // alert("注册失败");
+        tipp[1].innerHTML = "密码输入不一致";
+        tipp[1].style.color = "red";
+        this.password2C = false;
       }
+    },
+    //提示
+    passwordMsg() {
+      let tipp = document.getElementsByClassName("tipp");
+      //聚焦时显示密码格式
+      tipp[0].innerHTML = "字母、数字、特殊字符最少2种组合,长度为6-16字符";
+      tipp[0].style.color = "gray";
     },
     show() {
       let show = document.getElementsByClassName("administratoron")[0];
@@ -397,74 +440,15 @@ export default {
       }
     }
   },
-  mounted() {
-    console.log(g.user_msg.userInfo.role);
-    this.show();
-    this.YZtime();
-    this.test_drag();
-    this.passwordCheck();
-    console.log(g.user_msg);
-  },
   created() {
     g.user_msg.userInfo.role = this.$route.query.status;
   },
+  mounted() {
+    this.show();
+    this.test_drag();
+  },
   beforeRouteLeave(to, from, next) {
     //获取目标元素
-    console.log(to.name);
-    if ((to.name == "registersuccessLink")) {
-      let up = document.getElementsByClassName("btn_sent")[0];
-      let phone = document.getElementsByName("phone")[0];
-      let pw = document.getElementsByName("password")[0];
-      let ju =
-        g.register_judge.phone &&
-        g.register_judge.password1 &&
-        g.register_judge.password2 &&
-        g.register_judge.code &&
-        g.register_judge;
-      if (ju) {
-        let data = {
-          //用户注册手机号
-          phone: phone.value,
-          //用户密码
-          password: pw.value,
-          //用户身份
-          registerRole: g.user_msg.userInfo.role
-        };
-        if (g.user_msg.userInfo.role == "3") {
-          if(this.evidence == ''){
-            this.errorTip1 = true;
-            return;
-          }
-          data.evidence = this.evidence;
-        }
-        this.ajax(data, "/user/register.do", "registerAfter");
-        next();
-      } else {
-        //若有信息未填写则提示
-        if (!g.register_judge.phone) {
-          let tip = document.getElementsByClassName("tip")[0];
-          tip.innerHTML = "请输入注册手机号";
-          tip.style.color = "red";
-        }
-        if (!g.register_judge.code) {
-          let tip = document.getElementsByClassName("tip")[1];
-          tip.innerHTML = "请输入正确验证码";
-          tip.style.color = "red";
-        }
-        if (!g.register_judge.password1) {
-          let tip = document.getElementsByClassName("tipp")[0];
-          tip.innerHTML = "请输入密码";
-          tip.style.color = "red";
-        }
-        if (!g.register_judge.password2) {
-          let tip = document.getElementsByClassName("tipp")[1];
-          tip.innerHTML = "密码请填写一致";
-          tip.style.color = "red";
-        }
-      }
-      return;
-    }
-
     next();
   }
 };
@@ -507,16 +491,52 @@ export default {
   position: absolute;
 
   width: 40px;
-  height: 40px;
-  border: 1px solid #afd2bf;
+  height: 34px;
+  border: 3px solid #009788;
   background-color: #fff;
 
-  color: #afd2bf;
+  color: #009788;
   font-weight: bolder;
   text-align: center;
   line-height: 38px;
 
   user-select: none;
   cursor: move;
+}
+
+.MyBGColor {
+  background-color: #009788;
+  width: 95vw;
+  height: 6vh;
+}
+
+.btncss {
+  width: 100vw;
+  margin-top: 3vh;
+}
+
+.nav {
+  background-color: #009788;
+  height: 56px;
+  line-height: 56px;
+}
+
+.nav div {
+  height: 56px;
+}
+
+.nav .van-nav-bar__title {
+  color: white;
+  font-size: 17px;
+}
+
+.nav .van-icon-arrow-left {
+  color: white;
+  font-size: 24px;
+}
+
+.sent{
+  background-color: #009788;
+  border: #009788;
 }
 </style>

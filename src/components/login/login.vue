@@ -34,7 +34,7 @@
 
     <!-- 登录按钮 -->
     <div class="pos_1 btn">
-      <van-button type="primary" size="large" @click="login">
+      <van-button type="primary" size="small" @click="login" class="MyBGColor btncss" >
         <van-loading size="24px" type="spinner" color="white" v-show="show1" />
         {{login_msg}}
       </van-button>
@@ -150,6 +150,7 @@ export default {
 
 .btn {
   width: 95vw;
+  text-align: center;
 
   margin: 0 auto;
 }
@@ -159,5 +160,18 @@ export default {
   padding: 20px 10px;
   color: gray;
   font-size: 16px;
+}
+
+.MyBGColor{
+  background-color: #009788;
+  width: 95vw;
+  height: 6vh;
+  
+}
+
+.btncss{
+  border: #009788;
+  width: 95vw;
+  height: 6vh;
 }
 </style>

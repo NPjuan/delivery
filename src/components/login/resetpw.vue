@@ -24,7 +24,8 @@
         @keyup="passwordCheck"
       />
       <div class="text1">**字母、数字、特殊字符最少2种组合,长度为6-16字符**</div>
-      <van-button type="primary" @click="next" size="large">完成修改</van-button>
+
+      <van-button type="primary" @click="next" size="small" class="MyBGColor btncss">完成修改</van-button>
     </van-cell-group>
   </div>
 </template>
@@ -134,4 +135,17 @@ export default {
   color: gray;
   text-align: center;
 }
+
+.MyBGColor {
+  background-color: #009788;
+  border: #009788;
+  width: 95vw;
+  height: 6vh;
+}
+
+.btncss {
+  width: 100vw;
+  margin-top: 3vh;
+}
+
 </style>

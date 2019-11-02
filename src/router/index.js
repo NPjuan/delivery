@@ -42,6 +42,8 @@ import myInfo from "../components/login/myInfo"
 import password from "../components/login/password"
 import resetpw from "../components/login/resetpw"
 import setting from "../components/login/setting"
+import alterphone from "../components/login/alterPhone"
+import newphone from "../components/login/newphone"
 
 // import Chat from "../components/chat/chating"
 
@@ -62,7 +64,7 @@ export default new Router({
     {path: "/", name: "indexLink", component: Index, redirect: "/homepage", children: [
         {path: "/demo", meta: { index: 0, keepAlive: true }, name: "demoLink", component: Demo},
         // 默认跳转
-        {path: "/homepage", meta: { index: 0}, name: "homepageLink", component: HomePage},
+        {path: "/homepage", meta: { index: 0,index_: 0}, name: "homepageLink", component: HomePage},
         // 填写收货人地址
         { path: "/consigneeAddress", meta: { index: 1 }, name: "consigneeAddressLink", component: ConsigneeAddress },
         // 填写发货人地址
@@ -98,26 +100,37 @@ export default new Router({
 
 
     // yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    // 登录注册
+    // 登录
+    { path: '/login', meta: { index: 1, index_: 1, isLogin: false }, component: login },
+
+    //身份选择
     { path: '/idselect', meta: { index: 1, index_: 2 }, component: idselect, name: "idselectLink" },
+    //注册
     { path: '/register', meta: { index: 1, index_: 3 }, component: register },
+    //注册成功
     { path: '/registersuccess', meta: { index: 1, index_: 4 }, component: registersuccess, name: "registersuccessLink" },
+    //信息完善
     { path: '/pcmsg', meta: { index: 1, index_: 5 }, component: pcmsg },
+    //司机信息完善
     { path: '/driverselect', meta: { index: 1, index_: 6 }, component: driverselect },
 
-    { path: '/login', meta: { index: 1, index_: 2, isLogin: false }, component: login },
+    //个人信息(登录后)
+    { path: '/myInfo', meta: { index: 1, index_: 2 }, component: myInfo },
 
-    { path: '/myInfo', meta: { index: 1, index_: 3 }, component: myInfo },
-
-    { path: '/password', meta: { index: 1, index_: 3 }, component: password },
-
-    { path: '/resetpw', meta: { index: 1, index_: 4 }, component: resetpw },
+    //修改密码
+    { path: '/password', meta: { index: 1, index_: 2 }, component: password },
+    //修改密码
+    { path: '/resetpw', meta: { index: 1, index_: 3 }, component: resetpw },
 
     //设置页面
-    { path: '/setting', meta: { index: 1, index_: 4 }, component: setting },
+    { path: '/setting', meta: { index: 1, index_: 3 }, component: setting },
+    //修改手机页面
+    { path: '/alterphone', meta: { index: 1, index_: 4 }, component: alterphone },
+    //手机更换页面
+    { path: '/newphone', meta: { index: 1, index_: 5 }, component: newphone },
     
     //聊天页面
-    { path: '/chat', meta: { index: 1, index_: 2 }, component: Chat },
+    { path: '/chat', meta: { index: 1, index_: 1 }, component: Chat },
     // 通用
     { path: "*", redirect: "/" }
   ]

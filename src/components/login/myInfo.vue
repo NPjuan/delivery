@@ -1,16 +1,7 @@
 <template>
   <div class="hei100">
     <div class="out">
-      <div class="van-doc-nav-bar van-nav-bar van-hairline--bottom" style="z-index: 1;">
-        <div class="van-nav-bar__left">
-          <i
-            @click="$router.push('/homepage')"
-            class="van-icon van-icon-arrow-left van-nav-bar__arrow"
-          ></i>
-        </div>
-        <div class="van-nav-bar__title van-ellipsis">我的</div>
-        <div class="van-nav-bar__right"></div>
-      </div>
+      <van-nav-bar title="我的" left-arrow @click-left="$router.push('/homepage')" border class="nav" />
 
       <van-skeleton title avatar :row="3" avatar-size="65px" :loading="loading">
         <div class="context">
@@ -91,9 +82,7 @@ export default {
     this.loading = false;
   },
   beforeRouteEnter(to, from, next) {
-    // if(from.path=='/login'&&g.login_status){
-    //   this.$router.push({ path: "/homepage" });
-    // }
+
     next();
   },
   methods: {
@@ -204,6 +193,26 @@ export default {
   padding-top: 2vh;
   padding-bottom: 2vh;
   background-color: white;
+}
+
+.nav {
+  background-color: #009788;
+  height: 56px;
+  line-height: 56px;
+}
+
+.nav div {
+  height: 56px;
+}
+
+.nav .van-nav-bar__title {
+  color: white;
+  font-size: 17px;
+}
+
+.nav .van-icon-arrow-left {
+  color: white;
+  font-size: 24px;
 }
 
 /* we */

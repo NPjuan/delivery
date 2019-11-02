@@ -1,18 +1,15 @@
     <!-- 个人信息填写页面 -->
 <template id="page5">
-
   <!-- 标记,overflow使用 -->
-  <div class="hei100" style="overflow:auto">        
-    <div class="van-doc-nav-bar van-nav-bar van-hairline--bottom" style="z-index: 1;">
-      <div class="van-nav-bar__left">
-        <i @click="$router.back(-1)" class="van-icon van-icon-arrow-left van-nav-bar__arrow"></i>
-      </div>
-      <div class="van-nav-bar__title van-ellipsis">个人信息</div>
-      <div class="van-nav-bar__right"></div>
-    </div>
+  <div class="hei100" style="overflow:auto">
+
+
+    <!-- 导航栏 -->
+    <van-nav-bar title="个人信息" left-arrow @click-left="$router.back(-1)" border class="nav" />
+
     <section class="van-doc-demo-section demo-field">
       <div style="text-align: center;">
-        <h2 class="van-doc-demo-block__title">头像</h2>
+        <h2 class="van-doc-demo-block__title" style="color:#009788">头像</h2>
         <van-uploader v-model="fileList1" multiple :after-read="afterRead1" :max-count="1" />
       </div>
       <div class="van-cell-group van-hairline--top-bottom">
@@ -102,7 +99,14 @@
         </div>
         <div class="van-cell__value">
           <div class="van-field__body">
-            <input v-model="IDcard" type="text" placeholder="请输入身份证号" class="van-field__control" name="msg_iid" @blur="checkID"/>
+            <input
+              v-model="IDcard"
+              type="text"
+              placeholder="请输入身份证号"
+              class="van-field__control"
+              name="msg_iid"
+              @blur="checkID"
+            />
           </div>
           <div style="text-align: left;color:red">{{IDcardTip}}</div>
         </div>
@@ -110,7 +114,7 @@
 
       <!-- 身份证照片 -->
       <div style="text-align: center">
-        <h2 class="van-doc-demo-block__title">上传手持身份证照片</h2>
+        <h2 class="van-doc-demo-block__title" style="color:#009788">上传手持身份证照片</h2>
         <van-uploader
           preview-size="136px"
           v-model="fileList2"
@@ -119,8 +123,9 @@
           :max-count="1"
         />
       </div>
+      <div class="tip">信息仅用于身份验证，捎物保障您的信息安全</div>
       <section style="text-align:center">
-        <router-link
+        <!-- <router-link
           :to="ids"
           tag="button"
           id="_TP"
@@ -128,7 +133,9 @@
           class="van-button van-button--primary van-button--normal btn_pos"
         >
           <span class="van-button__text">保存</span>
-        </router-link>
+        </router-link>-->
+
+        <van-button type="primary" size="small" @click="register" class="MyBGColor btncss">保存</van-button>
       </section>
     </section>
   </div>
@@ -142,6 +149,7 @@ import g from "./global";
 export default {
   data() {
     return {
+      registerip: "/userInfo/userInfoRegister.do",
       sex: ["男", "女", "保密"],
       sexInfo: "选择性别",
       pictureFile: "",
@@ -160,7 +168,7 @@ export default {
       birtext: "选择你的出生日期",
       currentDate: new Date(),
       IDcard: "",
-      IDcardTip: "",
+      IDcardTip: ""
     };
   },
   methods: {
@@ -172,9 +180,9 @@ export default {
     checkID() {
       let re = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
       if (!re.test(this.IDcard)) {
-        this.IDcardTip = '请输入正确的身份证格式'
-      }else{
-        this.IDcardTip = '';
+        this.IDcardTip = "请输入正确的身份证格式";
+      } else {
+        this.IDcardTip = "";
       }
     },
     //显示弹出框
@@ -289,14 +297,87 @@ export default {
         this.$toast.fail("头像上传失败");
       }
     },
-    //注册ajax发送后的回调函数
-    adregister(i) {
-      if (i.code == 0) {
-        this.$toast.success("注册成功!");
-        //跳转到登录注册选择页面
-        // next();
-      } else {
-        this.$toast.fail("注册失败!");
+    register() {
+      //获取用户名值
+      let name = document.getElementsByName("msg_user")[0];
+      //获取身份证号
+      let id = document.getElementsByName("msg_iid")[0];
+      //获取生日
+      //判断是否填写非空
+      var ju =
+        name.value && id.value && g.user_msg.userInfo.identityCardPicture;
+
+      //填写信息写入user_msg对象---↓↓↓↓↓↓↓↓
+      //获取并写入用户名
+      g.user_msg.userInfo.name = name.value;
+      //获取并写入身份证号
+      g.user_msg.userInfo.identityCard = id.value;
+      //获取并写入出生日期
+      console.log(name.value);
+      console.log(g.user_msg.userInfo.role);
+      //判断身份
+      if (g.user_msg.userInfo.role == "3" && name.value) {
+        //如果身份是管理员并且写了用户名
+        console.log("成功-管理员");
+        this.axios
+          .post(this.$store.state.ip + this.registerip, {
+            userInfo: {
+              avatar: g.user_msg.userInfo.avatar,
+              uid: g.user_msg.userInfo.uid,
+              name: name.value,
+              gender: "男",
+              role: g.user_msg.userInfo.role
+            },
+            area: {
+              uid: g.user_msg.area.uid,
+              province: g.user_msg.area.province,
+              city: g.user_msg.area.city,
+              district: g.user_msg.area.district,
+              status: g.user_msg.area.status
+            }
+          })
+          .then(i => {
+            //注册成功
+            if (i.data.code == 0) {
+              this.$toast.success("注册成功!");
+              this.$router.push(this.ids);
+            } else {
+              this.$toast.success("注册失败!");
+              return;
+            }
+          })
+          .catch(e => {
+            console.info(e);
+          });
+      }
+      if (g.user_msg.userInfo.role == "1" && name.value && id.value) {
+        if (this.IDcardTip != "") {
+          return;
+        }
+
+        this.axios
+          .post(this.$store.state.ip + this.registerip, {
+            userInfo: g.user_msg.userInfo,
+            area: g.user_msg.area
+          })
+          .then(i => {
+            //注册成功
+            if (i.data.code == 0) {
+              this.$toast.success("注册成功!");
+              this.$router.push(this.ids);
+            } else {
+              this.$toast.success("注册失败!");
+              return;
+            }
+          })
+          .catch(e => {
+            console.info(e);
+          });
+      }
+      if (g.user_msg.userInfo.role == "2" && name.value && id.value) {
+        if (this.IDcardTip != "") {
+          return;
+        }
       }
     }
   },
@@ -317,72 +398,7 @@ export default {
     }
   },
   beforeRouteLeave(to, from, next) {
-
-    if(to.path=='/registersuccess'){
-      next();
-      return;
-    }
-
-    console.log("开启离开填写信息页面");
-    //填写完个人信息后保存执行:
-    //获取用户名值
-    let name = document.getElementsByName("msg_user")[0];
-    //获取身份证号
-    let id = document.getElementsByName("msg_iid")[0];
-    //获取生日
-    //判断是否填写非空
-    var ju = name.value && id.value && g.user_msg.userInfo.identityCardPicture;
-
-    //填写信息写入user_msg对象---↓↓↓↓↓↓↓↓
-    //获取并写入用户名
-    g.user_msg.userInfo.name = name.value;
-    //获取并写入身份证号
-    g.user_msg.userInfo.identityCard = id.value;
-    //获取并写入出生日期
-    console.log(name.value);
-    console.log(g.user_msg.userInfo.role);
-    //判断身份
-    if (g.user_msg.userInfo.role == "3" && name.value) {
-      //如果身份是管理员并且写了用户名
-      console.log("成功-管理员");
-      let ad_msg = {
-        userInfo: {
-          avatar: g.user_msg.userInfo.avatar,
-          uid: g.user_msg.userInfo.uid,
-          name: name.value,
-          gender: "男",
-          role: g.user_msg.userInfo.role
-        },
-        area: {
-          uid: g.user_msg.area.uid,
-          province: g.user_msg.area.province,
-          city: g.user_msg.area.city,
-          district: g.user_msg.area.district,
-          status: g.user_msg.area.status
-        }
-      };
-      this.ajax(ad_msg, "/userInfo/userInfoRegister.do", "adregister");
-      next();
-    }
-    if (g.user_msg.userInfo.role == "1" && name.value && id.value) {
-      if(this.IDcardTip !=''){
-        return
-      }
-      //如果身份是用户并且写了用户名和身份证号
-      let ad_msg = {
-        userInfo: g.user_msg.userInfo,
-        area: g.user_msg.area
-      };
-      this.ajax(ad_msg, "/userInfo/userInfoRegister.do", "adregister");
-      next();
-    }
-    if (g.user_msg.userInfo.role == "2" && name.value && id.value) {
-      if(this.IDcardTip !=''){
-        return
-      }
-      //如果身份是司机并且写了用户名和身份证号
-      next();
-    }
+    next();
   }
 };
 </script>
@@ -420,5 +436,48 @@ export default {
   padding: 0;
   height: 24px;
   line-height: normal;
+}
+
+.tip {
+  color: #455a6499;
+  text-align: center;
+  padding: 5px;
+}
+
+.van-doc-demo-block__title {
+  padding-top: 15px;
+}
+
+.MyBGColor {
+  background-color: #009788;
+  border: #009788;
+  width: 95vw;
+  height: 6vh;
+}
+
+.btncss {
+  width: 100vw;
+  margin-top: 3vh;
+}
+
+
+.nav {
+  background-color: #009788;
+  height: 56px;
+  line-height: 56px;
+}
+
+.nav div {
+  height: 56px;
+}
+
+.nav .van-nav-bar__title {
+  color: white;
+  font-size: 17px;
+}
+
+.nav .van-icon-arrow-left {
+  color: white;
+  font-size: 24px;
 }
 </style>

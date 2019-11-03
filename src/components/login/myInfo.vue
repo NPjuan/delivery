@@ -1,16 +1,16 @@
 <template>
   <div class="hei100">
     <div class="out">
-      <div class="van-doc-nav-bar van-nav-bar van-hairline--bottom" style="z-index: 1;">
-        <div class="van-nav-bar__left">
-          <i
-            @click="$router.push('/homepage')"
-            class="van-icon van-icon-arrow-left van-nav-bar__arrow"
-          ></i>
-        </div>
-        <div class="van-nav-bar__title van-ellipsis">我的</div>
-        <div class="van-nav-bar__right"></div>
-      </div>
+      <!--<div class="van-doc-nav-bar van-nav-bar van-hairline&#45;&#45;bottom" style="z-index: 1;">-->
+        <!--<div class="van-nav-bar__left">-->
+          <!--<i-->
+            <!--@click="$router.push('/homepage')"-->
+            <!--class="van-icon van-icon-arrow-left van-nav-bar__arrow"-->
+          <!--&gt;</i>-->
+        <!--</div>-->
+        <!--<div class="van-nav-bar__title van-ellipsis">我的</div>-->
+        <!--<div class="van-nav-bar__right"></div>-->
+      <!--</div>-->
       <div class="context">
         <!-- //头像 -->
         <div class="headpc dis_bl">

@@ -1,31 +1,31 @@
 <template>
   <div class="container">
-    <header>
-      <div class="head-fun-container">
-        <!--个人信息-->
-        <span class="head-span-button head-span-button-left" @click="show.information = !show.information">
-          <img src="../../assets/image/head.svg" alt="" class="head-span-button-img">
-        </span>
-        <!--搜索框-->
-        <span class="search-input-container">
-          <!--<img src="../../assets/image/search.svg" alt="">-->
-          <!--<input type="text" placeholder="地址搜索" class="search-input">-->
-          <span style="font-size: .35rem;color:grey;">用户页面</span>
-        </span>
-        <!--其他-->
-        <span class="head-span-button head-span-button-right" @click="show.more = !show.more">
-          <img src="../../assets/image/other.svg" alt="" class="head-span-button-img">
-        </span>
-      </div>
-      <div class="head-span-container">
-        <!--点击 span 跳转页面-->
-        <!--这里不可以换行显示否则或出现间隙需要用更多的 css 来兼容-->
-        <span :class="{'head-span': true,'head-span-active':true}">我要友捎</span>
-        <span v-if="!role" class="head-span" @click="driver">我要接单</span>
-        <span class="head-span" @click="message">友捎消息</span>
-        <span class="head-span" @click="login">{{loginStatus}}</span>
-      </div>
-    </header>
+    <!--<header>-->
+      <!--<div class="head-fun-container">-->
+        <!--&lt;!&ndash;个人信息&ndash;&gt;-->
+        <!--<span class="head-span-button head-span-button-left" @click="show.information = !show.information">-->
+          <!--<img src="../../assets/image/head.svg" alt="" class="head-span-button-img">-->
+        <!--</span>-->
+        <!--&lt;!&ndash;搜索框&ndash;&gt;-->
+        <!--<span class="search-input-container">-->
+          <!--&lt;!&ndash;<img src="../../assets/image/search.svg" alt="">&ndash;&gt;-->
+          <!--&lt;!&ndash;<input type="text" placeholder="地址搜索" class="search-input">&ndash;&gt;-->
+          <!--<span style="font-size: .35rem;color:grey;">用户页面</span>-->
+        <!--</span>-->
+        <!--&lt;!&ndash;其他&ndash;&gt;-->
+        <!--<span class="head-span-button head-span-button-right" @click="show.more = !show.more">-->
+          <!--<img src="../../assets/image/other.svg" alt="" class="head-span-button-img">-->
+        <!--</span>-->
+      <!--</div>-->
+      <!--<div class="head-span-container">-->
+        <!--&lt;!&ndash;点击 span 跳转页面&ndash;&gt;-->
+        <!--&lt;!&ndash;这里不可以换行显示否则或出现间隙需要用更多的 css 来兼容&ndash;&gt;-->
+        <!--<span :class="{'head-span': true,'head-span-active':true}">我要友捎</span>-->
+        <!--<span v-if="!role" class="head-span" @click="driver">我要接单</span>-->
+        <!--<span class="head-span" @click="message">友捎消息</span>-->
+        <!--<span class="head-span" @click="login">{{loginStatus}}</span>-->
+      <!--</div>-->
+    <!--</header>-->
     <Amap></Amap>
     <div class="content">
       <div class="content-container">
@@ -201,7 +201,7 @@
     },
     data() {
       return {
-        role:"",
+        role: 1,
         loginStatus:"注册信息",
         // 地图信息
         // lt http://118.25.85.198:8080/deliver
@@ -985,7 +985,7 @@
     width: 100%;
     max-width: 640px;
     min-width: 320px;
-    height: 100vh;
+    height: calc(100vh - 1.5rem);
     overflow: hidden;
   }
   .content{

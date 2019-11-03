@@ -1,6 +1,5 @@
 <template>
   <div>
-    <normalHeader :title="title" @leftClick="$router.go(-1)"></normalHeader>
     <div class="msg-list">
       <div v-if="orderList.length" class="list-container" v-for="(value, index, key) in orderList">
         <div class="list"  @click="showDetails(index)">
@@ -126,7 +125,7 @@
 <style scoped>
   .msg-list{
     height: calc(100vh - 1.2rem);
-    margin: 1rem auto .5rem auto;
+    margin: 0 auto .5rem auto;
     overflow: auto;
   }
   .list-container{

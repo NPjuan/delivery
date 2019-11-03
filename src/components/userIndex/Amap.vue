@@ -68,7 +68,6 @@
 <style scoped>
   .amap-page-container{
     position: absolute;
-    padding-top: 1.6rem;
     width: 100%;
     height: 100%;
     z-index: 1;

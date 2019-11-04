@@ -26,7 +26,7 @@
         <!--<span class="head-span" @click="login">{{loginStatus}}</span>-->
       <!--</div>-->
     <!--</header>-->
-    <Amap></Amap>
+    <Amap ref="amap" :role="amapRole"></Amap>
     <div class="content">
       <div class="content-container">
         <!--收，发货地址填写-->
@@ -201,6 +201,8 @@
     },
     data() {
       return {
+        // 0 表示发货地址 1 表示收货地址
+        amapRole: 0,
         role: 1,
         loginStatus:"注册信息",
         // 地图信息
@@ -601,6 +603,12 @@
             + this[role].village
             + this[role].detail
         this.judge[role].addressPick = true
+        if(role == 'consignor'){
+          this.amapRole = 0
+        }else{
+          this.amapRole = 1
+        }
+        this.$refs.amap.search(this[role].areaCode)
         this.show.address = false
       },
       // 地址触摸开始
@@ -738,20 +746,14 @@
 
     //yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
     mounted() {
-      /**         yxxxxxxxxxxxxxxxxx        */
-      if(this.$store.state.isLogin){
-        this.loginStatus = "我的";
-      }else{
-        this.loginStatus = "登录注册";
-      }
-      /**         yxxxxxxxxxxxxxxxxx        */
       // 初始化时间
       this.dateInit()
       // 初始化登陆状态
       this.loginInit()
-      this.role = this.$store.state.userData.user.role
-      console.log(this.$store.state.userData.user.role)
-      // 1 用户
+      if(this.$store.state.isLogin){
+        this.role = this.$store.state.userData.user.role
+        // 1 用户
+      }
     }
   }
 </script>

@@ -1,6 +1,6 @@
 <template>
     <div id="container">
-      <div v-if="!get" style="height: calc(100vh - 2rem);overflow: auto">
+      <div v-if="!get" style="height: calc(100vh - 2.5rem);overflow: auto;">
         <div class="list-container" v-for="(value, index, key) in orderList">
           <div class="list"  @click="showDetails(index)">
             <p class="list-head">
@@ -62,7 +62,7 @@
           收货订单
         </div>
       </footer>
-      <layer :show="detailShow" @changeShow="detailShow = !detailShow"/>
+      <layer :show="detailShow" @changeShow="detailShow = !detailShow" color="rgba(24,24,45,0.7)"/>
       <detail :show="detailShow" :detail="detail" @changeShow="detailShow = !detailShow"></detail>
     </div>
 </template>
@@ -139,9 +139,9 @@
         },
         showDetails(index) {
           let self = this
-          let userOrderId = self.orderList[index]["id"]
+          let userOrderId = Number(self.orderList[index]["id"])
           this.$axios.post(this.url + '/userOrder/findDetail.do',{
-            userOrderId            //用户订单id
+            userOrderId: 3           //用户订单id
           })
             .then(function (response) {
               console.log(response)

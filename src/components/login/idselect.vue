@@ -9,21 +9,21 @@
     <div class="out">
       <router-link  to="/register?status=1" tag="div" class="nids">
         <div class="f1">
-          <img src="../../assets/image/userinfo/用户.png" alt="用户" width="70px" />
+          <img src="../../assets/image/userinfo/user.png" alt="用户" width="70px" />
         </div>
         <div class="f2">用户</div>
       </router-link>
 
       <router-link  to="/register?status=2" tag="div" class="nids">
         <div class="f1">
-          <img src="../../assets/image/userinfo/司机.png" alt="司机" width="70px" />
+          <img src="../../assets/image/userinfo/driver.png" alt="司机" width="70px" />
         </div>
         <div class="f2">司机</div>
       </router-link>
 
       <router-link  to="/register?status=3" tag="div" class="nids">
         <div class="f1">
-          <img src="../../assets/image/userinfo/管理员.png" alt="管理员" width="70px" />
+          <img src="../../assets/image/userinfo/administrator.png" alt="管理员" width="70px" />
         </div>
         <div class="f2">管理员</div>
       </router-link>

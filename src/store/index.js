@@ -10,10 +10,10 @@ const store = new Vuex.Store({
     // 设置属性
     state: {
         isLogin: false,
-        ip:"http://47.96.231.75:8080/deliver",
+        ip: "http://47.96.231.75:8080/deliver",
         // 乐涛服务器地址
-        url:"http://118.25.85.198:8080/deliver",
-        userData:{},
+        url: "http://118.25.85.198:8080/deliver",
+        userData: {},
     },
 
     // 获取属性的状态
@@ -42,7 +42,7 @@ const store = new Vuex.Store({
             commit("userStatus", flag);
         },
         // 用户数据
-        userData({commit}, data) {
+        userData({ commit }, data) {
             commit("userD", data);
         },
     }

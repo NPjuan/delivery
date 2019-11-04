@@ -160,17 +160,7 @@ export default {
   border-bottom: rgb(214, 214, 214) 1px solid;
 }
 
-#userSet {
-  float: right;
 
-  width: 15px;
-  height: 15px;
-  background-image: url("../../assets/image/userInfo/右箭头.svg");
-  background-position: 50% 50%;
-  background-size: 20px;
-
-  vertical-align: sub;
-}
 
 .context_C {
   height: 40px;

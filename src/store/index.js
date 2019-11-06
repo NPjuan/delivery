@@ -14,6 +14,8 @@ const store = new Vuex.Store({
         // 乐涛服务器地址
         url:"http://118.25.85.198:8080/deliver",
         userData:{},
+        // 定位数组
+        point: []
     },
 
     // 获取属性的状态

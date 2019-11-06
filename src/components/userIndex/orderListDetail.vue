@@ -137,7 +137,7 @@
   }
   .enter{
     left: 10%;
-    z-index: 100;
+    z-index: 115;
   }
   .leave{
     background-color: transparent;

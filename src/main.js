@@ -51,9 +51,10 @@ import VueAMap from 'vue-amap';
 Vue.use(VueAMap);
 VueAMap.initAMapApiLoader({
   key: '8f6a4a30720fcafa2780d7ac218e21d9',
-  plugin: ['Autocomplete', 'PlaceSearch', 'Scale', 'OverView', 'ToolBar', 'MapType', 'PolyEditor', 'AMap.CircleEditor'],
+  plugin: ['Autocomplete', 'PlaceSearch', 'Scale', 'OverView', 'ToolBar', 'MapType', 'PolyEditor', 'AMap.CircleEditor', 'Driving'],
   // 默认高德 sdk 版本为 1.4.4
-  v: '1.4.4'
+  v: '1.4.4',
+  uiVersion: '1.0.11' // 版本号
 });
 
 Vue.prototype.$axios = axios

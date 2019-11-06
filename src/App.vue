@@ -13,8 +13,8 @@
         to="surety" class="case" tag="span">担保信息</router-link>
       </div>
     </header>
-    <div style="height: 1.5rem"></div>
-    <div style="box-shadow: 0 10px 50px #7d7e80;">
+    <div style="height: 1.5rem;"></div>
+    <div >
       <transition :name="transitionName">
         <router-view ></router-view>
       </transition>
@@ -89,16 +89,15 @@ header{
 }
 .nav{
   width: 100%;
-  height: .8rem;
-  padding-top: .2rem;
+  height: .9rem;
   overflow-x:auto;
   white-space: nowrap;
 }
 .case{
   display: inline-block;
-  line-height: .4rem;
   width: 25%;
-  height: 100%;
+  line-height: 1rem;
+  height: 1rem;
   font-size: .3rem;
   text-align: center;
   color: gray;

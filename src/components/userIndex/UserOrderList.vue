@@ -4,7 +4,7 @@
         <div class="list-container" v-for="(value, index, key) in orderList">
           <div class="list"  @click="showDetails(index)">
             <p class="list-head">
-              <span class="user-get">东莞市万江区潘俊渊 收</span>
+              <span class="user-get">东莞市万江区oligarchy 收</span>
               <span class="status">{{value.status | statusFilter}}</span>
             </p>
             <div class="center-container">
@@ -31,7 +31,7 @@
         <div class="list-container" v-for="(value, index, key) in orderList">
           <div class="list"  @click="showDetails(index)">
             <p class="list-head">
-              <span class="user-get">东莞市万江区潘俊渊 发</span>
+              <span class="user-get">东莞市万江区潘力给 发</span>
               <span class="status">待收货订单</span>
             </p>
             <div class="center-container">
@@ -139,9 +139,10 @@
         },
         showDetails(index) {
           let self = this
-          let userOrderId = Number(self.orderList[index]["id"])
+          let userOrderId = Number(self.orderList[index]["userOrderId"])
+          console.log(userOrderId)
           this.$axios.post(this.url + '/userOrder/findDetail.do',{
-            userOrderId: 3           //用户订单id
+            userOrderId           //用户订单id
           })
             .then(function (response) {
               console.log(response)
@@ -154,7 +155,7 @@
         },
         confirmGet(index) {
           let self = this
-          let userOrderId = self.orderList[index]["id"]
+          let userOrderId = Number(self.orderList[index]["userOrderId"])
           let cid = this.$store.state.userData.user.id
           this.$axios.post(this.url+"/userOrder/contactConfirm.do",{
             cid,                   // 用户id
@@ -324,7 +325,7 @@
     background-color: white;
   }
   .active{
-    background-color: skyblue;
+    background-color: seagreen;
     color: white;
   }
 </style>

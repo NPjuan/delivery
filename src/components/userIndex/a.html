@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+  let p = new Promise((resolve, reject) => {
+    resolve(1)
+  })
+  p.then(
+    (value) => {
+      console.log(value)
+      return new Promise((resolve, reject) => {
+        resolve(2)
+      })
+    },
+    (error) => {console.log(error)}
+  )
+  .then(
+    (value) => {console.log(value)},
+    (error) => {console.log(error)}
+  )
+  function b() {
+    function a() {
+      console.log("a")
+    }
+    function c() {
+      a()
+    }
+    c()
+  }
+  b()
+</script>
+</html>

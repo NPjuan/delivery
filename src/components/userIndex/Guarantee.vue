@@ -59,12 +59,14 @@
       methods:{
         // 匹配担保人 id
         findGuarantee(id) {
+          const self = this
           // 正则表达式匹配 10 位数字
-          let reg = /^\d{10}$/
-          if(id.toString().match(reg) == null){
-            this.search = false
-            return
-          }
+          // let reg = /^\d{10}$/
+          // if(id.toString().match(reg) == null){
+          //   this.search = false
+          //   return
+          // }
+          // 判断是否已经存在
           for(let i=0,len = this.guarantees.length;i<len;i++){
             if(this.guarantees[i].id == id){
               this.change(i)
@@ -72,18 +74,23 @@
               let self = this
               timer = setTimeout(function () {
                 self.$refs[i][0].style.backgroundColor = "white"
-                console.log("b")
               },400)
               return
             }
           }
-          this.guarantees.unshift({
-              id:3333333333,
-              name: "兔子",
-              phone: "1234564871",
-              type: true
+          this.$axios.post(this.$store.state.url+"/userOrder/validateSurety.do",{
+            shipperId: 3,              //发货人id
+            suretyId: Number(id)                //担保人id
+          })
+            .then(function (response) {
+              let suretyRelate = response.data.data.suretyRelate
+              suretyRelate.type = true
+              self.guarantees.unshift(suretyRelate)
+              self.search = false
             })
-          this.search = false
+            .catch(function (reason) {
+
+            })
         },
         // 选择改变样式
         change(index) {
@@ -103,7 +110,6 @@
               console.log(response)
               if(!response.data.data.code){
                 // 发布订单
-                console.log("b")
                 self.$emit("changeShow", self.guarantees[index].id)
               }
             })
@@ -122,6 +128,21 @@
             leave: !this.show,
           }
         }
+      },
+      mounted() {
+        // 查找历史使用的担保人
+        this.$axios.post(this.$store.state.url+"/user/findSuretyHistory.do",{
+          'userId': 1
+        })
+          .then(function (response) {
+            console.log(response)
+            let arr = response.data.data
+            let guarantees = this.guarantees
+            arr.forEach(function (item) {
+              item.type = false
+              guarantees.unshift(item)
+            })
+          })
       }
     }
 </script>

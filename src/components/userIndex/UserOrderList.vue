@@ -1,13 +1,6 @@
 <template>
     <div id="container">
-      <normalHeader
-          left-text="返回"
-          title="订单消息"
-          right-text=""
-          left-arrow
-          @leftClick="headerLeftClick"
-        />
-      <div v-if="!get" style="padding-top:1rem;height: calc(100vh - 2rem);overflow: auto">
+      <div v-if="!get" style="height: calc(100vh - 2rem);overflow: auto">
         <div class="list-container" v-for="(value, index, key) in orderList">
           <div class="list"  @click="showDetails(index)">
             <p class="list-head">
@@ -34,11 +27,11 @@
           </div>
         </div>
       </div>
-      <div v-else style="padding-top:1rem;height: calc(100vh - 2rem);overflow: auto">
+      <div v-else style="height: calc(100vh - 2rem);overflow: auto">
         <div class="list-container" v-for="(value, index, key) in orderList">
           <div class="list"  @click="showDetails(index)">
             <p class="list-head">
-              <span class="user-get">东莞市万江区潘俊渊发</span>
+              <span class="user-get">东莞市万江区潘俊渊 发</span>
               <span class="status">待收货订单</span>
             </p>
             <div class="center-container">
@@ -328,6 +321,7 @@
     line-height: 1rem;
     text-align: center;
     font-size: .3rem;
+    background-color: white;
   }
   .active{
     background-color: skyblue;

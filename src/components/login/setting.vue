@@ -1,7 +1,7 @@
 <template>
     <div class="hei100 bg">
         <!-- 导航栏 -->
-        <van-nav-bar title="设置" left-arrow @click-left="$router.back(-1)" border class="nav" />
+        <!-- <van-nav-bar title="设置" left-arrow @click-left="$router.back(-1)" border class="nav" /> -->
 
         <!-- 用户信息设置 -->
         <van-cell-group>

@@ -47,10 +47,10 @@ import setting from "../components/login/setting"
 import alterphone from "../components/login/alterPhone"
 import newphone from "../components/login/newphone"
 
-// import Chat from "../components/chat/chating"
+import Chat from "../components/chat/chating"
 
 
-const Chat = r => require.ensure([], () => r(require('../components/chat/chating')), 'chat')
+// const Chat = r => require.ensure([], () => r(require('../components/chat/chating')), 'chat')
 
 //聊天页面
 
@@ -83,7 +83,7 @@ export default new Router({
         {path: "/Receiving", meta: {index: 1}, name: "ReceivingLink", component: Receiving},
         // 司机 bz
         {
-          path: "/index/driver", meta: { index: 1, isLogin: true }, name: "driverLink", component: driver, children: [
+          path: "/index/driver", meta: { index: 1, index_: 0,isLogin: true }, name: "driverLink", component: driver, children: [
             // 发布行程
             { path: "/choices/route", meta: { index: 2 }, name: "routeLink", component: route },
             // 附近订单
@@ -138,7 +138,7 @@ export default new Router({
     { path: '/newphone', meta: { index: 1, index_: 5 }, component: newphone },
     
     //聊天页面
-    { path: '/chat', meta: { index: 1, index_: 1 }, component: Chat },
+    { path: '/chat', meta: { index: 1, index_: 1 ,isLogin: true}, component: Chat },
     // 通用
     { path: "*", redirect: "/" }
   ]

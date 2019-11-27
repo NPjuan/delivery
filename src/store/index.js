@@ -10,7 +10,11 @@ const store = new Vuex.Store({
     // 设置属性
     state: {
         isLogin: false,
-        ip: "http://47.96.231.75:8080/deliver",
+        // ip: "http://47.96.231.75:8080/deliver",
+        ip:"http://192.168.1.107:8080/deliver_war_exploded",
+        minIp:"http://47.96.231.75:8080",
+        ymIp:"http://192.168.1.107:8080/deliver_war_exploded",
+
         // 乐涛服务器地址
         url: "http://118.25.85.198:8080/deliver",
         userData: {},

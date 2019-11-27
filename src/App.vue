@@ -1,8 +1,24 @@
 <template>
   <div id="app">
-    <transition :name="transitionName">
-      <router-view ></router-view>
-    </transition>
+    <header>
+      <span class="head-pic-container"><img src="../src/assets/image/first-show.svg" alt="" class="head-pic"></span>
+      <p class="title" style="display: inline-block">捎物</p>
+      <div class="nav">
+        <router-link to="homepage" class="case" tag="span">我要友捎</router-link><router-link
+        to="/index/driver" class="case" tag="span">我要接单</router-link><router-link
+        to="/chat" class="case" tag="span">捎物消息</router-link><router-link
+        v-if="!login" to="login" class="case" tag="span">登陆注册</router-link><router-link
+        v-else to="myinfo" class="case" tag="span">我的</router-link><router-link
+        to="userOrderList" class="case" tag="span">历史订单</router-link><router-link
+        to="surety" class="case" tag="span">担保信息</router-link>
+      </div>
+    </header>
+    <div style="height: 1.5rem"></div>
+    <div style="box-shadow: 0 10px 50px #7d7e80;">
+      <transition :name="transitionName">
+        <router-view ></router-view>
+      </transition>
+    </div>
   </div>
 </template>
 
@@ -51,6 +67,11 @@ export default {
       const fromIndex = from.meta.index_;
       this.transitionName = toIndex < fromIndex ? 'right' : 'left';
     }
+  },
+  computed:{
+    login() {
+      return this.$store.state.isLogin
+    }
   }
 };
 </script>
@@ -60,9 +81,51 @@ export default {
   margin: 0;
   padding: 0;
 }
+header{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 1.5rem;
+  width: 100%;
+  z-index: 100000;
+}
+.head-pic-container{
+  box-sizing: border-box;
+  display: inline-block;
+  padding-top: .15rem;
+  padding-left: .5rem;
+  width: 1rem;
+  height: .5rem
+}
+.head-pic{
+  width: 100%;
+}
+.title{
+  font-size: .45rem;
+  margin-top: .3rem;
+  margin-left: .2rem;
+  color: gray;
+}
+.nav{
+  width: 100%;
+  height: .8rem;
+  padding-top: .2rem;
+  overflow-x:auto;
+  white-space: nowrap;
+}
+.case{
+  display: inline-block;
+  line-height: .4rem;
+  width: 25%;
+  height: 100%;
+  font-size: .3rem;
+  text-align: center;
+  color: gray;
+}
 
 .router-link-active {
-  color: white;
+  color: seagreen;
+  font-weight: bold;
 }
 
 /* yxxxxxxxxxxxxxxxxxxxxxxxxxxx */

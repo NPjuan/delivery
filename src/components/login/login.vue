@@ -6,10 +6,9 @@
     <img src="..\..\assets\image\userInfo\login_bg.png" width="100vw" style="width:100vw" />
 
     <!-- 返回键 -->
-    <div class="van-nav-bar__left arrow">
-      <!-- <i @click="$router.back(-1)" class="van-icon van-icon-arrow-left van-nav-bar__arrow"></i> -->
+    <!-- <div class="van-nav-bar__left arrow">
       <i @click="$router.push('/homepage')" class="van-icon van-icon-arrow-left van-nav-bar__arrow"></i>
-    </div>
+    </div> -->
 
     <!-- 密码和用户名输入框 -->
     <van-cell-group class="pos_1">

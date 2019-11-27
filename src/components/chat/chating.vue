@@ -1,213 +1,424 @@
 <!-- //重新设置密码 -->
 <template>
-    <div class="demo">
-        <svg class="sidebar" :viewBox="viewBox">
-            <path class="s-path" fill="#fff" :d="_path" />
-        </svg>
-        <div class="static">
-            <div class="static__text">拖动查看聊天目录</div>
-        </div>
-        <div class="sidebar-content">
-            <div class="contact">
-                <img src="../../assets/img/1.png" alt class="contact__photo" />
-                <span class="contact__name">于翔</span>
-                <span class="contact__status online"></span>
-            </div>
-            <div class="contact">
-                <img src="../../assets/img/2.png" alt class="contact__photo" />
-                <span class="contact__name">潘俊渊</span>
-                <span class="contact__status online"></span>
-            </div>
-            <div class="contact">
-                <img src="../../assets/img/3.png" alt class="contact__photo" />
-                <span class="contact__name">佘焙桩</span>
-                <span class="contact__status online"></span>
-            </div>
-            <div class="contact">
-                <img src="../../assets/img/4.png" alt class="contact__photo" />
-                <span class="contact__name">康俊彬</span>
-                <span class="contact__status online"></span>
-            </div>
-            <div class="contact">
-                <img src="../../assets/img/5.png" alt class="contact__photo" />
-                <span class="contact__name">罗艺明</span>
-                <span class="contact__status online"></span>
-            </div>
-            <div class="contact">
-                <img src="../../assets/img/6.png" alt class="contact__photo" />
-                <span class="contact__name">林乐涛</span>
-                <span class="contact__status online"></span>
-            </div>
-            <div class="contact">
-                <img src="../../assets/img/7.png" alt class="contact__photo" />
-                <span class="contact__name">陈恩秦</span>
-                <span class="contact__status"></span>
-            </div>
-            <div class="contact">
-                <img src="../../assets/img/8.png" alt class="contact__photo" />
-                <span class="contact__name">林加云</span>
-                <span class="contact__status"></span>
-            </div>
-            <div class="contact">
-                <img src="../../assets/img/9.png" alt class="contact__photo" />
-                <span class="contact__name">田依凡</span>
-                <span class="contact__status"></span>
-            </div>
-            <div class="contact">
-                <img src="../../assets/img/1.png" alt class="contact__photo" />
-                <span class="contact__name">蔡荣镔</span>
-                <span class="contact__status"></span>
-            </div>
-
-            <div class="contact">
-                <img src="../../assets/img/1.png" alt class="contact__photo" />
-                <span class="contact__name">蔡荣镔</span>
-                <span class="contact__status"></span>
-            </div>
-            <div class="contact">
-                <img src="../../assets/img/1.png" alt class="contact__photo" />
-                <span class="contact__name">蔡荣镔</span>
-                <span class="contact__status"></span>
-            </div>
-            <div class="contact">
-                <img src="../../assets/img/1.png" alt class="contact__photo" />
-                <span class="contact__name">蔡荣镔</span>
-                <span class="contact__status"></span>
-            </div>
-            <div class="contact">
-                <img src="../../assets/img/1.png" alt class="contact__photo" />
-                <span class="contact__name">蔡荣镔</span>
-                <span class="contact__status"></span>
-            </div>
-            <div class="contact">
-                <img src="../../assets/img/1.png" alt class="contact__photo" />
-                <span class="contact__name">蔡荣镔</span>
-                <span class="contact__status"></span>
-            </div>
-            <div class="contact">
-                <img src="../../assets/img/1.png" alt class="contact__photo" />
-                <span class="contact__name">蔡荣镔</span>
-                <span class="contact__status"></span>
-            </div>
-            <div class="contact">
-                <img src="../../assets/img/1.png" alt class="contact__photo" />
-                <span class="contact__name">蔡荣镔</span>
-                <span class="contact__status"></span>
-            </div>
-            <div class="contact">
-                <img src="../../assets/img/1.png" alt class="contact__photo" />
-                <span class="contact__name">蔡荣镔</span>
-                <span class="contact__status"></span>
-            </div>
-            <div class="contact">
-                <img src="../../assets/img/1.png" alt class="contact__photo" />
-                <span class="contact__name">蔡荣镔</span>
-                <span class="contact__status"></span>
-            </div>
-            <div class="contact">
-                <img src="../../assets/img/1.png" alt class="contact__photo" />
-                <span class="contact__name">蔡荣镔</span>
-                <span class="contact__status"></span>
-            </div>
-            <div class="search">
-                <img src="../../assets/img/t8TeL1S.png" alt class="search__img" />
-                <input type="text" class="search__input" placeholder="搜索..." />
-            </div>
-        </div>
-        <div class="chat">
-            <span class="chat__back"></span>
-            <span class="chat__status">在线</span>
-            <div class="chat__person">
-                <span class="chat__online active"></span>
-                <span class="chat__name">Huehue Huehue</span>
-            </div>
-
-            <!-- 聊天内容 -->
-            <div class="chat__messages" ref="out">
-                <div class="chat__msgRow">
-                    <div class="chat__message mine">请问你地址在哪11111111111111111111111111111111111???</div>
-                </div>
-                <div class="chat__msgRow">
-                    <div class="chat__message notMine">广东工业大学阿达撒打算打算大声道按时11111111111111111学五号楼!!!</div>
-                </div>
-                <div class="chat__msgRow">
+    <div class="c-container">
+        <div id="chatbox">
+            <div id="friendslist">
+                <!-- 好友名单集合 -->
+                <div id="friends">
+                    <!-- 好友单元 -->
                     <div
-                        class="chat__message mine"
-                    >战!!!!!11111111111111111111111111111111111111111111111111111111!!!!!!!~</div>
+                        class="friend"
+                        v-for="(item,i) in friendsList"
+                        :key="i"
+                        @click="chat"
+                        :data-index="i"
+                    >
+                        <img v-bind:src="item.src" />
+                        <p>
+                            <strong>{{item.username}}</strong>
+                            <span>{{item.email}}</span>
+                        </p>
+                        <div :class="{'inactive':item.status==0,'status':item.status==1}"></div>
+                    </div>
                 </div>
-                <div class="chat__msgRow">
-                    <div class="chat__message notMine">战!!!!!!!!!!!!!!</div>
-                </div>
-                <div class="chat__msgRow">
-                    <div class="chat__message mine">战!!!!!!!!!!!!!!!~</div>
+
+                <!-- 好友搜索 -->
+                <div id="search">
+                    <input
+                        type="text"
+                        id="searchfield"
+                        placeholder="搜索好友"
+                        @keyup.enter="searchFri(searchVal)"
+                        v-model="searchVal"
+                    />
                 </div>
             </div>
 
-            <!-- 聊天输入框 -->
-            <!-- <input type="text" class="chat__input" placeholder="输入消息..." /> -->
+            <!-- 聊天界面窗口 -->
 
-            <!--
-          @keyup.enter
-          键盘监听，绑定Enter按键，使其发送文本 
+            <div id="chatview" class="p1">
+                <!-- 聊天头部:封面/头像/名称/邮箱 -->
+                <div id="profile">
+                    <div id="close">
+                        <div class="cy"></div>
+                        <div class="cx"></div>
+                    </div>
+                    <p>用户名</p>
+                    <span>xxxxxx@gmail.com</span>
+                </div>
 
-          onkeydown:
-          屏蔽原生的Enter效果（屏蔽按下Enter时换行）
-            -->
-            <div
-                contenteditable="true"
-                class="chat__input"
-                ref="input"
-                @keyup.enter="sent('text')"
-                onkeydown="if(event.keyCode==13){event.keyCode=0;event.returnValue=false;}"
-            ></div>
+                <!-- 聊天内容 -->
+                <div id="chat-messages" ref="out">
+                    <!-- 时间戳 -->
+                    <!-- <label>星期五 2019-11-10</label> -->
 
-            <img
-                src="../../assets/img/cM3yCT9.png"
-                alt="发送图片/文件"
-                class="imgBtn"
-                @click.stop="sentImg"
-            />
+                    <!-- 聊天信息单元 -->
+                    <div
+                        :class="{'message': 1,'right': item.self}"
+                        v-for="(item,i) in chatMsg"
+                        :key="i"
+                    >
+                        <img :src="item.src" />
+                        <div class="bubble">
+                            {{item.msg}}
+                            <div class="corner"></div>
+                            <span>{{item.time}}</span>
+                        </div>
+                    </div>
+                </div>
 
-            <button class="sent" @click="send">发送</button>
-            <button @click="ssss">111111111111111</button>
+                <!-- 聊天发送窗口 -->
+                <!-- <div id="sendmessage">
+                    <input type="text" placeholder="发送..." />
+                    <button id="send"></button>
+                </div>-->
+
+                <!-- //旧的,添加 -->
+
+                <!--
+                    @keyup.enter
+                    键盘监听，绑定Enter按键，使其发送文本 
+
+                    onkeydown:
+                    屏蔽原生的Enter效果（屏蔽按下Enter时换行）
+                -->
+
+                <div class="sendmessage">
+                    <div
+                        contenteditable="true"
+                        class="chat__input"
+                        ref="input"
+                        @keyup.enter="send"
+                        onkeydown="if(event.keyCode==13){event.keyCode=0;event.returnValue=false;}"
+                    ></div>
+
+                    <img
+                        src="../../assets/img/camera.svg"
+                        alt="发送图片/文件"
+                        class="imgBtn"
+                        @click.stop="sentImg"
+                        width="20px"
+                    />
+                    <button class="sent" @click="send">发 送</button>
+                </div>
+            </div>
         </div>
-
-        <!-- //图片发送入口 -->
-        <input type="file" class="upimg" ref="upimg" accept="image/*" />
     </div>
 </template>
 
 <script>
-import stopExecutionOnTimeout from "../../js/stopExecutionOnTimeout.js";
-import jquery from "../../js/jquery.min.js";
-import main from "../../js/main.js";
-import g from "../login/global";
-
+// import g from "../login/global";
 export default {
     data() {
         return {
+            // ------------
+            // 好友信息列表--->>>>
+            //      src:头像地址
+            //      username:用户昵称
+            //      email:邮箱
+            //      status:0->不在线 1->忙碌 2->在线
+            // ------------
+            friendsList: [
+                {
+                    src: require("../../assets/img/1.jpg"),
+                    username: "于翔",
+                    email: "854696361@qq.com",
+                    status: 2
+                },
+                {
+                    src: require("../../assets/img/2.jpg"),
+                    username: "康俊彬",
+                    email: "854696361@qq.com",
+                    status: 0
+                },
+                {
+                    src: require("../../assets/img/3.jpg"),
+                    username: "林乐涛",
+                    email: "854696361@qq.com",
+                    status: 0
+                },
+                {
+                    src: require("../../assets/img/4.jpg"),
+                    username: "佘焙桩",
+                    email: "854696361@qq.com",
+                    status: 0
+                },
+                {
+                    src: require("../../assets/img/5.jpg"),
+                    username: "潘俊渊",
+                    email: "854696361@qq.com",
+                    status: 0
+                },
+                {
+                    src: require("../../assets/img/6.jpg"),
+                    username: "罗艺明",
+                    email: "854696361@qq.com",
+                    status: 0
+                },
+                {
+                    src: require("../../assets/img/7.jpg"),
+                    username: "陈恩秦",
+                    email: "854696361@qq.com",
+                    status: 0
+                },
+                {
+                    src: require("../../assets/img/8.jpg"),
+                    username: "林家云",
+                    email: "854696361@qq.com",
+                    status: 0
+                },
+                {
+                    src: require("../../assets/img/9.jpg"),
+                    username: "田依凡",
+                    email: "854696361@qq.com",
+                    status: 0
+                },
+                {
+                    src: require("../../assets/img/10.jpg"),
+                    username: "蔡荣镔",
+                    email: "854696361@qq.com",
+                    status: 0
+                }
+            ],
+            // ------------
+            // 聊天信息列表--->>>>
+            //      msg:聊天内容
+            //      src:头像地址
+            //      self:是否自己
+            //      time:消息时间
+            // ------------
+            chatMsg: [
+                {
+                    msg: "来啊啊啊啊啊啊",
+                    src: require("../../assets/img/5.jpg"),
+                    self: false,
+                    time: "3 min"
+                },
+                {
+                    msg: "来啊啊啊啊啊啊",
+                    src: require("../../assets/img/1.jpg"),
+                    self: true,
+                    time: "3 min"
+                },
+                {
+                    msg: "来啊啊啊啊啊啊111111",
+                    src: require("../../assets/img/5.jpg"),
+                    self: false,
+                    time: "3 min"
+                },
+                {
+                    msg: "来啊啊啊啊啊啊",
+                    src: require("../../assets/img/1.jpg"),
+                    self: true,
+                    time: "Now"
+                },
+                {
+                    msg: "来啊啊啊啊啊啊",
+                    src: require("../../assets/img/5.jpg"),
+                    self: false,
+                    time: "Now"
+                }
+            ],
             _path: "",
             viewBox: "",
             comm: `<div class="chat__msgRow">
-          <div class="chat__message notMine">${this.val}</div>
-        </div>`,
+                        <div class="chat__message notMine">${this.val}</div>
+                    </div>`,
+
+            // 搜索框内容
+            searchVal: "",
+            //搜索IP地址
+            searchIp: "/user/abstractQuery.do",
+
+            //聊天内容
             val: "",
             out: "",
             // id请求地址
             ajaxip:
-                "http://192.168.1.108:8080/deliver_war_exploded/chat/login.do",
+                "http://192.168.1.107:8080/deliver_war_exploded/chat/login.do",
             //websocket
-            path: "ws://192.168.1.108:8080/deliver_war_exploded/ws.do",
+            path: "ws://192.168.1.107:8080/deliver_war_exploded/ws.do",
             // path: "ws://116.62.46.122:8080/deliver/ws.do",
 
             socket: "",
 
             //待发送的图片地址
-            imgSrc: ""
+            imgSrc: "",
+
+            //是否websocket已连接
+            chatStatus: false,
+
+            //聊天对象ID
+            leftObj: {}
         };
     },
 
     methods: {
+        //点击用户后处理的事件(事件委托)
+        chat(e) {
+            // console.log(e.target);
+            this.chatMsg = [];
+
+            var _target = e.target;
+
+            //如果点击了非div元素则查找其父元素
+            while (_target.nodeName.toLowerCase() !== "div") {
+                var _target = _target.parentNode;
+            }
+            const index = parseInt(e.target.dataset.i);
+            // 获得引索后，只需要修改data数据就能改变UI了
+
+            //获取聊天对象的信息
+            this.leftObj = this.friendsList[_target.dataset.index];
+
+            //若点击了列表中的某好友,则:
+            console.log("进入");
+
+            var preloadbg = document.createElement("img");
+            // preloadbg.src = "../../assets/img/timeline1.png";
+            //获取元素相对于文档的偏移
+            var childOffset = $(_target).offset();
+
+            //其父元素的父元素的偏移
+            var parentOffset = $(_target)
+                .parent()
+                .parent()
+                .offset();
+
+            // 偏移计算
+            var childTop = childOffset.top - parentOffset.top;
+
+            var clone = $(_target)
+                //找到其中的img元素
+                .find("img")
+                //img中的第0个元素
+                .eq(0)
+                //复制选中的图片
+                .clone();
+            var top = childTop + 12 + "px";
+            $(clone)
+                .css({ top: top })
+                .addClass("floatingImg")
+                .appendTo("#chatbox");
+
+            //增加聊天头部动画
+            setTimeout(function() {
+                $("#profile p").addClass("animate");
+                $("#profile").addClass("animate");
+            }, 100);
+
+            //增加聊天内容动画
+            setTimeout(function() {
+                $("#chat-messages").addClass("animate");
+
+                //关闭箭头增加类,动画1
+                $(".cx, .cy").addClass("s1");
+
+                //关闭箭头增加类,动画2
+                setTimeout(function() {
+                    $(".cx, .cy").addClass("s2");
+                }, 100);
+
+                //关闭箭头增加类,动画3
+                setTimeout(function() {
+                    $(".cx, .cy").addClass("s3");
+                }, 200);
+            }, 150);
+
+            let wid = document.body.clientWidth / 2;
+            let _left = parseInt(wid) - 34 + "px";
+            //头像动画居中
+            $(".floatingImg").animate(
+                {
+                    width: "68px",
+                    height: "68px",
+                    left: _left,
+                    top: "-60px"
+                },
+                200
+            );
+
+            //找到其用户名
+            var name = $(_target)
+                .find("p strong")
+                .html();
+
+            //找到其email
+            var email = $(_target)
+                .find("p span")
+                .html();
+
+            // 写入聊天页面
+            $("#profile p").html(name);
+            $("#profile span").html(email);
+
+            //把对面头像写入聊天内容
+            $(".message")
+                .not(".right")
+                .find("img")
+                .attr("src", $(clone).attr("src"));
+
+            //隐藏好友列表
+            $("#friendslist").fadeOut();
+            //显出聊天列表
+            $("#chatview").fadeIn();
+
+            //箭头
+            $("#close")
+                .unbind("click")
+                .click(function() {
+                    //移除动画
+                    $("#chat-messages, #profile, #profile p").removeClass(
+                        "animate"
+                    );
+
+                    // 箭头动画
+                    $(".cx, .cy").removeClass("s1 s2 s3");
+
+                    //头像回归原位
+                    $(".floatingImg").animate(
+                        {
+                            width: "40px",
+                            top: top,
+                            left: "12px"
+                        },
+                        200,
+                        function() {
+                            $(".floatingImg").remove();
+                        }
+                    );
+
+                    //关闭聊天,弹出好友列表
+                    setTimeout(function() {
+                        $("#chatview").fadeOut();
+                        $("#friendslist").fadeIn();
+                    }, 50);
+                });
+            setTimeout(() => {
+                let chatId = "chat" + this.leftObj.id;
+                let chatMsg = localStorage.getItem(chatId);
+                let _chatMsg = JSON.parse(chatMsg);
+                console.log(_chatMsg);
+
+                if (_chatMsg == null) {
+                    console.log("聊天记录为空");
+                } else {
+                    var Ctemp = new Array();
+                    for (let i = 0; i < _chatMsg.length; i++) {
+                        Ctemp[i] = _chatMsg[i];
+                    }
+                }
+
+                this.chatMsg = Ctemp;
+                //当内容超出聊天框时滚动条自动滚至聊天底部
+            }, 50);
+            setTimeout(() => {
+                // this.$refs.out.scrollTop = this.$refs.out.scrollHeight;
+                console.log(this.$refs.out.scrollTop);
+                this.$refs.out.scrollTop = this.$refs.out.scrollHeight;
+                console.log(this.$refs.out.scrollHeight);
+            }, 100);
+        },
         //选中图片并发送
         sentImg() {
             let upimg = this.$refs.upimg;
@@ -225,54 +436,9 @@ export default {
                 };
             };
         },
-        //聊天发送文本
-        sent(type, img) {
-            if (this.$refs.input.innerHTML === "" && type === "text") {
-                return;
-            }
-
-            // 获取聊天总文本
-            this.out = this.$refs.out.innerHTML;
-
-            //如果是图片
-            if (type === "img") {
-                this.comm = `
-                <div class="chat__msgRow" data-v-429d673a>
-                    <div class="chat__message notMine" data-v-429d673a><img src="${img}" width="200px"></div>
-                </div>
-                `;
-            }
-
-            //如果是文本
-            if (type === "text") {
-                //获取输入框中的文本
-                this.val = this.$refs.input.innerHTML;
-                // console.log(this.val);
-
-                // console.log(this.out);
-
-                //模板文本
-                this.comm = `
-                <div class="chat__msgRow" data-v-429d673a>
-                    <div class="chat__message notMine" data-v-429d673a>${this.val}</div>
-                </div>`;
-
-                //清空文本
-                this.$refs.input.innerHTML = "";
-            }
-
-            this.$refs.out.innerHTML = this.out + this.comm;
-            // console.log(this.out);
-
-            //当内容超出聊天框时滚动条自动滚至聊天底部
-            this.$refs.out.scrollTop = this.$refs.out.scrollHeight;
-            // console.log(this.$refs.out.scrollTop);
-        },
-
         //初始化WS
         init() {
-            console.log(this.$store.state.userData.user.id);
-
+            //建立连接
             this.$axios
                 .post(this.ajaxip, {
                     id: this.$store.state.userData.user.id
@@ -290,49 +456,152 @@ export default {
         },
         open() {
             console.log("socket连接成功");
+            this.chatStatus = true;
         },
         error() {
             console.log("连接错误");
         },
+        //监听socket消息
         getMessage(msg) {
-            console.log(msg.data);
-            console.log("Client received a message", msg);
+            //当内容超出聊天框时滚动条自动滚至聊天底部
+            this.$refs.out.scrollTop = this.$refs.out.scrollHeight;
+            console.log("WebSocket:收到一条信息", msg);
+            //格式转化成json
+            var data = $.parseJSON(msg.data);
 
-            // 获取聊天总文本
-            this.out = this.$refs.out.innerHTML;
+            //获取对方ID
+            let chatId = "chat" + this.leftObj.id;
+            let chatMsg = localStorage.getItem(chatId);
+            let _chatMsg = JSON.parse(chatMsg);
 
-            //模板文本
-            this.comm = `
-                <div class="chat__msgRow" data-v-429d673a>
-                    <div class="chat__message Mine" data-v-429d673a>${msg.data}</div>
-                </div>`;
+            let msgAdd = {
+                msg: data.msgContent,
+                src:
+                    data.from == this.$store.state.userData.user.id
+                        ? this.$store.state.minIp +
+                          this.$store.state.userData.userInfo.avatar
+                        : this.leftObj.src,
+                self:
+                    data.from == this.$store.state.userData.user.id
+                        ? true
+                        : false,
+                time: data.date
+            };
+            console.log(msgAdd);
+            console.log(_chatMsg);
+            if (_chatMsg == null) {
+                _chatMsg = [];
+                _chatMsg.push(msgAdd);
+            } else {
+                _chatMsg.push(msgAdd);
+            }
 
-            this.$refs.out.innerHTML = this.out + this.comm;
+            localStorage.setItem(chatId, JSON.stringify(_chatMsg));
+
+            //若收到的消息是自己发出的则
+            if (data.from == this.$store.state.userData.user.id) {
+                return;
+            }
+
+            if (data.from != this.leftObj.id) {
+                return;
+            }
+
+            let msgTemp = {
+                msg: data.msgContent,
+                src: this.leftObj.src,
+                self: false,
+                time: data.date
+            };
+       
+            this.chatMsg.push(msgTemp);
 
             //当内容超出聊天框时滚动条自动滚至聊天底部
             this.$refs.out.scrollTop = this.$refs.out.scrollHeight;
-
-            var data = $.parseJSON(msg.data);
-            console.log("WebSocket:收到一条信息", data);
         },
         send() {
+            if (this.chatStatus === false) {
+                this.$toast("网络请求失败,请稍后再试!");
+                return;
+            }
             //获取输入框中的文本
             this.val = this.$refs.input.innerHTML;
-
-            let idstr = this.$store.state.userData.user.id.toString();
-
+            if (this.val == "") {
+                return;
+            }
             //清空文本
             this.$refs.input.innerHTML = "";
+
+            //获取自己的id
+            let idstr = this.$store.state.userData.user.id.toString();
+            //获取对方的id
+            let tostr = this.$store.state.userData.user.id.toString();
+
+            //获取时间
+            let ntime = new Date();
+            let t_year = ntime.getFullYear();
+            let t_month = ntime.getMonth() + 1;
+            let t_day = ntime.getDate();
+            let time = t_year + "-" + t_month + "-" + t_day;
+
+            let msgTemp = {
+                msg: this.val,
+                src:
+                    this.$store.state.minIp +
+                    this.$store.state.userData.userInfo.avatar,
+                self: true,
+                time: time
+            };
+            console.log(this.chatMsg);
+
+            if (this.chatMsg == undefined) {
+                this.chatMsg = [msgTemp];
+            } else {
+                this.chatMsg.push(msgTemp);
+            }
+
             var msg = {
                 from: idstr,
                 msgContent: this.val,
-                to: null
+                to: this.leftObj.id.toString()
             };
+
             this.socket.send(JSON.stringify(msg));
+        },
+        searchFri(msg) {
+            console.log(msg);
+            this.$axios
+                .post(this.$store.state.ymIp + this.searchIp, {
+                    pn: "1",
+                    info: msg
+                })
+                .then(i => {
+                    console.log(i);
+                    this.friendsList = [];
+
+                    let data = i.data.data.list;
+
+                    for (let j = 0; j < data.length; j++) {
+                        let temp = {
+                            src:
+                                this.$store.state.minIp +
+                                data[j].userInfo.avatar,
+                            username: data[j].userInfo.name,
+                            email: "854696361@qq.com",
+                            status: data[j].isOnLine,
+                            id: data[j].user.id
+                        };
+                        this.friendsList.push(temp);
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                });
         },
 
         close() {
             console.log("socket已经关闭");
+            this.chatStatus = false;
         }
     },
     destroyed() {
@@ -340,32 +609,12 @@ export default {
         this.socket.onclose = this.close;
     },
 
-    created() {
-        //获取屏幕高度
-        let _hei = document.documentElement.clientHeight;
-        let _wid = document.documentElement.clientWidth;
-
-        var _hei_ = _hei / 1.2;
-
-        _hei = Math.floor(_hei);
-        _wid = Math.floor(_wid);
-
-        this._path =
-            "M0,0 50,0 a0," +
-            Math.floor(_hei / 2) +
-            " 0 1,1 0," +
-            _hei +
-            " L0," +
-            _hei;
-
-        this.viewBox = "0 0 " + _wid + " " + _hei;
-    },
-
     mounted() {
-        this.phone = g.pwphone;
-
         //初始化
         this.init();
+
+        this.chatMsg = [];
+        this.friendsList = [];
     }
 };
 </script>
@@ -373,39 +622,27 @@ export default {
 
 
 
+
 <style scoped>
-[class^="icon-"],
-[class*=" icon-"] {
-    font-family: "icomoon";
-    speak: none;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-
-    /* Better Font Rendering =========== */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+/* 初始化 */
+b,
+strong {
+    font-weight: 700;
 }
 
-body,
-html {
-    font-size: 100%;
-    padding: 0;
-    margin: 0;
+q {
+    quotes: "\201C""\201D""\2018""\2019";
+}
+svg:not(:root) {
+    overflow: hidden;
 }
 
-/* Reset */
-*,
-*:after,
-*:before {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+button,
+input {
+    line-height: normal;
 }
 
-/* Clearfix hack by Nicolas Gallagher: http://nicolasgallagher.com/micro-clearfix-hack/ */
+/* ----------------------------------------------------- */
 .clearfix:before,
 .clearfix:after {
     content: " ";
@@ -416,194 +653,22 @@ html {
     clear: both;
 }
 
-body {
-    background: #f9f7f6;
-    color: #404d5b;
-    font-weight: 500;
-    font-size: 1.05em;
-    font-family: "Segoe UI", "Lucida Grande", Helvetica, Arial,
-        "Microsoft YaHei", FreeSans, Arimo, "Droid Sans", "wenquanyi micro hei",
-        "Hiragino Sans GB", "Hiragino Sans GB W3", "FontAwesome", sans-serif;
-}
-a {
-    color: #2fa0ec;
-    text-decoration: none;
-    outline: none;
-}
-a:hover,
-a:focus {
-    color: #74777b;
+.c-container {
+    height: 100vh;
+    /* overflow: hidden; */
 }
 
-.htmleaf-container {
-    margin: 0 auto;
-    text-align: center;
-    overflow: hidden;
-}
-.htmleaf-content {
-    font-size: 150%;
-    padding: 1em 0;
-}
-
-.htmleaf-content h2 {
-    margin: 0 0 2em;
-    opacity: 0.1;
-}
-
-.htmleaf-content p {
-    margin: 1em 0;
-    padding: 5em 0 0 0;
-    font-size: 0.65em;
-}
-.bgcolor-1 {
-    background: #f0efee;
-}
-.bgcolor-2 {
-    background: #f9f9f9;
-}
-.bgcolor-3 {
-    background: #e8e8e8;
-} /*light grey*/
-.bgcolor-4 {
-    background: #2f3238;
-    color: #fff;
-} /*Dark grey*/
-.bgcolor-5 {
-    background: #df6659;
-    color: #521e18;
-} /*pink1*/
-.bgcolor-6 {
-    background: #2fa8ec;
-} /*sky blue*/
-.bgcolor-7 {
-    background: #d0d6d6;
-} /*White tea*/
-.bgcolor-8 {
-    background: #3d4444;
-    color: #fff;
-} /*Dark grey2*/
-.bgcolor-9 {
-    background: #ef3f52;
-    color: #fff;
-} /*pink2*/
-.bgcolor-10 {
-    background: #64448f;
-    color: #fff;
-} /*Violet*/
-.bgcolor-11 {
-    background: #3755ad;
-    color: #fff;
-} /*dark blue*/
-.bgcolor-12 {
-    background: #3498db;
-    color: #fff;
-} /*light blue*/
-/* Header */
-.htmleaf-header {
-    padding: 1em 190px 1em;
-    letter-spacing: -1px;
-    text-align: center;
-}
-.htmleaf-header h1 {
-    font-weight: 600;
-    font-size: 5em;
-    line-height: 1;
-    margin-bottom: 0;
-    font-family: "Segoe UI", "Lucida Grande", Helvetica, Arial,
-        "Microsoft YaHei", FreeSans, Arimo, "Droid Sans", "wenquanyi micro hei",
-        "Hiragino Sans GB", "Hiragino Sans GB W3", "FontAwesome", sans-serif;
-}
-.htmleaf-header h1 span {
-    font-family: "Segoe UI", "Lucida Grande", Helvetica, Arial,
-        "Microsoft YaHei", FreeSans, Arimo, "Droid Sans", "wenquanyi micro hei",
-        "Hiragino Sans GB", "Hiragino Sans GB W3", "FontAwesome", sans-serif;
-    display: block;
-    font-size: 60%;
-    font-weight: 400;
-    padding: 0.8em 0 0.5em 0;
-    color: #c3c8cd;
-}
-/*nav*/
-.htmleaf-demo a {
-    color: #1d7db1;
-    text-decoration: none;
-}
-.htmleaf-demo {
-    width: 100%;
-    padding-bottom: 1.2em;
-}
-.htmleaf-demo a {
-    display: inline-block;
-    margin: 0.5em;
-    padding: 0.6em 1em;
-    border: 3px solid #1d7db1;
-    font-weight: 700;
-}
-.htmleaf-demo a:hover {
-    opacity: 0.6;
-}
-.htmleaf-demo a.current {
-    background: #1d7db1;
-    color: #fff;
-}
-/* Top Navigation Style */
-.htmleaf-links {
-    position: relative;
-    display: inline-block;
-    white-space: nowrap;
-    font-size: 3.5em;
-    text-align: center;
-}
-
-.htmleaf-links::after {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    margin-left: -1px;
-    width: 2px;
-    height: 100%;
-    background: #dbdbdb;
-    content: "";
-    -webkit-transform: rotate3d(0, 0, 1, 22.5deg);
-    transform: rotate3d(0, 0, 1, 22.5deg);
-}
-
-.htmleaf-icon {
-    display: inline-block;
-    margin: 0.5em;
-    padding: 0em 0;
-    width: 3.5em;
-    text-decoration: none;
-}
-
-.htmleaf-icon span {
-    display: none;
-}
-
-.htmleaf-icon:before {
-    margin: 0 5px;
-    text-transform: none;
-    font-weight: normal;
-    font-style: normal;
-    font-variant: normal;
-    font-family: "icomoon";
-    line-height: 1;
-    /* speak: none; */
-    -webkit-font-smoothing: antialiased;
-}
 /* footer */
-.htmleaf-footer {
-    width: 100%;
-    padding-top: 10px;
-}
-.htmleaf-small {
-    font-size: 0.8em;
-}
+
 .center {
     text-align: center;
 }
 /****/
 .related {
+    position: absolute;
+    top: 800px;
+    left: 0;
+    width: 100%;
     color: #fff;
     background: #333;
     text-align: center;
@@ -658,448 +723,448 @@ a:focus {
     color: #fff;
 }
 /* icomoon */
-.icon-htmleaf-home-outline:before {
-    content: "\e5000";
-}
 
-.icon-htmleaf-arrow-forward-outline:before {
-    content: "\e5001";
-}
+/* ---------------------------------------------------- */
 
-@media screen and (max-width: 50em) {
-    .htmleaf-header {
-        padding: 3em 10% 4em;
-    }
-    .htmleaf-header h1 {
-        font-size: 2em;
-    }
+* {
+    margin: 0px;
+    padding: 0px;
 }
-
-@media screen and (max-width: 40em) {
-    .htmleaf-header h1 {
-        font-size: 1.5em;
-    }
-}
-
-@media screen and (max-width: 30em) {
-    .htmleaf-header h1 {
-        font-size: 1.2em;
-    }
-}
-
-*,
-*:before,
-*:after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-html,
 body {
-    font-size: 62.5%;
-    height: 100%;
+    background: #f0f1f2;
+    font: 12px "Open Sans", sans-serif;
 }
-
-button,
-input {
-    border: 0;
-    outline: none;
-}
-
-body {
-    background: -webkit-linear-gradient(45deg, #636f85, #6960a0);
-    background: linear-gradient(45deg, #636f85, #6960a0);
-}
-
-.demo {
-    position: relative;
-    /* top: 50%; */
-    /* left: 50%; */
-    /* margin-top: -250px; */
-    /* margin-left: -150px; */
-    /* width: 300px; */
-    width: 100vw;
-    height: 100vh;
-    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
-}
-
-.static {
-    height: 100%;
-    font-size: 18px;
-    font-family: "Open Sans", Helvetica, Arial, sans-serif;
-    /* //聊天背景颜色 */
-    background: #07c160;
-}
-.static:before,
-.static:after {
-    content: "";
+#view-code {
+    color: #89a2b5;
+    opacity: 0.7;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-decoration: none;
     position: absolute;
-    left: 70px;
-    width: 20px;
-    height: 20px;
-    margin-left: -10px;
-    margin-top: -10px;
-    border: 2px solid #fff;
-    border-left: none;
-    border-bottom: none;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
-    -webkit-animation: arrows 1.5s infinite;
-    animation: arrows 1.5s infinite;
-}
-.static:before {
-    top: 25vh;
-    content: "";
-}
-.static:after {
-    top: 75vh;
-    content: "";
-}
-.static__text {
-    width: 90px;
-    position: absolute;
-    top: 50%;
+    top: 660px;
     left: 50%;
     margin-left: -50px;
-    -webkit-transform: translate3d(0, -50%, 0);
-    transform: translate3d(0, -50%, 0);
-    color: #fff;
-    -webkit-perspective: 1px;
-    perspective: 1px;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
+    z-index: 200;
 }
-
-.sidebar-content {
-    z-index: -1;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 200px;
-    height: 100%;
-    padding-top: 10px;
-    opacity: 0;
-    -webkit-transition: opacity 200ms, z-index 0s 0s;
-    transition: opacity 200ms, z-index 0s 0s;
-    background-color: #e9eaf3;
-    overflow-y: auto;
-}
-.sidebar-content.active {
-    z-index: 2;
+#view-code:hover {
     opacity: 1;
 }
-
-.contact {
+#chatbox {
     position: relative;
-    width: 100%;
-    height: 50px;
-    padding-left: 17px;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-    cursor: pointer;
-    overflow: hidden;
-}
-.contact__photo {
-    border-radius: 50%;
-    margin-right: 15px;
-}
-.contact__name {
-    font-size: 12px;
-    font-family: "Open Sans", Helvetica, Arial, sans-serif;
-}
-.contact__status {
-    position: absolute;
-    top: 21px;
-    right: 15px;
-    width: 8px;
-    height: 8px;
-    border: 2px solid #00b570;
-    border-radius: 50%;
-    opacity: 0;
-    -webkit-transition: opacity 0.3s;
-    transition: opacity 0.3s;
-}
-.contact__status.online {
-    opacity: 1;
-}
 
-.search {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 200px;
-    height: 55px;
-    padding-left: 15px;
+    width: 100vw;
+    height: 100vh;
     background: #fff;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
+
+    /* overflow: hidden; */
 }
 
-svg {
-    overflow: visible;
-}
-
-.sidebar {
-    z-index: 1;
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    width: 100%;
-    height: 100%;
-}
-
-.s-path {
-    cursor: -webkit-grab;
-    cursor: grab;
-}
-
-.cloned {
-    position: absolute;
-    z-index: 10;
-    -webkit-transition: top 0.3s, left 0.3s;
-    transition: top 0.3s, left 0.3s;
-    -webkit-transition-delay: 0.2s;
-    transition-delay: 0.2s;
-    -webkit-transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
-    transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
-}
-.cloned.removed {
-    -webkit-transition: opacity 0.2s 0;
-    transition: opacity 0.2s 0;
-    opacity: 0;
-}
-
-.chat {
-    display: none;
-    z-index: 5;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    padding: 25px 0 55px 25px;
-    -webkit-transition: opacity 200ms;
-    transition: opacity 200ms;
-    opacity: 0;
-}
-.chat.active {
-    opacity: 1;
-}
-.chat.active:before {
-    width: 100%;
-}
-.chat:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 5px;
-    background: #1cc6ae;
-    width: 0;
-    -webkit-transition: width 0.2s;
-    transition: width 0.2s;
-}
-.chat__back {
+#friendslist {
     position: relative;
-    display: inline-block;
+    height: 100vh;
+}
+
+#friends {
+    max-height: 80vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.friend {
+    height: 70px;
+    border-bottom: 1px solid #e7ebee;
+    position: relative;
+}
+.friend:hover {
+    background: #f1f4f6;
+    cursor: pointer;
+}
+.friend img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 15px;
+    float: left;
+}
+.floatingImg {
+    position: absolute;
+    width: 40px;
+    border-radius: 50%;
+    z-index: 2;
+    top: 0;
+    left: 12px;
+    border: 3px solid #fff;
+}
+.friend p {
+    padding: 15px 0 0 0;
+    float: left;
+    width: 220px;
+}
+.friend p strong {
+    font-weight: 600;
+    font-size: 15px;
+    color: #597a96;
+}
+.friend p span {
+    font-size: 13px;
+    font-weight: 400;
+    color: #aab8c2;
+}
+.friend .status {
+    background: #26c281;
+    border-radius: 50%;
+    width: 9px;
+    height: 9px;
+    position: absolute;
+    top: 31px;
+    right: 17px;
+}
+.friend .status.away {
+    background: #ffce54;
+}
+.friend .inactive {
+    background: #777777;
+    border-radius: 50%;
+    width: 9px;
+    height: 9px;
+    position: absolute;
+    top: 31px;
+    right: 17px;
+}
+#search {
+    position: fixed;
+    background: #e3e9ed url("../../assets/img/search.png") -11px 0 no-repeat;
+    height: 60px;
+    width: 100vw;
+    bottom: 0;
+}
+#searchfield {
+    background: #e3e9ed;
+    margin: 21px 0 0 55px;
+    border: none;
+    padding: 0;
+    font-size: 14px;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 400px;
+    color: #8198ac;
+}
+#searchfield:focus {
+    outline: 0;
+}
+#chatview {
+    position: fixed;
+    width: 100vw;
+    z-index: 1;
+    top: 0;
+    height: 100vh;
+    display: none;
+    background: #fff;
+}
+#profile {
+    height: 25vh;
+    overflow: hidden;
+    text-align: center;
+    color: #fff;
+}
+.p1 #profile {
+    background: #fff url("../../assets/img/timeline1.png") 0 0 no-repeat;
+    background-size: cover;
+}
+#profile .avatar {
+    width: 68px;
+    border: 3px solid #fff;
+    margin: 23px 0 0;
+    border-radius: 50%;
+}
+#profile p {
+    font-weight: 600;
+    font-size: 15px;
+    margin: 118px 0 -1px;
+    opacity: 0;
+    -webkit-transition: all 200ms cubic-bezier(0, 0.995, 0.99, 1);
+    -moz-transition: all 200ms cubic-bezier(0, 0.995, 0.99, 1);
+    -ms-transition: all 200ms cubic-bezier(0, 0.995, 0.99, 1);
+    -o-transition: all 200ms cubic-bezier(0, 0.995, 0.99, 1);
+    transition: all 200ms cubic-bezier(0, 0.995, 0.99, 1);
+}
+#profile p.animate {
+    margin-top: 97px;
+    opacity: 1;
+    -webkit-transition: all 200ms cubic-bezier(0, 0.995, 0.99, 1);
+    -moz-transition: all 200ms cubic-bezier(0, 0.995, 0.99, 1);
+    -ms-transition: all 200ms cubic-bezier(0, 0.995, 0.99, 1);
+    -o-transition: all 200ms cubic-bezier(0, 0.995, 0.99, 1);
+    transition: all 200ms cubic-bezier(0, 0.995, 0.99, 1);
+}
+#profile span {
+    display: block;
+    margin: 10px;
+    font-weight: 400;
+    font-size: 11px;
+}
+#chat-messages {
+    opacity: 0;
+    margin-top: 30px;
+    max-height: 66vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-left: 20px;
+    padding-right: 20px;
+    -webkit-transition: all 200ms cubic-bezier(0, 0.995, 0.99, 1);
+    -moz-transition: all 200ms cubic-bezier(0, 0.995, 0.99, 1);
+    -ms-transition: all 200ms cubic-bezier(0, 0.995, 0.99, 1);
+    -o-transition: all 200ms cubic-bezier(0, 0.995, 0.99, 1);
+    transition: all 200ms cubic-bezier(0, 0.995, 0.99, 1);
+}
+#chat-messages.animate {
+    opacity: 1;
+    margin-top: 0;
+}
+#chat-messages label {
+    color: #aab8c2;
+    font-weight: 600;
+    font-size: 12px;
+    text-align: center;
+    margin: 15px 0;
+    display: block;
+}
+#chat-messages div.message {
+    padding: 0 0 30px 38px;
+    clear: both;
+    margin-bottom: 45px;
+}
+#chat-messages div.message.right {
+    padding: 0 58px 30px 0;
+    margin-right: -19px;
+    margin-left: 19px;
+}
+#chat-messages .message img {
+    float: left;
+    margin-left: -38px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    margin-top: 12px;
+}
+#chat-messages div.message.right img {
+    float: right;
+    margin-left: 0;
+    margin-right: -38px;
+}
+
+.message .bubble {
+    background: #f0f4f7;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 12px 13px;
+    border-radius: 5px 5px 5px 0px;
+    color: #8495a3;
+    position: relative;
+    float: left;
+}
+#chat-messages div.message.right .bubble {
+    float: right;
+    border-radius: 5px 5px 0px 5px;
+}
+
+#chat-messages :first-child {
+    margin-top: 20px;
+}
+.bubble .corner {
+    background: url("../../assets/img/bubble-corner.png") 0 0 no-repeat;
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    left: -5px;
+    bottom: 0;
+}
+div.message.right .corner {
+    background: url("../../assets/img/bubble-cornerR.png") 0 0 no-repeat;
+    left: auto;
+    right: -5px;
+}
+
+.bubble span {
+    color: #aab8c2;
+    font-size: 11px;
+    position: absolute;
+    white-space: nowrap;
+    right: 0;
+    bottom: -22px;
+}
+#sendmessage {
+    position: relative;
+    width: 100vw;
+    /* bottom: 0; */
+    height: 60px;
+    border-top: 1px solid #e7ebee;
+    background: #fff;
+}
+#sendmessage input {
+    border: none;
+}
+#sendmessage input {
+    background: #fff;
+    margin: 21px 0 0 21px;
+    border: none;
+    padding: 0;
+    font-size: 14px;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 400px;
+    color: #aab8c2;
+}
+#sendmessage input:focus {
+    outline: 0;
+}
+#sendmessage button {
+    background: #fff url("../../assets/img/send.svg") 0 -41px no-repeat;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 15px;
+    top: 23px;
+    border: none;
+}
+#sendmessage button:hover {
+    cursor: pointer;
+    background-position: 0 0;
+}
+#sendmessage button:focus {
+    outline: 0;
+}
+
+#close {
+    position: absolute;
+    top: 8px;
+    opacity: 0.8;
+    right: 10px;
     width: 20px;
     height: 20px;
-    margin-top: 5px;
-    margin-left: -6px;
     cursor: pointer;
 }
-.chat__back:hover:before {
-    -webkit-transform: translateX(-3px) rotate(-45deg);
-    -ms-transform: translateX(-3px) rotate(-45deg);
-    transform: translateX(-3px) rotate(-45deg);
-}
-.chat__back:before {
-    content: "";
-    position: absolute;
-    display: block;
-    top: 4px;
-    left: 6px;
-    width: 12px;
-    height: 12px;
-    border: 2px solid #545675;
-    border-right: none;
-    border-bottom: none;
-    -webkit-transform: rotate(-45deg);
-    -ms-transform: rotate(-45deg);
-    transform: rotate(-45deg);
-    -webkit-transition: -webkit-transform 0.3s;
-    transition: transform 0.3s;
-}
-.chat__status {
-    position: absolute;
-    top: 3vh;
-    right: 65px;
-    font-size: 12px;
-    font-family: "Open Sans", Helvetica, Arial, sans-serif;
-    text-transform: uppercase;
-    color: #b1a9a9;
-}
-.chat__person {
-    display: inline-block;
-    position: absolute;
-    top: 5vh;
-    right: 65px;
-    font-size: 20px;
-    font-family: "Open Sans", Helvetica, Arial, sans-serif;
-    color: #36343d;
-}
-.chat__online {
-    position: absolute;
-    top: 50%;
-    left: -15px;
-    margin-top: -3px;
-    width: 8px;
-    height: 8px;
-    border: 2px solid #00b570;
-    border-radius: 50%;
-    opacity: 0;
-    -webkit-transition: opacity 0.3s;
-    transition: opacity 0.3s;
-}
-.chat__online.active {
+#close:hover {
     opacity: 1;
 }
-.chat__messages {
+.cx,
+.cy {
+    background: #fff;
     position: absolute;
-    /* top: 75px; */
-    top: 10vh;
-    left: 25px;
-    width: 93vw;
-    min-height: 10vh;
-    max-height: 80vh;
-    padding-right: 25px;
-    overflow-y: auto;
+    width: 0px;
+    top: 15px;
+    right: 15px;
+    height: 3px;
+    -webkit-transition: all 250ms ease-in-out;
+    -moz-transition: all 250ms ease-in-out;
+    -ms-transition: all 250ms ease-in-out;
+    -o-transition: all 250ms ease-in-out;
+    transition: all 250ms ease-in-out;
 }
-.chat__msgRow {
-    margin-bottom: 3vh;
+.cx.s1,
+.cy.s1 {
+    right: 0;
+    width: 20px;
+    -webkit-transition: all 100ms ease-out;
+    -moz-transition: all 100ms ease-out;
+    -ms-transition: all 100ms ease-out;
+    -o-transition: all 100ms ease-out;
+    transition: all 100ms ease-out;
 }
-.chat__msgRow:after {
-    content: "";
-    display: table;
-    clear: both;
+.cy.s2 {
+    -ms-transform: rotate(50deg);
+    -webkit-transform: rotate(50deg);
+    transform: rotate(50deg);
+    -webkit-transition: all 100ms ease-out;
+    -moz-transition: all 100ms ease-out;
+    -ms-transition: all 100ms ease-out;
+    -o-transition: all 100ms ease-out;
+    transition: all 100ms ease-out;
 }
-.chat__message {
-    word-break: break-all;
-    word-wrap: break-word;
-    display: inline-block;
-    max-width: 70vw;
-    padding: 10px;
-    font-size: 14px;
-    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+.cy.s3 {
+    -ms-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    -webkit-transition: all 100ms ease-out;
+    -moz-transition: all 100ms ease-out;
+    -ms-transition: all 100ms ease-out;
+    -o-transition: all 100ms ease-out;
+    transition: all 100ms ease-out;
 }
-.chat__message.mine {
-    color: #2b2342;
-    border: 1px solid #dfdfdf;
-    background: #ffffff;
+.cx.s1 {
+    right: 0;
+    width: 20px;
+    -webkit-transition: all 100ms ease-out;
+    -moz-transition: all 100ms ease-out;
+    -ms-transition: all 100ms ease-out;
+    -o-transition: all 100ms ease-out;
+    transition: all 100ms ease-out;
 }
-.chat__message.notMine {
-    float: right;
-    color: #23244e;
-    background: #e9eaf3;
+.cx.s2 {
+    -ms-transform: rotate(140deg);
+    -webkit-transform: rotate(140deg);
+    transform: rotate(140deg);
+    -webkit-transition: all 100ms ease-out;
+    -moz-transition: all 100ms ease-out;
+    -ms-transition: all 100ease-out;
+    -o-transition: all 100ms ease-out;
+    transition: all 100ms ease-out;
+}
+.cx.s3 {
+    -ms-transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+    transform: rotate(135deg);
+    -webkit-transition: all 100ease-out;
+    -moz-transition: all 100ms ease-out;
+    -ms-transition: all 100ms ease-out;
+    -o-transition: all 100ms ease-out;
+    transition: all 100ms ease-out;
+}
+#chatview,
+#sendmessage {
+    overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------- */
+
+.sendmessage {
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    /* bottom: 0; */
+    min-height: 60px;
+    border-top: 1px solid #e7ebee;
+    z-index: 100;
+    background-color: white;
+}
+.imgBtn {
+    position: absolute;
+    bottom: 20px;
+    left: 15px;
 }
 .chat__input {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    min-height: 55px;
+
+    width: 60vw;
+    height: 45%;
+    /* min-height: 55px; */
     /* padding: 10px 70px 10px 40px; */
-    padding: 20px 70px 15px 40px;
-    /* background-image: url("../../assets/img/cM3yCT9.png"); */
-    background-repeat: no-repeat;
-    background-position: 10px 15px;
-    background-color: #e9eaf3;
+    padding: 20px 70px 15px 45px;
     color: #2b2342;
     font-size: 14px;
-    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    /* font-family: "Open Sans", Helvetica, Arial, sans-serif; */
     outline: none;
 }
-
-.ripple {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    margin-left: -50px;
-    margin-top: -50px;
-    background: rgba(0, 0, 0, 0.4);
-    -webkit-transform: scale(0);
-    -ms-transform: scale(0);
-    transform: scale(0);
-    -webkit-animation: animRipple 0.3s;
-    animation: animRipple 0.3s;
-    border-radius: 50%;
-}
-
-.contact img {
-    width: 34px;
-    height: 34px;
-}
-
-@-webkit-keyframes animRipple {
-    to {
-        -webkit-transform: scale(2.5);
-        transform: scale(2.5);
-        opacity: 0;
-    }
-}
-
-@keyframes animRipple {
-    to {
-        -webkit-transform: scale(2.5);
-        transform: scale(2.5);
-        opacity: 0;
-    }
-}
-@-webkit-keyframes arrows {
-    to {
-        -webkit-transform: translateX(100%) rotate(45deg);
-        transform: translateX(100%) rotate(45deg);
-        opacity: 0;
-    }
-}
-@keyframes arrows {
-    to {
-        -webkit-transform: translateX(100%) rotate(45deg);
-        transform: translateX(100%) rotate(45deg);
-        opacity: 0;
-    }
-}
-
 .sent {
     position: absolute;
 
+    font-size: 12px;
     bottom: 11px;
     right: 10px;
     border: none;
+    color: white;
+    /* letter-spacing: 5px; */
+    font-weight: bold;
     padding: 10px 15px;
     background: #1cc6ae;
     border-radius: 5px;
-}
-
-.imgBtn {
-    position: absolute;
-    bottom: 15px;
-    left: 12px;
 }
 </style>

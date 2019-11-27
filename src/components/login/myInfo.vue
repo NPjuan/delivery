@@ -1,12 +1,12 @@
 <template>
   <div class="hei100">
     <div class="out">
-      <van-nav-bar title="我的" left-arrow @click-left="$router.push('/homepage')" border class="nav" />
+      <!-- <van-nav-bar title="我的" left-arrow @click-left="$router.push('/homepage')" border class="nav" /> -->
 
       <van-skeleton title avatar :row="3" avatar-size="65px" :loading="loading">
         <div class="context">
           <div class="headpc dis_bl">
-            <img :src="headPic" alt="头像" width="64px" />
+            <img :src="headPic" alt="头像" width="64px" height="64px"/>
           </div>
           <div class="userInfo dis_bl">
             <div class="f_s_big username">{{username}}</div>
@@ -155,7 +155,7 @@ export default {
 .context {
   height: 70px;
   padding: 20px 30px;
-  padding-top: 70px;
+  padding-top: 30px;
   background-color: #ffffff;
   border-bottom: rgb(214, 214, 214) 1px solid;
 }

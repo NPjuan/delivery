@@ -77,7 +77,6 @@
 </template>
 
 <script>
-  import g from '../login/global'
   import  AreaList from '../../assets/area'; // 地址列表
   export default {
     name: "ConsignorAddress",
@@ -254,22 +253,23 @@
       // 依次赋值给当前对象
       // this.$route.id = 用户的 id 可以拿来取用
       // 判断是否有 mes 属性，有则说明时带参数传递并且功能应该为修改默认地址
+      let data = this.$store.state.userData
+      this.consignor.id = data.user.id // 发货对应的 id
+      this.consignor.name = data.userInfo.name
+      this.consignor.phone = data.user.phone
       if(this.$route.query.hasOwnProperty("mes")){
         let mes = this.$route.query.mes
         console.log(mes)
-        this.consignor = mes
-        this.consignor.id = this.$route.query.id
-        this.consignor.name = g.l_user.userInfo.name
-        this.consignor.phone = g.l_user.user.phone
         this.consignor.areaCode = mes.province + mes.city + mes.district
-        // this.consignor.province  = mes.province
-        // this.consignor.city  = mes.city
-        // this.consignor.district  = mes.district
-        console.log(this.consignor.district)
+        this.consignor.province = mes.province
+        this.consignor.city = mes.city
+        this.consignor.district = mes.district
+        this.consignor.detail = mes.detail
+        this.consignor.town = mes.town
+        this.consignor.village = mes.village
         // 这一步放在下面覆盖掉上面的 id 赋值
         this.judge.areaCode = true
         this.judge.areaDetail = true
-
       }
     }
   }

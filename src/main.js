@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import $ from 'jquery'
 /*********************************/
 import axios from 'axios'
 import VueAxios from 'vue-axios'
@@ -33,7 +34,7 @@ import {
 
 // pjy 的个人组件
 import normalHeader from './components/userIndex/NormalHeader'
-Vue.component("normalHeader",normalHeader)
+Vue.component("normalHeader", normalHeader)
 
 
 import VueBus from './vue-bus'
@@ -49,6 +50,7 @@ Vue.use(DatetimePicker).use(Uploader).use(Switch).use(Picker).use(Circle).use(Lo
 
 // 高德地图
 import VueAMap from 'vue-amap';
+import log from '_loglevel@1.6.4@loglevel'
 Vue.use(VueAMap);
 VueAMap.initAMapApiLoader({
   key: '8f6a4a30720fcafa2780d7ac218e21d9',
@@ -98,11 +100,12 @@ router.beforeEach((to, from, next) => {
   } else {
     //用户想进入需要登录的页面，则定向回登录界面
     if (to.meta.isLogin) {
+      //提示
+      Toast('请先登录!');
+      
       next({
         path: '/login',
       })
-      //提示
-      this.$toast.message("请先登录");
       //用户进入无需登录的界面，则跳转继续
     } else {
       next()

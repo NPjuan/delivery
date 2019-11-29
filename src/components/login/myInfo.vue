@@ -74,11 +74,11 @@ export default {
       let url = "http://47.96.231.75:8080";
       this.headPic = url + g.l_user.userInfo.avatar;
     }
-      
+
     //赋值身份
     if (g.l_user.user.role == 0) {
       this.role = "游客";
-    } else if (g.l_user.user.role == 1) { 
+    } else if (g.l_user.user.role == 1) {
       this.role = "用户";
     } else if (g.l_user.user.role == 2) {
       this.role = "司机";
@@ -96,7 +96,7 @@ export default {
   },
   methods: {
 
-    
+
     ajax(data, url, func) {
       var ajax = new XMLHttpRequest();
       var stringData = JSON.stringify(data);

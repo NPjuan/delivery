@@ -1,5 +1,5 @@
 <template>
-  <div class="container" @click="findDriver">
+  <div class="container">
     <header>
       <span class="go-back-button" @click="goBack">返回</span>
       <span style="height: 100%;line-height: 1rem;font-size: .32rem;">附近司机</span>
@@ -25,7 +25,7 @@
           <p class="phone">{{value.phone}}</p>
           <p class="address">{{value.startAddress}}</p>
           <p class="time">{{value.startDate}}</p>
-          <button class="invite-button">邀请司机</button>
+          <button class="invite-button" @click="inviteDriver(index)">邀请司机</button>
         </div>
       </div>
     </div>

@@ -29,7 +29,9 @@ import ConsigneeAddress from '../components/userIndex/ConsigneeAddress'
 import ConsignorAddress from '../components/userIndex/ConsignorAddress'
 import FindDriver from '../components/userIndex/FindDriver'
 import UserOrderList from '../components/userIndex/UserOrderList'
-
+import Guarantee from '../components/userIndex/Guarantee'
+import Surety from '../components/userIndex/Surety'
+import Receiving from '../components/userIndex/Receiving'
 //yxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 import loginselect from '../components/login/loginselect'
 import idselect from "../components/login/idselect"
@@ -59,8 +61,9 @@ export default new Router({
   routes: [
     // 主页
     {path: "/", name: "indexLink", component: Index, redirect: "/homepage", children: [
+        {path: "/demo", meta: { index: 0, keepAlive: true }, name: "demoLink", component: Demo},
         // 默认跳转
-        {path: "/homepage", meta: { index: 0 }, name: "homepageLink", component: HomePage},
+        {path: "/homepage", meta: { index: 0}, name: "homepageLink", component: HomePage},
         // 填写收货人地址
         {path: "/consigneeAddress", meta: {index: 1}, name: "consigneeAddressLink", component: ConsigneeAddress},
         // 填写发货人地址
@@ -68,9 +71,13 @@ export default new Router({
         // 寻找附件司机
         {path: "/findDriver", meta: {index: 1}, name: "findDriverLink", component: FindDriver},
         // 订单详情
-
         {path: "/userOrderList", meta: {index: 1}, name: "userOrderListLink", component: UserOrderList},
-
+        // 寻找担保人信息
+        {path: "/Guarantee", meta: {index: 1}, name: "GuaranteeLink", component: Guarantee},
+        // 我是担保人
+        {path: "/Surety", meta: {index: 1}, name: "SuretyLink", component: Surety},
+        // 待收货订单
+        {path: "/Receiving", meta: {index: 1}, name: "ReceivingLink", component: Receiving},
         // 司机 bz
         {path:"/index/driver", meta: {index: 1}, name:"driverLink",component:driver,   children:[
             // 发布行程
@@ -109,7 +116,6 @@ export default new Router({
       {path:'/password', meta: {index: 1,index_:3},  component:password},
 
       {path:'/resetpw', meta: {index: 1,index_:4},  component:resetpw},
-    { path: '/setting', meta: { index: 1, index_: 4 }, component: setting },
 
       //聊天页面
       {path:'/chat', meta: {index: 1,index_:2},  component:Chat},

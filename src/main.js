@@ -46,17 +46,15 @@ import './css/vueup.css'
 Vue.use(AddressEdit).use(Area).use(Button).use(Popup).use(Field).use(Cell).use(CellGroup).use(Dialog).use(NavBar).use(List)
 Vue.use(DatetimePicker).use(Uploader).use(Switch).use(Picker).use(Circle).use(Loading).use(Image).use(ActionSheet)
 
-// Vue.use(BaiduMap, {
-//   ak: "ANlGUWwHxTnBFsMnbRaTsRfQ6f37SOTo"
-// })
 // 高德地图
 import VueAMap from 'vue-amap';
 Vue.use(VueAMap);
 VueAMap.initAMapApiLoader({
   key: '8f6a4a30720fcafa2780d7ac218e21d9',
-  plugin: ['Autocomplete', 'PlaceSearch', 'Scale', 'OverView', 'ToolBar', 'MapType', 'PolyEditor', 'AMap.CircleEditor'],
+  plugin: ['Autocomplete', 'PlaceSearch', 'Scale', 'OverView', 'ToolBar', 'MapType', 'PolyEditor', 'AMap.CircleEditor', 'Driving'],
   // 默认高德 sdk 版本为 1.4.4
-  v: '1.4.4'
+  v: '1.4.4',
+  uiVersion: '1.0.11' // 版本号
 });
 
 Vue.prototype.$axios = axios
@@ -68,7 +66,6 @@ Toast.setDefaultOptions({
 })
 export const eventBus = new Vue()
 /****************************************/
-
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

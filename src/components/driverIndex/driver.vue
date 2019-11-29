@@ -3,18 +3,18 @@
 
     <!-- <van-button type="primary"  @click="returnChoices">返回</van-button> -->
     <!-- router-link默认渲染为a标签,这两个router-link在组件切换后依旧存在 -->
-    <header>
-      <div class="van-doc-nav-bar van-nav-bar van-hairline--bottom" style="z-index: 1;">
-        <div class="van-nav-bar__left">
-          <i @click="$router.back(-1)" class="van-icon van-icon-arrow-left van-nav-bar__arrow"></i>
-        </div>
-        <div class="van-nav-bar__title van-ellipsis">司机页面</div>
-        <div class="van-nav-bar__right"></div>
-      </div>
-    </header>
+    <!--<header>-->
+      <!--<div class="van-doc-nav-bar van-nav-bar van-hairline&#45;&#45;bottom" style="z-index: 1;">-->
+        <!--<div class="van-nav-bar__left">-->
+          <!--<i @click="$router.back(-1)" class="van-icon van-icon-arrow-left van-nav-bar__arrow"></i>-->
+        <!--</div>-->
+        <!--<div class="van-nav-bar__title van-ellipsis">司机页面</div>-->
+        <!--<div class="van-nav-bar__right"></div>-->
+      <!--</div>-->
+    <!--</header>-->
 
     <!--<van-button plain type="default" size="small" @click="goHomePage" class="go-back-button"><</van-button>-->
-    <div style="padding-top: 1rem">
+    <div >
       <router-link to="/choices/route">发布行程</router-link>
       <router-link to="/choices/order">附近订单</router-link>
       <router-link to="/choices/invitation">邀我友捎</router-link>

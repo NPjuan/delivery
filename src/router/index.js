@@ -41,7 +41,6 @@ import login from "../components/login/login"
 import myInfo from "../components/login/myInfo"
 import password from "../components/login/password"
 import resetpw from "../components/login/resetpw"
-import setting from "../components/login/setting"
 
 import Chat from "../components/chat/chating"
 
@@ -57,11 +56,9 @@ import Chat from "../components/chat/chating"
 Vue.use(Router)
 import Demo from "../components/userIndex/demo"
 export default new Router({
-  mode: 'history',
   routes: [
     // 主页
-    {
-      path: "/", name: "indexLink", component: Index, redirect: "/homepage", children: [
+    {path: "/", name: "indexLink", component: Index, redirect: "/homepage", children: [
         // 默认跳转
         {path: "/homepage", meta: { index: 0 }, name: "homepageLink", component: HomePage},
         // 填写收货人地址
@@ -71,7 +68,9 @@ export default new Router({
         // 寻找附件司机
         {path: "/findDriver", meta: {index: 1}, name: "findDriverLink", component: FindDriver},
         // 订单详情
+
         {path: "/userOrderList", meta: {index: 1}, name: "userOrderListLink", component: UserOrderList},
+
         // 司机 bz
         {path:"/index/driver", meta: {index: 1}, name:"driverLink",component:driver,   children:[
             // 发布行程
@@ -110,7 +109,6 @@ export default new Router({
       {path:'/password', meta: {index: 1,index_:3},  component:password},
 
       {path:'/resetpw', meta: {index: 1,index_:4},  component:resetpw},
-    //设置页面
     { path: '/setting', meta: { index: 1, index_: 4 }, component: setting },
 
       //聊天页面

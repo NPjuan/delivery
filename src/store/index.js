@@ -11,6 +11,7 @@ const store = new Vuex.Store({
     state: {
         isLogin: false,
         ip:"http://47.96.231.75:8080/deliver",
+        userData:{},
     },
 
     // 获取属性的状态
@@ -23,7 +24,12 @@ const store = new Vuex.Store({
     mutations: {
         //保存登录状态
         userStatus(state, flag) {
-            state.isLogin = flag
+            state.isLogin = flag;
+        },
+
+        // 用户数据
+        userD(state, data) {
+            state.userData = data;
         },
     },
 
@@ -31,7 +37,11 @@ const store = new Vuex.Store({
     actions: {
         //获取登录状态
         userLogin({ commit }, flag) {
-            commit("userStatus", flag)
+            commit("userStatus", flag);
+        },
+        // 用户数据
+        userData({commit}, data) {
+            commit("userD", data);
         },
     }
 

@@ -235,9 +235,9 @@ export default {
             out: "",
             // id请求地址
             ajaxip:
-                "http://192.168.1.107:8080/deliver_war_exploded/chat/login.do",
+                "http://192.168.1.109:8080/deliver_war_exploded/chat/login.do",
             //websocket
-            path: "ws://192.168.1.107:8080/deliver_war_exploded/ws.do",
+            path: "ws://192.168.1.109:8080/deliver_war_exploded/ws.do",
             // path: "ws://116.62.46.122:8080/deliver/ws.do",
 
             socket: "",
